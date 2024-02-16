@@ -1,0 +1,23 @@
+Index: src/test/org/hibernate/ejb/test/EJB3TestCase.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/EJB3TestCase.java	(revisão 16168)
++++ src/test/org/hibernate/ejb/test/EJB3TestCase.java	(cópia de trabalho)
+@@ -113,11 +113,17 @@
+ 	}
+ 
+ 	protected void setUp() throws Exception {
+-		if ( getSessions() == null || lastTestClass != getClass() ) {
++		if ( getSessions() == null || lastTestClass != getClass() || getSessions().isClosed() ) {
+ 			buildSessionFactory( getMappings() );
+ 			lastTestClass = getClass();
+ 		}
+ 	}
++	
++	protected void tearDown() throws Exception {
++		if (getSessions() != null && !getSessions().isClosed()) {
++			getSessions().close();
++		}
++	}
+ 
+ 	protected void runTest() throws Throwable {
+ 		final boolean stats = ( (SessionFactoryImplementor) sessions ).getStatistics().isStatisticsEnabled();

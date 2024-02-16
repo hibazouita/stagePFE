@@ -1,0 +1,35 @@
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+import org.hibernate.validator.Validator;
+
+/**
+ * The value has to be in a defined range with precision & scale
+ *
+ * @author Priyatam Mudivarti
+ */
+public class BigDecimalRangeValidator implements Validator<BigDecimalRange>, Serializable {;
+
+	private long minPrecision;
+	private long maxPrecision;
+	private int scale;
+
+	public void initialize(BigDecimalRange parameters) {
+		minPrecision = parameters.minPrecision();
+		maxPrecision = parameters.maxPrecision();
+		scale = parameters.scale();
+	}
+
+	public boolean isValid(Object value) {
+		if ( value == null ) return true;
+
+		else if ( value instanceof BigDecimal ) {
+			int _precision = ((BigDecimal)value).precision();
+			int _scale = ((BigDecimal)value).scale();
+			return (_precision >= minPrecision && _precision <= maxPrecision && _scale <= scale);
+		}
+		else {
+			return false;
+		}
+	}
+}

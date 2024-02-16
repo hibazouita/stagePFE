@@ -1,0 +1,599 @@
+Index: doc/reference/en/modules/defineconstraints.xml
+===================================================================
+--- doc/reference/en/modules/defineconstraints.xml	(revision 14483)
++++ doc/reference/en/modules/defineconstraints.xml	(working copy)
+@@ -83,10 +83,12 @@
+           <row>
+             <entry>@NotEmpty</entry>
+ 
+-            <entry>property</entry>
++            <entry>property (String, Array, Collection, Map)</entry>
+ 
+             <entry>check if the string is not null nor empty. Check if the
+-            connection is not null nor empty</entry>
++            collection/map/array is not null nor empty.
++            Optional for Strings: setting option <literal>trim</literal>
++            will trim the string before length check.</entry>
+ 
+             <entry>Column(s) are not null (for String)</entry>
+           </row>
+Index: src/test/org/hibernate/validator/test/validators/NotEmptyTest.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/NotEmptyTest.java	(revision 14483)
++++ src/test/org/hibernate/validator/test/validators/NotEmptyTest.java	(working copy)
+@@ -1,31 +1,24 @@
+ //$Id: $
+ package org.hibernate.validator.test.validators;
+ 
+-import junit.framework.TestCase;
+-import org.hibernate.validator.ClassValidator;
+-import org.hibernate.validator.InvalidValue;
++import org.hibernate.validator.test.validators.helpers.ValidatorTestCase;
+ 
+ /**
+  * @author Gavin King
++ * @author Sanne Grinovero
+  */
+-public class NotEmptyTest extends TestCase {
+-
+-	public void testBigInteger() throws Exception {
+-		Car car = new Car();
+-		ClassValidator<Car> classValidator = new ClassValidator<Car>( Car.class );
+-		InvalidValue[] invalidValues = classValidator.getInvalidValues( car );
+-		assertEquals( 2, invalidValues.length );
+-		car.name = "";
+-		invalidValues = classValidator.getInvalidValues( car );
+-		assertEquals( 2, invalidValues.length );
+-		car.name = "350Z";
+-		invalidValues = classValidator.getInvalidValues( car );
+-		assertEquals( 1, invalidValues.length );
+-		car.insurances = new String[0];
+-		invalidValues = classValidator.getInvalidValues( car );
+-		assertEquals( 1, invalidValues.length );
+-		car.insurances = new String[1];
+-		invalidValues = classValidator.getInvalidValues( car );
+-		assertEquals( 0, invalidValues.length );
++public class NotEmptyTest extends ValidatorTestCase {
++	
++	public void testNotEmpty() throws Exception {
++		tryAllRegisteredValues(Car.getTestCases_NotEmpty());
++		tryAllRegisteredValues(FormEmptyness.getTestCases_NotEmpty());
+ 	}
++	
++	protected Class[] getMappings() {
++		return new Class[] {
++				Car.class,
++				FormEmptyness.class
++		};
++	}
++	
+ }
+Index: src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestInputData.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestInputData.java	(revision 0)
++++ src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestInputData.java	(revision 0)
+@@ -0,0 +1,41 @@
++package org.hibernate.validator.test.validators.helpers;
++
++import java.util.Map;
++import java.util.TreeMap;
++
++/**
++ * This is a wrapper for Validator testcases; define an example entity class to use as test base
++ * and then register all possible good/bad values for each field.
++ * 
++ * @author Sanne Grinovero
++ * 
++ */
++@SuppressWarnings("unchecked")
++public class ValidatorTestInputData {
++	
++	final Class clazz;
++	
++	final Map<String,PropertyValidityTestCase> tests = new TreeMap<String,PropertyValidityTestCase>();
++	
++	/**
++	 * @param clazz The entity class used for tests.
++	 */
++	public ValidatorTestInputData(Class clazz) {
++		this.clazz = clazz;
++	}
++
++	/**
++	 * @param fieldName the name of the field where to set the
++	 * test values.
++	 * @return The container for all test data.
++	 */
++	public PropertyValidityTestCase forField(String fieldName) {
++		PropertyValidityTestCase pvt = tests.get(fieldName);
++		if (pvt==null){
++			pvt = new PropertyValidityTestCase();
++			tests.put(fieldName, pvt);
++		}
++		return pvt;
++	}
++
++}
+Index: src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestCase.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestCase.java	(revision 0)
++++ src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestCase.java	(revision 0)
+@@ -0,0 +1,113 @@
++package org.hibernate.validator.test.validators.helpers;
++
++import org.hibernate.EntityMode;
++import org.hibernate.cfg.Configuration;
++import org.hibernate.event.PreInsertEventListener;
++import org.hibernate.event.PreUpdateEventListener;
++import org.hibernate.mapping.PersistentClass;
++import org.hibernate.mapping.Property;
++import org.hibernate.property.PropertyAccessor;
++import org.hibernate.property.PropertyAccessorFactory;
++import org.hibernate.property.Setter;
++import org.hibernate.validator.ClassValidator;
++import org.hibernate.validator.InvalidValue;
++import org.hibernate.validator.event.ValidateEventListener;
++import org.hibernate.validator.test.HANTestCase;
++
++/**
++ * Contains some useful methods to simplify writing Validator testcases.
++ * 
++ * You're supposed to list a series of good/bad values per field in the entity,
++ * so you can keep a good overview on them, then use tryAllRegisteredValues(..)
++ * to verify your assumptions.
++ * 
++ * @author Sanne Grinovero
++ */
++@SuppressWarnings("unchecked")
++public abstract class ValidatorTestCase extends HANTestCase {
++
++	public ValidatorTestCase() {
++		super();
++	}
++
++	public ValidatorTestCase(String x) {
++		super(x);
++	}
++	
++	protected final void tryAllRegisteredValues(ValidatorTestInputData tests) throws InstantiationException, IllegalAccessException {
++		
++		Class entClazz = tests.clazz;
++		ClassValidator classValidator = new ClassValidator( entClazz );
++		
++		{	//first test: the unmodified entity class needs to pass validation, to make sense of next tests.
++			Object testEntity = tests.clazz.newInstance();
++			assertTrue("the fields of tested entity needs to contain valid (as by it's validators) values on default construction.", 
++				assertEntityIsValid(classValidator, testEntity));
++		}
++		
++		PersistentClass classMapping = getCfg().getClassMapping( entClazz.getName() );
++		assertNotNull(classMapping);
++		
++		//will run tests on each field for which testcases where defined
++		for (String field : tests.tests.keySet()){
++			
++			Property property = classMapping.getProperty(field);
++			assertNotNull(property);
++			
++			PropertyAccessor propertyAccessor = PropertyAccessorFactory.getPropertyAccessor(property, EntityMode.POJO);
++			Setter setter = propertyAccessor.getSetter(entClazz, field);
++			
++			PropertyValidityTestCase propertyValidityTestCase = tests.tests.get(field);
++			assertNotNull(propertyValidityTestCase);
++			
++			//using all values expected to return valid.
++			for (Object goodValue : propertyValidityTestCase.getValidValues()){
++				Object testEntity = entClazz.newInstance();
++				setter.set(testEntity, goodValue, null);
++				InvalidValue[] invalidValues = classValidator.getInvalidValues( testEntity );
++				assertEquals("Value \""+goodValue+"\" not validated on field ["+field+"].", 0, invalidValues.length);
++			}
++			
++			//and all values expected to return invalid.
++			for (Object badvalue : propertyValidityTestCase.getNotValidValues()){
++				Object testEntity = entClazz.newInstance();
++				setter.set(testEntity, badvalue, null);
++				InvalidValue[] invalidValues = classValidator.getInvalidValues( testEntity );
++				assertEquals("Value \""+badvalue+"\" was validated on field ["+field+"] (but was expected to fail)", 1, invalidValues.length);
++			}
++				
++		}
++		
++	}
++
++	protected final boolean assertEntityIsValid(ClassValidator classValidator, Object entity) {
++		InvalidValue[] invalidValues = classValidator.getInvalidValues( entity );
++		StringBuilder msg = new StringBuilder("Was expecting a valid entity; invalid properties: ");
++		for (InvalidValue i :  invalidValues){
++			msg.append(i.getPropertyPath());
++			msg.append(", ");
++		}
++		assertEquals(msg.toString(), 0, invalidValues.length);
++		return invalidValues.length == 0;
++	}
++
++	protected final boolean assertEntityNotValid(ClassValidator classValidator, Object entity, String expectedFailingPropertyName) {
++		InvalidValue[] invalidValues = classValidator.getInvalidValues( entity );
++		assertEquals("Unexpected validation for field "+expectedFailingPropertyName+";", 1, invalidValues.length);
++		if (invalidValues.length==1){
++			assertEquals("invalid property was ", expectedFailingPropertyName, invalidValues[0].getPropertyName());
++			return expectedFailingPropertyName.equals(invalidValues[0].getPropertyName());
++		}
++		else
++			return false;
++	}
++
++	protected void configure(Configuration cfg) {
++		super.configure(cfg);
++		cfg.getEventListeners()
++				.setPreInsertEventListeners( new PreInsertEventListener[]{new ValidateEventListener()} );
++		cfg.getEventListeners()
++				.setPreUpdateEventListeners( new PreUpdateEventListener[]{new ValidateEventListener()} );
++	}
++	
++}
+Index: src/test/org/hibernate/validator/test/validators/helpers/PropertyValidityTestCase.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/helpers/PropertyValidityTestCase.java	(revision 0)
++++ src/test/org/hibernate/validator/test/validators/helpers/PropertyValidityTestCase.java	(revision 0)
+@@ -0,0 +1,58 @@
++package org.hibernate.validator.test.validators.helpers;
++
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.List;
++
++/**
++ * Each PropertyValidityTestCase will be associated to a property
++ * of a test Entity, to register many tests "by example":
++ * you specify for which values it will have to fail or succeed
++ * validation.
++ * 
++ * @author Sanne Grinovero
++ */
++@SuppressWarnings("unchecked")
++public class PropertyValidityTestCase {
++	
++	private final List validValues = new ArrayList();
++	private final List notValidValues = new ArrayList();
++
++	public PropertyValidityTestCase() {
++	}
++
++	/**
++	 * The Validators registered on the test Entity will
++	 * be tested to return "valid" for all this values
++	 * set on the current field.
++	 * A different new entity will be created for test
++	 * for each value.
++	 * 
++	 * @param goodValues WARNING: don't ever register a single array to prevent unwrapping
++	 */
++	public void registerValidValues(Object... goodValues) {
++		validValues.addAll(Arrays.asList(goodValues));
++	}
++
++	/**
++	 * The Validators registered on the test Entity will
++	 * be tested to return "NOT valid" for all this values
++	 * set on the current field.
++	 * A different new entity will be created for test
++	 * for each value.
++	 * @param goodValues WARNING: don't ever register a single array to prevent unwrapping
++	 */
++	public void registerInvalidValues(Object... badValues) {
++		notValidValues.addAll(Arrays.asList(badValues));
++	}
++
++	List getValidValues() {
++		return Collections.unmodifiableList(validValues);
++	}
++
++	List getNotValidValues() {
++		return Collections.unmodifiableList(notValidValues);
++	}
++	
++}
+Index: src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestingSelfTest.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestingSelfTest.java	(revision 0)
++++ src/test/org/hibernate/validator/test/validators/helpers/ValidatorTestingSelfTest.java	(revision 0)
+@@ -0,0 +1,44 @@
++package org.hibernate.validator.test.validators.helpers;
++
++import org.hibernate.EntityMode;
++import org.hibernate.cfg.AnnotationConfiguration;
++import org.hibernate.mapping.PersistentClass;
++import org.hibernate.mapping.Property;
++import org.hibernate.property.PropertyAccessor;
++import org.hibernate.property.PropertyAccessorFactory;
++import org.hibernate.property.Setter;
++import org.hibernate.validator.test.validators.Car;
++
++/**
++* @author Sanne Grinovero
++*/
++@SuppressWarnings("unchecked")
++public class ValidatorTestingSelfTest extends ValidatorTestCase {
++	
++	public final void testSelfTesting(){
++		Class clazz = Car.class;
++		String propName = "name";
++		Object testEntity = new Car();
++		Object value = "macchina rossa";
++		
++		AnnotationConfiguration cfg = super.getCfg();
++		PersistentClass classMapping = cfg.getClassMapping( clazz.getName() );
++		assertNotNull(classMapping);
++		
++		Property property = classMapping.getProperty(propName);
++		PropertyAccessor propertyAccessor = PropertyAccessorFactory.getPropertyAccessor(property, EntityMode.POJO);
++		Setter setter = propertyAccessor.getSetter(clazz, propName);
++		
++		setter.set(testEntity, value, null);
++		
++		assertEquals(((Car)testEntity).name, value);
++		
++	}
++	
++	protected Class[] getMappings() {
++		return new Class[] {
++				Car.class
++		};
++	}
++	
++}
+Index: src/test/org/hibernate/validator/test/validators/DigitsTest.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/DigitsTest.java	(revision 14483)
++++ src/test/org/hibernate/validator/test/validators/DigitsTest.java	(working copy)
+@@ -1,38 +1,20 @@
+ //$Id: $
+ package org.hibernate.validator.test.validators;
+ 
+-import java.math.BigDecimal;
+-
+-import org.hibernate.cfg.Configuration;
+-import org.hibernate.event.PreInsertEventListener;
+-import org.hibernate.event.PreUpdateEventListener;
+ import org.hibernate.mapping.Column;
+ import org.hibernate.mapping.PersistentClass;
+-import org.hibernate.validator.ClassValidator;
+-import org.hibernate.validator.InvalidValue;
+-import org.hibernate.validator.test.HANTestCase;
+-import org.hibernate.validator.event.ValidateEventListener;
++import org.hibernate.validator.test.validators.helpers.ValidatorTestCase;
+ 
+ /**
+  * @author Emmanuel Bernard
++ * @author Sanne Grinovero
+  */
+-public class DigitsTest extends HANTestCase {
+-
++public class DigitsTest extends ValidatorTestCase {
++	
+ 	public void testDigits() throws Exception {
+-		Car car = new Car();
+-		car.name = "350Z";
+-		car.insurances = new String[] { "random" };
+-		car.length = new BigDecimal(10.2);
+-		car.gallons = 100.3;
+-		ClassValidator<Car> classValidator = new ClassValidator<Car>( Car.class );
+-		InvalidValue[] invalidValues = classValidator.getInvalidValues( car );
+-		assertEquals( 2, invalidValues.length );
+-		car.length = new BigDecimal(1.223); //more than 2
+-		car.gallons = 10.300; //1 digit really so not invalid
+-		invalidValues = classValidator.getInvalidValues( car );
+-		assertEquals( 1, invalidValues.length );
++		tryAllRegisteredValues(Car.getTestCases_Digits());
+ 	}
+-
++	
+ 	public void testApply() throws Exception {
+ 		PersistentClass classMapping = getCfg().getClassMapping( Car.class.getName() );
+ 		Column stateColumn = (Column) classMapping.getProperty( "gallons" ).getColumnIterator().next();
+@@ -40,16 +22,10 @@
+ 		assertEquals( stateColumn.getScale(), 1 );
+ 	}
+ 
+-	protected void configure(Configuration cfg) {
+-		cfg.getEventListeners()
+-				.setPreInsertEventListeners( new PreInsertEventListener[]{new ValidateEventListener()} );
+-		cfg.getEventListeners()
+-				.setPreUpdateEventListeners( new PreUpdateEventListener[]{new ValidateEventListener()} );
+-	}
+-
+ 	protected Class[] getMappings() {
+ 		return new Class[] {
+ 				Car.class
+ 		};
+ 	}
++	
+ }
+Index: src/test/org/hibernate/validator/test/validators/Car.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/Car.java	(revision 14483)
++++ src/test/org/hibernate/validator/test/validators/Car.java	(working copy)
+@@ -9,20 +9,54 @@
+ 
+ import org.hibernate.validator.NotEmpty;
+ import org.hibernate.validator.Digits;
++import org.hibernate.validator.test.validators.helpers.ValidatorTestInputData;
+ 
+ /**
+  * @author Emmanuel Bernard
++ * @author Sanne Grinovero
+  */
+ @Entity
+ public class Car {
++	
++	// ! initialize all fields to succeed in validation by default
++	
+ 	@Id @GeneratedValue
+ 	public Long id;
++	
+ 	@NotEmpty
+-	public String name;
++	public String name = "350Z";
++	
+ 	@NotEmpty
+-	public String[] insurances;
++	public String[] insurances = new String[] { "random" };
++	
+ 	@Digits(integerDigits = 1, fractionalDigits = 2)
+-	public BigDecimal length;
++	public BigDecimal length = new BigDecimal("1.22");
++	
+ 	@Digits(integerDigits = 2, fractionalDigits = 1)
+-	public Double gallons; 
++	public Double gallons = 10.3;
++	
++	public static ValidatorTestInputData getTestCases_NotEmpty(){
++		ValidatorTestInputData v = new ValidatorTestInputData(Car.class);
++		
++		v.forField("name").registerValidValues( "350Z", " ", "0" );
++		v.forField("name").registerInvalidValues( "" , null );
++		
++		v.forField("insurances").registerValidValues( new String[] { "random" }, new String[] { "","" }, new String[1] );
++		v.forField("insurances").registerInvalidValues( new String[]{}, null , new String[0]);
++		
++		return v;
++	}
++	
++	public static ValidatorTestInputData getTestCases_Digits(){
++		ValidatorTestInputData v = new ValidatorTestInputData(Car.class);
++		
++		v.forField("length").registerValidValues( BigDecimal.ZERO, new BigDecimal("9.99"), null );
++		v.forField("length").registerInvalidValues(new BigDecimal("1.223"), new BigDecimal("1.223") );
++		
++		v.forField("gallons").registerValidValues( Double.valueOf("99.9"), null );
++		v.forField("gallons").registerInvalidValues( new Double("10.333") );
++		
++		return v;
++	}
++	
+ }
+Index: src/test/org/hibernate/validator/test/validators/FormEmptyness.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/FormEmptyness.java	(revision 0)
++++ src/test/org/hibernate/validator/test/validators/FormEmptyness.java	(revision 0)
+@@ -0,0 +1,59 @@
++package org.hibernate.validator.test.validators;
++
++import javax.persistence.Entity;
++import javax.persistence.GeneratedValue;
++import javax.persistence.Id;
++
++import org.hibernate.validator.NotEmpty;
++import org.hibernate.validator.test.validators.helpers.ValidatorTestInputData;
++
++/**
++ * @author Sanne Grinovero
++ */
++@Entity
++public class FormEmptyness {
++	
++	@Id @GeneratedValue
++	public Long id;
++	
++	public String anystring = null;
++	
++	@NotEmpty
++	public String original = "hey";
++	
++	@NotEmpty(trim=false)
++	public String pleasenotrim = "hey";
++	
++	@NotEmpty(trim=true)
++	public String reallyempty = "hey";
++	
++	public Object[] anyarr = null;
++	
++	@NotEmpty
++	public Object[] originalarr = new Object[1];
++	
++	public static ValidatorTestInputData getTestCases_NotEmpty(){
++		ValidatorTestInputData v = new ValidatorTestInputData(FormEmptyness.class);
++		
++		v.forField("anystring").registerValidValues( null, "", "hey" );
++		v.forField("anystring").registerInvalidValues(  );
++		
++		v.forField("original").registerValidValues( " ", "hey" );
++		v.forField("original").registerInvalidValues( null, "" );
++		
++		v.forField("pleasenotrim").registerValidValues( " ", "hey"  );
++		v.forField("pleasenotrim").registerInvalidValues( null, "" );
++		
++		v.forField("reallyempty").registerValidValues( "hey" );
++		v.forField("reallyempty").registerInvalidValues( null, "", " ", "   "  );
++		
++		v.forField("anyarr").registerValidValues( null, new Object[0], new Object[1] );
++		v.forField("anyarr").registerInvalidValues(  );
++		
++		v.forField("originalarr").registerValidValues( new Object[2], new Object[1], new Object[]{ (byte) 1, (short) 54, (int) 755, 9L, 5.6F, 7.88, 'c', true } ); //don't ever register a single array, it will be unwrapped!
++		v.forField("originalarr").registerInvalidValues( new Object[0], null );
++		
++		return v;
++	}
++	
++}
+Index: src/java/org/hibernate/validator/NotEmptyValidator.java
+===================================================================
+--- src/java/org/hibernate/validator/NotEmptyValidator.java	(revision 14483)
++++ src/java/org/hibernate/validator/NotEmptyValidator.java	(working copy)
+@@ -15,10 +15,14 @@
+  * Check the non emptyness of the element
+  *
+  * @author Gavin King
++ * @author Sanne Grinovero
+  */
+ public class NotEmptyValidator implements Validator<NotEmpty>, PropertyConstraint, Serializable {
++	
++	private boolean trim;
+ 
+ 	public void initialize(NotEmpty parameters) {
++		trim = parameters.trim();
+ 	}
+ 
+ 	public boolean isValid(Object value) {
+@@ -32,8 +36,16 @@
+ 		else if ( value instanceof Map ) {
+ 			return ( (Map) value ).size() > 0;
+ 		}
++		else if ( value instanceof String) {
++			if (trim) {
++				return value.toString().trim().length() > 0;
++			}
++			else {
++				return value.toString().length() > 0;				
++			}
++		}
+ 		else {
+-			return ( (String) value ).length() > 0;
++			return false;
+ 		}
+ 	}
+ 
+Index: src/java/org/hibernate/validator/NotEmpty.java
+===================================================================
+--- src/java/org/hibernate/validator/NotEmpty.java	(revision 14483)
++++ src/java/org/hibernate/validator/NotEmpty.java	(working copy)
+@@ -9,7 +9,10 @@
+ 
+ /**
+  * Check that a String is not empty (not null and length > 0)
+- * or that a Collection (or array) is not empty (not null and length > 0)
++ * or that a Collection (or array or map) is not empty (not null and size > 0).
++ * When used on a String setting the "trim" option to true
++ * will cause the validator to trim the value before testing
++ * length > 0.
+  *
+  * @author Emmanuel Bernard
+  */
+@@ -19,4 +22,5 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface NotEmpty {
+ 	String message() default "{validator.notEmpty}";
++	boolean trim() default false;
+ }

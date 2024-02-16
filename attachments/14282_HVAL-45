@@ -1,0 +1,21 @@
+#######################################
+# Mert Caliskan - mcaliskan@gmail.com
+# http://www.jroller.com/mert
+#######################################
+
+validator.assertFalse=teyit ba\u015far\u0131s\u0131z
+validator.assertTrue=teyit ba\u015far\u0131s\u0131z
+validator.future=ileri bir tarih olmal\u0131
+validator.length=uzunluk {min} ile {max} aras\u0131nda olmal\u0131
+validator.max={value} de\u011ferinden k\u00fc\u00e7\u00fck veya e\u015fit olmal\u0131
+validator.min={value} de\u011ferinden b\u00fcy\u00fck veya e\u015fit olmal\u0131
+validator.notNull=null olamaz
+validator.past=ge\u00e7mi\u015f bir tarih olmal\u0131
+validator.pattern="{regex}" ile e\u015fle\u015fmeli
+validator.range={min} ile {max} aras\u0131nda olmal\u0131
+validator.size=boyut {min} ile {max} aras\u0131nda olmal\u0131
+validator.email=hatal\u0131 eposta adresi
+validator.notEmpty=null veya bo\u015f de\u011fer olamaz
+validator.digits=Say\u0131sal de\u011fer s\u0131n\u0131rlar\u0131n d\u0131\u015f\u0131nda (beklenen <{integerDigits} basamak>.<{fractionalDigits} basamak>)
+validator.creditCard=Ge\u00e7ersiz kredi kart\u0131 numaras\u0131
+validator.ean=Ge\u00e7ersiz EAN

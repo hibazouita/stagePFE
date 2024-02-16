@@ -1,0 +1,46 @@
+package org.hibernate.validator;
+
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+
+public class FutureValidator implements Validator<Future>, Serializable {
+	
+	private boolean inclusive = true;
+
+	public void initialize(Future parameters) {
+		inclusive = parameters.inclusive();
+	}
+
+	public boolean isValid(Object value) {
+		if ( value == null ) return true;
+		if ( value instanceof Date ) {
+			Date date = (Date) value;
+			return date.after( getCurrentDate() );
+		}
+		else if ( value instanceof Calendar ) {
+			Calendar cal = (Calendar) value;
+			return cal.after( getCurrentCalendar() );
+		}
+		else {
+			return false;
+		}
+	}
+
+	private Date getCurrentDate() {
+		return getCurrentCalendar().getTime();
+	}
+
+	private Calendar getCurrentCalendar() {
+		Calendar currentCalendar = Calendar.getInstance();
+		if (inclusive) {
+			currentCalendar.set(Calendar.HOUR, 0);
+			currentCalendar.set(Calendar.MINUTE, 0);
+			currentCalendar.set(Calendar.SECOND, 0);
+			currentCalendar.set(Calendar.MILLISECOND, 0);
+		}
+		return currentCalendar;
+	}
+}

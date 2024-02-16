@@ -1,0 +1,267 @@
+Index: F:/hibernate-svn/HibernateExt/metadata/src/test/org/hibernate/validator/test/ValidatorTest.java
+===================================================================
+--- F:/hibernate-svn/HibernateExt/metadata/src/test/org/hibernate/validator/test/ValidatorTest.java	(revision 11016)
++++ F:/hibernate-svn/HibernateExt/metadata/src/test/org/hibernate/validator/test/ValidatorTest.java	(working copy)
+@@ -2,6 +2,7 @@
+ package org.hibernate.validator.test;
+ 
+ import java.util.Date;
++import java.util.GregorianCalendar;
+ import java.util.Locale;
+ import java.util.ResourceBundle;
+ import java.math.BigInteger;
+@@ -214,4 +215,26 @@
+ 		InvalidValue[] validationMessages = classValidator.getInvalidValues( site );
+ 		assertEquals( 2, validationMessages.length );
+ 	}
++    
++    public void testValidatorList() throws Exception {
++        Loan loan = new Loan();
++        GregorianCalendar cal = new GregorianCalendar();
++        cal.set(2000, 1, 1);
++        loan.setStartDate(cal.getTime());
++        
++        cal.set(2001,1,1);
++        loan.setFirstPayment( cal.getTime());
++        
++        cal.set(2010, 1, 1);
++        loan.setEndDate(cal.getTime());
++        ClassValidator<Loan> classValidator = new ClassValidator<Loan>(Loan.class);
++        InvalidValue[] invalidValues = classValidator.getInvalidValues(loan);
++        assertEquals(0, invalidValues.length);
++        
++        // force an error, by setting firstPayment < startDate
++        cal.set(1999,1,1);
++        loan.setFirstPayment( cal.getTime());
++        InvalidValue[] invalidValues2 = classValidator.getInvalidValues(loan);
++        assertEquals(1,invalidValues2.length);
++    }
+ }
+Index: F:/hibernate-svn/HibernateExt/metadata/src/test/org/hibernate/validator/test/Loan.java
+===================================================================
+--- F:/hibernate-svn/HibernateExt/metadata/src/test/org/hibernate/validator/test/Loan.java	(revision 0)
++++ F:/hibernate-svn/HibernateExt/metadata/src/test/org/hibernate/validator/test/Loan.java	(revision 0)
+@@ -0,0 +1,52 @@
++
++package org.hibernate.validator.test;
++
++import java.util.Date;
++
++import org.hibernate.annotations.Parameter;
++import org.hibernate.validator.AfterValidator;
++import org.hibernate.validator.GenericValidator;
++import org.hibernate.validator.ValidatorList;
++
++@ValidatorList({
++    @GenericValidator(validatorClass=AfterValidator.class, parameters = { @Parameter(name="property",value="endDate"), 
++                                                                          @Parameter(name="after",value="startDate")}, 
++                                                                          message = "endDate must be after startDate"),
++    @GenericValidator(validatorClass=AfterValidator.class, parameters = { @Parameter(name="property",value="firstPayment"), 
++                                                                          @Parameter(name="after",value="startDate")}, 
++                                                                          message = "firstPayment must be after startDate"),
++                                                                          
++})
++public class Loan {
++
++    private Date startDate;
++
++    private Date endDate;
++
++    private Date firstPayment;
++
++    public Date getEndDate() {
++        return endDate;
++    }
++
++    public Date getFirstPayment() {
++        return firstPayment;
++    }
++
++    public Date getStartDate() {
++        return startDate;
++    }
++
++    public void setEndDate(Date endDate) {
++        this.endDate = endDate;
++    }
++
++    public void setFirstPayment(Date firstPayment) {
++        this.firstPayment = firstPayment;
++    }
++
++    public void setStartDate(Date startDate) {
++        this.startDate = startDate;
++    }
++
++}
+Index: F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/AfterValidator.java
+===================================================================
+--- F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/AfterValidator.java	(revision 0)
++++ F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/AfterValidator.java	(revision 0)
+@@ -0,0 +1,37 @@
++
++package org.hibernate.validator;
++
++import java.util.Date;
++
++import org.hibernate.property.Getter;
++import org.hibernate.util.ReflectHelper;
++
++public class AfterValidator implements Validator<After> {
++
++    String property;
++
++    String after;
++
++    private Getter propertyGetter;
++
++    private Getter afterGetter;
++
++    public void initialize(After parameters) {
++        property = parameters.property();
++        after = parameters.after();
++    }
++
++    public boolean isValid(Object value) {
++        initGetters(value.getClass());
++        Date propertyValue = (Date) propertyGetter.get(value);
++        Date afterValue = (Date) afterGetter.get(value);
++        return propertyValue.after(afterValue);
++    }
++
++    
++    private synchronized void initGetters(Class value) {
++        propertyGetter = ReflectHelper.getGetter(value, property);
++        afterGetter = ReflectHelper.getGetter(value, after);
++    }
++
++}
+Index: F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/ClassValidator.java
+===================================================================
+--- F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/ClassValidator.java	(revision 11016)
++++ F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/ClassValidator.java	(working copy)
+@@ -9,6 +9,8 @@
+ import java.lang.annotation.Annotation;
+ import java.lang.reflect.Method;
+ import java.lang.reflect.Modifier;
++import java.lang.reflect.ParameterizedType;
++import java.lang.reflect.Type;
+ import java.text.MessageFormat;
+ import java.util.ArrayList;
+ import java.util.Collection;
+@@ -29,6 +31,9 @@
+ import org.hibernate.Hibernate;
+ import org.hibernate.MappingException;
+ import org.hibernate.validator.interpolator.DefaultMessageInterpolatorAggerator;
++import org.hibernate.annotationfactory.AnnotationDescriptor;
++import org.hibernate.annotationfactory.AnnotationFactory;
++import org.hibernate.annotations.Parameter;
+ import org.hibernate.cfg.annotations.Version;
+ import org.hibernate.cfg.BinderHelper;
+ import org.hibernate.mapping.PersistentClass;
+@@ -196,8 +201,16 @@
+ 			Annotation[] classAnnotations = currentClass.getAnnotations();
+ 			for ( int i = 0; i < classAnnotations.length ; i++ ) {
+ 				Annotation classAnnotation = classAnnotations[i];
+-				Validator beanValidator = createValidator( classAnnotation );
+-				if ( beanValidator != null ) beanValidators.add( beanValidator );
++                if (classAnnotation instanceof ValidatorList) {
++                    ValidatorList validatorList = (ValidatorList) classAnnotation;
++                    for (GenericValidator v : validatorList.value()) {
++                        Validator beanValidator = createValidator(v);
++                        if ( beanValidator != null ) beanValidators.add( beanValidator );
++                    }
++                } else {
++    				Validator beanValidator = createValidator( classAnnotation );
++    				if ( beanValidator != null ) beanValidators.add( beanValidator );
++                }
+ 			}
+ 		}
+ 
+@@ -271,6 +284,28 @@
+ 		}
+ 	}
+ 
++    @SuppressWarnings("unchecked")
++    private Validator createValidator(GenericValidator annotation) {
++        try {
++            Validator validator;
++            validator = (Validator) annotation.validatorClass().newInstance();
++            Type[] genericInterfaces = validator.getClass().getGenericInterfaces();
++            ParameterizedType paramType = (ParameterizedType) genericInterfaces[0];
++            Type[] actualTypeArguments = paramType.getActualTypeArguments();
++            AnnotationDescriptor descriptor = new AnnotationDescriptor((Class<? extends Annotation>) actualTypeArguments[0]);
++            for (Parameter p: annotation.parameters()) {
++                descriptor.setValue(p.name() , p.value());
++            }
++            descriptor.setValue("message", annotation.message());
++            Annotation a = AnnotationFactory.create(descriptor);
++            validator.initialize( a );
++            defaultInterpolator.addInterpolator( annotation, validator );
++            return validator;
++        } catch (Exception e) {
++            throw new IllegalArgumentException( "could not instantiate ClassValidator", e );
++        }
++    }
++    
+ 	@SuppressWarnings("unchecked")
+ 	private Validator createValidator(Annotation annotation) {
+ 		try {
+Index: F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/GenericValidator.java
+===================================================================
+--- F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/GenericValidator.java	(revision 0)
++++ F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/GenericValidator.java	(revision 0)
+@@ -0,0 +1,18 @@
++package org.hibernate.validator;
++
++import org.hibernate.annotations.Parameter;
++
++/**
++ * Used together with ValidatorList to put multiple bean-validators on 1 bean.
++ * 
++ * @author Edwin van der Elst
++ *
++ */
++public @interface GenericValidator {
++
++    Class validatorClass();
++    
++    Parameter [] parameters() default {};
++
++    String message();
++}
+Index: F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/After.java
+===================================================================
+--- F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/After.java	(revision 0)
++++ F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/After.java	(revision 0)
+@@ -0,0 +1,15 @@
++package org.hibernate.validator;
++
++import static java.lang.annotation.ElementType.TYPE;
++import java.lang.annotation.Target;
++
++@ValidatorClass(AfterValidator.class)
++@Target(TYPE)
++public @interface After {
++
++    String property();
++    
++    String after();
++    
++    String message() default "";
++}
+Index: F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/ValidatorList.java
+===================================================================
+--- F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/ValidatorList.java	(revision 0)
++++ F:/hibernate-svn/HibernateExt/metadata/src/java/org/hibernate/validator/ValidatorList.java	(revision 0)
+@@ -0,0 +1,10 @@
++package org.hibernate.validator;
++
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++
++@Retention(RetentionPolicy.RUNTIME)
++public @interface ValidatorList {
++
++    GenericValidator [] value();
++}

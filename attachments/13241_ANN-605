@@ -1,0 +1,39 @@
+Index: D:/dev/workspace/annotations/doc/reference/en/modules/entity.xml
+===================================================================
+--- D:/dev/workspace/annotations/doc/reference/en/modules/entity.xml	(revision 11518)
++++ D:/dev/workspace/annotations/doc/reference/en/modules/entity.xml	(working copy)
+@@ -171,7 +171,7 @@
+ @Temporal(TemporalType.TIME)
+ java.util.Date getDepartureTime() { ... } // persistent property           
+ 
+-@Enumerated(STRING)
++@Enumerated(EnumType.STRING)
+ Starred getNote() { ... } //enum persisted as String in database</programlisting>
+ 
+         <para><literal>counter</literal>, a transient field, and
+Index: D:/dev/workspace/annotations/doc/reference/fr/modules/entity.xml
+===================================================================
+--- D:/dev/workspace/annotations/doc/reference/fr/modules/entity.xml	(revision 11518)
++++ D:/dev/workspace/annotations/doc/reference/fr/modules/entity.xml	(working copy)
+@@ -175,7 +175,7 @@
+ @Temporal(TemporalType.TIME)
+ java.util.Date getDepartureTime() { ... } // propriété persistante
+ 
+-@Enumerated(STRING)
++@Enumerated(EnumType.STRING)
+ Starred getNote() { ... } // enum persistée en tant que String dans la base de données</programlisting>
+ 
+         <para><literal>counter</literal>, un champ transient, et
+Index: D:/dev/workspace/annotations/doc/reference/zh_cn/modules/entity.xml
+===================================================================
+--- D:/dev/workspace/annotations/doc/reference/zh_cn/modules/entity.xml	(revision 11518)
++++ D:/dev/workspace/annotations/doc/reference/zh_cn/modules/entity.xml	(working copy)
+@@ -145,7 +145,7 @@
+ @Temporal(TemporalType.TIME)
+ java.util.Date getDepartureTime() { ... } // persistent property           
+ 
+-@Enumerated(STRING)
++@Enumerated(EnumType.STRING)
+ Starred getNote() { ... } //enum persisted as String in database</programlisting>
+ 
+         <para>ä¸Šé?¢è¿™ä¸ªä¾‹å­?ä¸­,<literal>counter</literal>æ˜¯ä¸€ä¸ªtransientçš„å­—æ®µ,

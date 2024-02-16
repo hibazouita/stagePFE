@@ -1,0 +1,28 @@
+/**
+ *
+ */
+package com.tpt.common.validators;
+
+import javax.swing.JTextField;
+import javax.validation.valueextraction.ExtractedValue;
+import javax.validation.valueextraction.UnwrapByDefault;
+import javax.validation.valueextraction.ValueExtractor;
+
+/**
+ * Allows the text from a component to be validated. Note that the value is trimmed of spaces and then
+ * set to <code>null</code> if it is empty. This is what is expected when validating text entered by the user
+ * on our panels.
+ *
+ * @author jaygo
+ */
+@UnwrapByDefault
+public class JTextArrayValueExtractor implements ValueExtractor<JTextField @ExtractedValue(type=String.class)[]> {
+
+  @Override
+  public void extractValues(JTextField[] component, ValueReceiver receiver) {
+    for (int i = 0; i < component.length; i++) {
+      String text = component[i].getText().trim();
+      receiver.indexedValue(null, i, text);
+    }
+  }
+}

@@ -1,0 +1,57 @@
+Index: org/hibernate/test/annotations/generics/EmbeddedGenericsTest.java
+===================================================================
+--- org/hibernate/test/annotations/generics/EmbeddedGenericsTest.java	(revision 15224)
++++ org/hibernate/test/annotations/generics/EmbeddedGenericsTest.java	(working copy)
+@@ -39,26 +39,36 @@
+ 		super.tearDown();
+ 	}
+ 
+-	public void testWorksWithGenericEmbedded() {
+-		Book b = new Book();
+-		b.edition = edition;
+-		persist( b );
+-		
+-		Book retrieved = (Book)find( Book.class, b.id );
+-		assertEquals( "Second", retrieved.edition.name );
+-		
+-		clean( Book.class, b.id );
++	public void testWorksWithGenericEmbedded() throws Exception {
++		try {
++			Book b = new Book();
++			b.edition = edition;
++			persist( b );
++			
++			Book retrieved = (Book)find( Book.class, b.id );
++			assertEquals( "Second", retrieved.edition.name );
++			
++			clean( Book.class, b.id );
++		} catch (Exception e) {
++			session.getTransaction().rollback();
++			throw e;
++		}
+ 	}
+ 
+-	public void testWorksWithGenericCollectionOfElements() {
+-		PopularBook b = new PopularBook();
+-		b.editions.add( edition );
+-		persist( b );
++	public void testWorksWithGenericCollectionOfElements() throws Exception {
++		try {
++			PopularBook b = new PopularBook();
++			b.editions.add( edition );
++			persist( b );
+ 
+-		PopularBook retrieved = (PopularBook)find( PopularBook.class, b.id );
+-		assertEquals( "Second", retrieved.editions.iterator().next().name );
++			PopularBook retrieved = (PopularBook)find( PopularBook.class, b.id );
++			assertEquals( "Second", retrieved.editions.iterator().next().name );
+ 
+-		clean( PopularBook.class, b.id );
++			clean( PopularBook.class, b.id );
++		} catch (Exception e) {
++			session.getTransaction().rollback();
++			throw e;
++		}
+ 	}
+ 
+ 	protected Class[] getMappings() {

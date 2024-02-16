@@ -1,0 +1,557 @@
+Index: src/test/org/hibernate/validator/test/ValidatorTest.java
+===================================================================
+--- src/test/org/hibernate/validator/test/ValidatorTest.java	(revision 13946)
++++ src/test/org/hibernate/validator/test/ValidatorTest.java	(working copy)
+@@ -37,7 +37,7 @@
+ 		a.setState( "Victoria" );
+ 		validationMessages = classValidator.getInvalidValues( a );
+ 		assertEquals( 2, validationMessages.length );
+-		validationMessages = classValidator.getInvalidValues( a, "zip" );
++		validationMessages = classValidator.getPropertyInvalidValues( a, "zip" );
+ 		assertEquals( 1, validationMessages.length );
+ 		a.setZip( "3181" );
+ 		a.setState( "NSW" );
+Index: src/java/org/hibernate/validator/AssertTrue.java
+===================================================================
+--- src/java/org/hibernate/validator/AssertTrue.java	(revision 13946)
++++ src/java/org/hibernate/validator/AssertTrue.java	(working copy)
+@@ -19,4 +19,5 @@
+ @Retention(RUNTIME)
+ public @interface AssertTrue {
+ 	String message() default "{validator.assertTrue}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/EAN.java
+===================================================================
+--- src/java/org/hibernate/validator/EAN.java	(revision 13946)
++++ src/java/org/hibernate/validator/EAN.java	(working copy)
+@@ -20,4 +20,5 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface EAN {
+ 	String message() default "{validator.ean}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Past.java
+===================================================================
+--- src/java/org/hibernate/validator/Past.java	(revision 13946)
++++ src/java/org/hibernate/validator/Past.java	(working copy)
+@@ -19,4 +19,5 @@
+ @Retention(RUNTIME)
+ public @interface Past {
+ 	String message() default "{validator.past}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/ClassValidator.java
+===================================================================
+--- src/java/org/hibernate/validator/ClassValidator.java	(revision 13946)
++++ src/java/org/hibernate/validator/ClassValidator.java	(working copy)
+@@ -9,6 +9,7 @@
+ import java.lang.annotation.Annotation;
+ import java.lang.reflect.Method;
+ import java.lang.reflect.Modifier;
++import java.lang.reflect.InvocationTargetException;
+ import java.text.MessageFormat;
+ import java.util.ArrayList;
+ import java.util.Collection;
+@@ -22,6 +23,7 @@
+ import java.util.ResourceBundle;
+ import java.util.Set;
+ import java.util.StringTokenizer;
++import java.util.Collections;
+ 
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+@@ -55,11 +57,17 @@
+ 	private static final String DEFAULT_VALIDATOR_MESSAGE = "org.hibernate.validator.resources.DefaultValidatorMessages";
+ 	private static final String VALIDATOR_MESSAGE = "ValidatorMessages";
+ 	private static final Set<Class> INDEXABLE_CLASS = new HashSet<Class>();
++	private static final Set<String> DEFAULT_GROUPS;
++	private static final String DEFAULT_GROUP = "default";
++	private static final String[] REQUESTED_GROUP = new String[] { DEFAULT_GROUP };
+ 
+ 	static {
+ 		INDEXABLE_CLASS.add( Integer.class );
+ 		INDEXABLE_CLASS.add( Long.class );
+ 		INDEXABLE_CLASS.add( String.class );
++		Set<String> groups = new HashSet<String>(1);
++		groups.add( DEFAULT_GROUP );
++		DEFAULT_GROUPS = Collections.unmodifiableSet( groups );
+ 	}
+ 
+ 	static {
+@@ -74,7 +82,9 @@
+ 
+ 	private final transient Map<XClass, ClassValidator> childClassValidators;
+ 	private transient List<Validator> beanValidators;
++	private transient List<Set<String>> beanValidatorsGroups;
+ 	private transient List<Validator> memberValidators;
++	private transient List<Set<String>> memberValidatorsGroups;
+ 	private transient List<XMember> memberGetters;
+ 	private transient List<XMember> childGetters;
+ 	private transient DefaultMessageInterpolatorAggerator defaultInterpolator;
+@@ -189,7 +199,9 @@
+ 			XClass xClass, Map<XClass, ClassValidator> childClassValidators
+ 	) {
+ 		beanValidators = new ArrayList<Validator>();
++		beanValidatorsGroups = new ArrayList<Set<String>>();
+ 		memberValidators = new ArrayList<Validator>();
++		memberValidatorsGroups = new ArrayList<Set<String>>();
+ 		memberGetters = new ArrayList<XMember>();
+ 		childGetters = new ArrayList<XMember>();
+ 		defaultInterpolator = new DefaultMessageInterpolatorAggerator();
+@@ -199,17 +211,22 @@
+ 		childClassValidators.put( xClass, this );
+ 		Collection<XClass> classes = new HashSet<XClass>();
+ 		addSuperClassesAndInterfaces( xClass, classes );
++
++		//process bean Validators
+ 		for ( XClass currentClass : classes ) {
+ 			Annotation[] classAnnotations = currentClass.getAnnotations();
+ 			for ( int i = 0; i < classAnnotations.length ; i++ ) {
+ 				Annotation classAnnotation = classAnnotations[i];
+ 				Validator beanValidator = createValidator( classAnnotation );
+-				if ( beanValidator != null ) beanValidators.add( beanValidator );
++				if ( beanValidator != null ) {
++					beanValidators.add( beanValidator );
++					beanValidatorsGroups.add( getGroups( classAnnotation ) );
++				}
+ 				handleAggregateAnnotations(classAnnotation, null);
+ 			}
+ 		}
+ 
+-		//Check on all selected classes
++		//process member Validators
+ 		for ( XClass currClass : classes ) {
+ 			List<XMethod> methods = currClass.getDeclaredMethods();
+ 			for ( XMethod method : methods ) {
+@@ -227,6 +244,32 @@
+ 		}
+ 	}
+ 
++	private Set<String> getGroups(Annotation annotation) {
++		try {
++			Method groupsParam = annotation.getClass().getMethod( "groups" );
++			Class returnType = groupsParam.getReturnType();
++			if ( returnType.isArray() && returnType.getComponentType().equals( String.class ) ) {
++				String[] groupsArray = (String[]) groupsParam.invoke( annotation );
++				Set<String> groups = new HashSet<String>(groupsArray.length);
++				for (String group : groupsArray) {
++					groups.add( group );
++				}
++				//no group means 'default' group
++				return groups.size() > 0 ? groups : DEFAULT_GROUPS;
++			}
++		}
++		catch (NoSuchMethodException e) {
++			//this is a safe exit, the group defaults
++		}
++		catch (IllegalAccessException e) {
++			throw new IllegalArgumentException("Unable to read groups in " + annotation.getClass(), e);
++		}
++		catch (InvocationTargetException e) {
++			throw new IllegalArgumentException("Unable to read groups in " + annotation.getClass(), e);
++		}
++		return DEFAULT_GROUPS;
++	}
++
+ 	private void addSuperClassesAndInterfaces(XClass clazz, Collection<XClass> classes) {
+ 		for ( XClass currClass = clazz; currClass != null ; currClass = currClass.getSuperclass() ) {
+ 			if ( ! classes.add( currClass ) ) return;
+@@ -266,10 +309,12 @@
+ 						memberValidators.add( validator );
+ 						setAccessible( member );
+ 						memberGetters.add( member );
++						memberValidatorsGroups.add( getGroups( annotation ) );
+ 					}
+ 					else {
+ 						//bean
+ 						beanValidators.add( validator );
++						beanValidatorsGroups.add( getGroups( annotation ) );
+ 					}
+ 					validatorPresent = true;
+ 				}
+@@ -306,6 +351,7 @@
+ 				memberValidators.add( propertyValidator );
+ 				setAccessible( member );
+ 				memberGetters.add( member );
++				memberValidatorsGroups.add( getGroups( methodAnnotation ) );
+ 				validatorPresent = true;
+ 			}
+ 			boolean agrValidPresent = handleAggregateAnnotations( methodAnnotation, member );
+@@ -347,8 +393,8 @@
+ 	 * apply constraints on a bean instance and return all the failures.
+ 	 * if <code>bean</code> is null, an empty array is returned
+ 	 */
+-	public InvalidValue[] getInvalidValues(T bean) {
+-		return this.getInvalidValues( bean, new IdentitySet() );
++	public InvalidValue[] getInvalidValues(T bean, String... groups) {
++		return this.getInvalidValues( bean, new IdentitySet(), groups );
+ 	}
+ 
+ 	/**
+@@ -356,7 +402,8 @@
+ 	 * if <code>bean</code> is null, an empty array is returned
+ 	 */
+ 	@SuppressWarnings("unchecked")
+-	protected InvalidValue[] getInvalidValues(T bean, Set<Object> circularityState) {
++	protected InvalidValue[] getInvalidValues(T bean, Set<Object> circularityState, String... groups) {
++		if ( groups.length == 0 ) groups = REQUESTED_GROUP;
+ 		if ( bean == null || circularityState.contains( bean ) ) {
+ 			return EMPTY_INVALID_VALUE_ARRAY; //Avoid circularity
+ 		}
+@@ -372,8 +419,9 @@
+ 
+ 		for ( int i = 0; i < beanValidators.size() ; i++ ) {
+ 			Validator validator = beanValidators.get( i );
+-			if ( !validator.isValid( bean ) ) {
+-				results.add( new InvalidValue( interpolate(validator), beanClass, null, bean, bean ) );
++			Set<String> intersectedGroups = getIntersection( groups, beanValidatorsGroups.get( i ) );
++			if ( intersectedGroups.size() > 0 && !validator.isValid( bean ) ) {
++				results.add( new InvalidValue( interpolate(validator), beanClass, null, bean, bean, intersectedGroups ) );
+ 			}
+ 		}
+ 
+@@ -382,9 +430,10 @@
+ 			if ( Hibernate.isPropertyInitialized( bean, getPropertyName( getter ) ) ) {
+ 				Object value = getMemberValue( bean, getter );
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
++				Set<String> intersectedGroups = getIntersection( groups, memberValidatorsGroups.get( i ) );
++				if ( intersectedGroups.size() > 0 && !validator.isValid( value ) ) {
+ 					String propertyName = getPropertyName( getter );
+-					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
++					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean, intersectedGroups ) );
+ 				}
+ 			}
+ 		}
+@@ -409,7 +458,7 @@
+ 								continue;
+ 							}
+ 							InvalidValue[] invalidValues = getClassValidator( actualElement )
+-									.getInvalidValues( actualElement, circularityState );
++									.getInvalidValues( actualElement, circularityState, groups );
+ 
+ 							String indexedPropName = MessageFormat.format(
+ 									"{0}[{1}]",
+@@ -434,7 +483,7 @@
+ 								continue;
+ 							}
+ 							InvalidValue[] invalidValues = getClassValidator( element )
+-									.getInvalidValues( element, circularityState );
++									.getInvalidValues( element, circularityState, groups );
+ 
+ 							String indexedPropName = MessageFormat.format(
+ 									"{0}[{1}]",
+@@ -451,7 +500,7 @@
+ 					}
+ 					else {
+ 						InvalidValue[] invalidValues = getClassValidator( value )
+-								.getInvalidValues( value, circularityState );
++								.getInvalidValues( value, circularityState, groups );
+ 						for ( InvalidValue invalidValue : invalidValues ) {
+ 							invalidValue.addParentBean( bean, propertyName );
+ 							results.add( invalidValue );
+@@ -464,6 +513,14 @@
+ 		return results.toArray( new InvalidValue[results.size()] );
+ 	}
+ 
++	private Set<String> getIntersection(String[] requestedGroups, Set<String> validatorGroups) {
++		Set<String> intersection = new HashSet<String>();
++		for ( String group : requestedGroups ) {
++			if ( validatorGroups.contains( group ) ) intersection.add(group);
++		}
++		return intersection;
++	}
++
+ 	private String interpolate(Validator validator) {
+ 		String message = defaultInterpolator.getAnnotationMessage( validator );
+ 		if (userInterpolator != null) {
+@@ -490,16 +547,17 @@
+ 	 * Note this is not recursive.
+ 	 */
+ 	//TODO should it be recursive?
+-	public InvalidValue[] getInvalidValues(T bean, String propertyName) {
++	public InvalidValue[] getPropertyInvalidValues(T bean, String propertyName, String... groups) {
++		if ( groups.length == 0 ) groups = REQUESTED_GROUP;
+ 		List<InvalidValue> results = new ArrayList<InvalidValue>();
+-
+ 		for ( int i = 0; i < memberValidators.size() ; i++ ) {
+ 			XMember getter = memberGetters.get( i );
+ 			if ( getPropertyName( getter ).equals( propertyName ) ) {
+ 				Object value = getMemberValue( bean, getter );
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
+-					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
++				Set<String> intersectedGroups = getIntersection( groups, memberValidatorsGroups.get( i ) );
++				if ( intersectedGroups.size() > 0 && !validator.isValid( value ) ) {
++					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean, intersectedGroups ) );
+ 				}
+ 			}
+ 		}
+@@ -513,19 +571,19 @@
+ 	 * Note this is not recursive.
+ 	 */
+ 	//TODO should it be recursive?
+-	public InvalidValue[] getPotentialInvalidValues(String propertyName, Object value) {
++	public InvalidValue[] getPotentialInvalidValues(String propertyName, Object value, String... groups) {
++		if ( groups.length == 0 ) groups = REQUESTED_GROUP;
+ 		List<InvalidValue> results = new ArrayList<InvalidValue>();
+-
+ 		for ( int i = 0; i < memberValidators.size() ; i++ ) {
+ 			XMember getter = memberGetters.get( i );
+ 			if ( getPropertyName( getter ).equals( propertyName ) ) {
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
+-					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, null ) );
++				Set<String> intersectedGroups = getIntersection( groups, memberValidatorsGroups.get( i ) );
++				if ( intersectedGroups.size() > 0 && !validator.isValid( value ) ) {
++					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, null, intersectedGroups ) );
+ 				}
+ 			}
+ 		}
+-
+ 		return results.toArray( new InvalidValue[results.size()] );
+ 	}
+ 
+@@ -540,7 +598,7 @@
+ 		return value;
+ 	}
+ 
+-	public String getPropertyName(XMember member) {
++	private String getPropertyName(XMember member) {
+ 		//Do no try to cache the result in a map, it's actually much slower (2.x time)
+ 		String propertyName;
+ 		if ( XProperty.class.isAssignableFrom( member.getClass() ) ) {
+@@ -632,19 +690,24 @@
+ 	 * @param persistentClass hibernate metadata
+ 	 */
+ 	public void apply(PersistentClass persistentClass) {
+-
+-		for ( Validator validator : beanValidators ) {
+-			if ( validator instanceof PersistentClassConstraint ) {
++		Iterator<Validator> validators = beanValidators.iterator();
++		Iterator<Set<String>> validatorsGroups = beanValidatorsGroups.iterator();
++		while ( validators.hasNext() ) {
++			Validator validator = validators.next();
++			Set<String> groups = validatorsGroups.next();
++			if ( validator instanceof PersistentClassConstraint && groups.contains( DEFAULT_GROUP ) ) {
+ 				( (PersistentClassConstraint) validator ).apply( persistentClass );
+ 			}
+ 		}
+ 
+-		Iterator<Validator> validators = memberValidators.iterator();
++		validators = memberValidators.iterator();
++		validatorsGroups = memberValidatorsGroups.iterator();
+ 		Iterator<XMember> getters = memberGetters.iterator();
+ 		while ( validators.hasNext() ) {
+ 			Validator validator = validators.next();
++			Set<String> groups = validatorsGroups.next();
+ 			String propertyName = getPropertyName( getters.next() );
+-			if ( validator instanceof PropertyConstraint ) {
++			if ( validator instanceof PropertyConstraint && groups.contains( DEFAULT_GROUP ) ) {
+ 				try {
+ 					Property property = findPropertyByName(persistentClass, propertyName);
+ 					if (property != null) {
+@@ -659,8 +722,8 @@
+ 
+ 	}
+ 
+-	public void assertValid(T bean) {
+-		InvalidValue[] values = getInvalidValues( bean );
++	public void assertValid(T bean, String... groups) {
++		InvalidValue[] values = getInvalidValues( bean, groups );
+ 		if ( values.length > 0 ) {
+ 			throw new InvalidStateException( values );
+ 		}
+Index: src/java/org/hibernate/validator/AssertFalse.java
+===================================================================
+--- src/java/org/hibernate/validator/AssertFalse.java	(revision 13946)
++++ src/java/org/hibernate/validator/AssertFalse.java	(working copy)
+@@ -19,4 +19,5 @@
+ @Retention(RUNTIME)
+ public @interface AssertFalse {
+ 	String message() default "{validator.assertFalse}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/CreditCardNumber.java
+===================================================================
+--- src/java/org/hibernate/validator/CreditCardNumber.java	(revision 13946)
++++ src/java/org/hibernate/validator/CreditCardNumber.java	(working copy)
+@@ -20,4 +20,5 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface CreditCardNumber {
+ 	String message() default "{validator.creditCard}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Pattern.java
+===================================================================
+--- src/java/org/hibernate/validator/Pattern.java	(revision 13946)
++++ src/java/org/hibernate/validator/Pattern.java	(working copy)
+@@ -25,4 +25,6 @@
+ 	int flags() default 0;
+ 
+ 	String message() default "{validator.pattern}";
++
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Digits.java
+===================================================================
+--- src/java/org/hibernate/validator/Digits.java	(revision 13946)
++++ src/java/org/hibernate/validator/Digits.java	(working copy)
+@@ -22,4 +22,5 @@
+     int integerDigits();
+     int fractionalDigits() default 0;
+     String message() default "{validator.digits}";
++	String[] groups() default {};
+ }
+\ No newline at end of file
+Index: src/java/org/hibernate/validator/Min.java
+===================================================================
+--- src/java/org/hibernate/validator/Min.java	(revision 13946)
++++ src/java/org/hibernate/validator/Min.java	(working copy)
+@@ -21,4 +21,6 @@
+ 	long value();
+ 
+ 	String message() default "{validator.min}";
++
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Version.java
+===================================================================
+--- src/java/org/hibernate/validator/Version.java	(revision 13946)
++++ src/java/org/hibernate/validator/Version.java	(working copy)
+@@ -10,7 +10,7 @@
+  * @author Emmanuel Bernard
+  */
+ public class Version {
+-	public static final String VERSION = "3.0.0.GA";
++	public static final String VERSION = "3.1.0.Alpha1-JSR-303";
+ 	private static Log log = LogFactory.getLog( Version.class );
+ 
+ 	static {
+Index: src/java/org/hibernate/validator/Max.java
+===================================================================
+--- src/java/org/hibernate/validator/Max.java	(revision 13946)
++++ src/java/org/hibernate/validator/Max.java	(working copy)
+@@ -21,4 +21,6 @@
+ 	long value();
+ 
+ 	String message() default "{validator.max}";
++
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Range.java
+===================================================================
+--- src/java/org/hibernate/validator/Range.java	(revision 13946)
++++ src/java/org/hibernate/validator/Range.java	(working copy)
+@@ -24,4 +24,6 @@
+ 	long min() default Long.MIN_VALUE;
+ 
+ 	String message() default "{validator.range}";
++	
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Size.java
+===================================================================
+--- src/java/org/hibernate/validator/Size.java	(revision 13946)
++++ src/java/org/hibernate/validator/Size.java	(working copy)
+@@ -23,4 +23,6 @@
+ 	int min() default 0;
+ 
+ 	String message() default "{validator.size}";
++
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Future.java
+===================================================================
+--- src/java/org/hibernate/validator/Future.java	(revision 13946)
++++ src/java/org/hibernate/validator/Future.java	(working copy)
+@@ -19,4 +19,5 @@
+ @Retention(RUNTIME)
+ public @interface Future {
+ 	String message() default "{validator.future}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/NotEmpty.java
+===================================================================
+--- src/java/org/hibernate/validator/NotEmpty.java	(revision 13946)
++++ src/java/org/hibernate/validator/NotEmpty.java	(working copy)
+@@ -19,4 +19,5 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface NotEmpty {
+ 	String message() default "{validator.notEmpty}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/Length.java
+===================================================================
+--- src/java/org/hibernate/validator/Length.java	(revision 13946)
++++ src/java/org/hibernate/validator/Length.java	(working copy)
+@@ -23,4 +23,6 @@
+ 	int min() default 0;
+ 
+ 	String message() default "{validator.length}";
++
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/InvalidValue.java
+===================================================================
+--- src/java/org/hibernate/validator/InvalidValue.java	(revision 13946)
++++ src/java/org/hibernate/validator/InvalidValue.java	(working copy)
+@@ -2,6 +2,7 @@
+ package org.hibernate.validator;
+ 
+ import java.io.Serializable;
++import java.util.Set;
+ 
+ /**
+  * A single violation of a class level or method level constraint.
+@@ -16,6 +17,12 @@
+ 	private final Object bean;
+ 	private Object rootBean;
+ 
++	public String[] getGroups() {
++		return groups;
++	}
++
++	private String[] groups;
++
+ 	public Object getRootBean() {
+ 		return rootBean;
+ 	}
+@@ -26,7 +33,7 @@
+ 
+ 	private String propertyPath;
+ 
+-	public InvalidValue(String message, Class beanClass, String propertyName, Object value, Object bean) {
++	public InvalidValue(String message, Class beanClass, String propertyName, Object value, Object bean, Set<String> groups) {
+ 		this.message = message;
+ 		this.value = value;
+ 		this.beanClass = beanClass;
+@@ -34,6 +41,7 @@
+ 		this.bean = bean;
+ 		this.rootBean = bean;
+ 		this.propertyPath = propertyName;
++		this.groups = groups.toArray( new String[ groups.size() ] );
+ 	}
+ 
+ 	public void addParentBean(Object parentBean, String propertyName) {
+Index: src/java/org/hibernate/validator/Email.java
+===================================================================
+--- src/java/org/hibernate/validator/Email.java	(revision 13946)
++++ src/java/org/hibernate/validator/Email.java	(working copy)
+@@ -19,4 +19,5 @@
+ @Retention(RUNTIME)
+ public @interface Email {
+ 	String message() default "{validator.email}";
++	String[] groups() default {};
+ }
+Index: src/java/org/hibernate/validator/NotNull.java
+===================================================================
+--- src/java/org/hibernate/validator/NotNull.java	(revision 13946)
++++ src/java/org/hibernate/validator/NotNull.java	(working copy)
+@@ -19,4 +19,5 @@
+ @Retention(RUNTIME)
+ public @interface NotNull {
+ 	String message() default "{validator.notNull}";
++	String[] groups() default {};
+ }

@@ -1,0 +1,148 @@
+Index: doc/reference/en/modules/defineconstraints.xml
+===================================================================
+--- doc/reference/en/modules/defineconstraints.xml	(revision 14496)
++++ doc/reference/en/modules/defineconstraints.xml	(working copy)
+@@ -83,10 +83,12 @@
+           <row>
+             <entry>@NotEmpty</entry>
+ 
+-            <entry>property</entry>
++            <entry>property (String, Array, Collection, Map)</entry>
+ 
+             <entry>check if the string is not null nor empty. Check if the
+-            connection is not null nor empty</entry>
++            collection/map/array is not null nor empty.
++            Optional for Strings: setting option <literal>trim</literal>
++            will trim the string before length check.</entry>
+ 
+             <entry>Column(s) are not null (for String)</entry>
+           </row>
+Index: src/test/org/hibernate/validator/test/validators/NotEmptyTest.java
+===================================================================
+--- src/test/org/hibernate/validator/test/validators/NotEmptyTest.java	(revision 14496)
++++ src/test/org/hibernate/validator/test/validators/NotEmptyTest.java	(working copy)
+@@ -1,15 +1,31 @@
+ //$Id: $
+ package org.hibernate.validator.test.validators;
+ 
++import java.util.HashMap;
++
+ import junit.framework.TestCase;
+ import org.hibernate.validator.ClassValidator;
+ import org.hibernate.validator.InvalidValue;
++import org.hibernate.validator.NotEmpty;
++import org.hibernate.validator.NotEmptyValidator;
+ 
+ /**
+  * @author Gavin King
++ * @author Sanne Grinovero
++ * @author Emmanuel Bernard
+  */
+ public class NotEmptyTest extends TestCase {
++	
++	@NotEmpty
++	String plain;
++	
++	@NotEmpty(trim=false)
++	String trimfalse;
++	
++	@NotEmpty(trim=true)
++	String trimtrue;
+ 
++
+ 	public void testBigInteger() throws Exception {
+ 		Car car = new Car();
+ 		ClassValidator<Car> classValidator = new ClassValidator<Car>( Car.class );
+@@ -28,4 +44,35 @@
+ 		invalidValues = classValidator.getInvalidValues( car );
+ 		assertEquals( 0, invalidValues.length );
+ 	}
++	
++	public void testNotEmptyDefault() throws Exception {
++		NotEmptyValidator va = new NotEmptyValidator();
++		va.initialize(getAnn("plain"));
++		assertTrue(va.isValid("ciao"));
++		assertTrue(va.isValid("  "));
++		assertTrue(va.isValid(new String[10]));
++		assertTrue(va.isValid(new String[10]));
++		HashMap map = new HashMap();
++		map.put("key", "");
++		assertTrue(va.isValid(map));
++		assertFalse(va.isValid(new HashMap()));
++		assertFalse(va.isValid(new String[0]));
++	}
++	
++	public void testNotEmptyTrimFalse() throws Exception {
++		NotEmptyValidator va = new NotEmptyValidator();
++		va.initialize(getAnn("trimfalse"));
++		assertTrue(va.isValid("  "));
++	}
++	
++	public void testNotEmptyTrimTrue() throws Exception {
++		NotEmptyValidator va = new NotEmptyValidator();
++		va.initialize(getAnn("trimtrue"));
++		assertFalse(va.isValid("  "));
++	}
++	
++	private NotEmpty getAnn(String fieldName) throws NoSuchFieldException {
++		return (NotEmpty)getClass().getDeclaredField(fieldName).getAnnotations()[0];
++	}
++	
+ }
+Index: src/java/org/hibernate/validator/NotEmptyValidator.java
+===================================================================
+--- src/java/org/hibernate/validator/NotEmptyValidator.java	(revision 14496)
++++ src/java/org/hibernate/validator/NotEmptyValidator.java	(working copy)
+@@ -15,10 +15,14 @@
+  * Check the non emptyness of the element
+  *
+  * @author Gavin King
++ * @author Sanne Grinovero
+  */
+ public class NotEmptyValidator implements Validator<NotEmpty>, PropertyConstraint, Serializable {
++	
++	private boolean trim;
+ 
+ 	public void initialize(NotEmpty parameters) {
++		trim = parameters.trim();
+ 	}
+ 
+ 	public boolean isValid(Object value) {
+@@ -33,7 +37,14 @@
+ 			return ( (Map) value ).size() > 0;
+ 		}
+ 		else {
+-			return ( (String) value ).length() > 0;
++			//FIXME : bug HV-23 : it's not safe to cast to String
++			String vstring = (String)value;
++			if (trim) {
++				return vstring.trim().length() > 0;
++			}
++			else {
++				return vstring.length() > 0;				
++			}
+ 		}
+ 	}
+ 
+Index: src/java/org/hibernate/validator/NotEmpty.java
+===================================================================
+--- src/java/org/hibernate/validator/NotEmpty.java	(revision 14496)
++++ src/java/org/hibernate/validator/NotEmpty.java	(working copy)
+@@ -9,7 +9,10 @@
+ 
+ /**
+  * Check that a String is not empty (not null and length > 0)
+- * or that a Collection (or array) is not empty (not null and length > 0)
++ * or that a Collection (or array or map) is not empty (not null and size > 0).
++ * When used on a String setting the "trim" option to true
++ * will cause the validator to trim the value before testing
++ * length > 0.
+  *
+  * @author Emmanuel Bernard
+  */
+@@ -19,4 +22,5 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface NotEmpty {
+ 	String message() default "{validator.notEmpty}";
++	boolean trim() default false;
+ }

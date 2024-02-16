@@ -1,0 +1,62 @@
+diff --git a/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaAttribute.java b/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaAttribute.java
+index 347c598..e3b1749 100644
+--- a/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaAttribute.java
++++ b/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaAttribute.java
+@@ -79,6 +79,10 @@ public abstract class AnnotationMetaAttribute implements MetaAttribute {
+ 	public MetaEntity getHostingEntity() {
+ 		return parent;
+ 	}
++	
++	public void setHostingEntity(MetaEntity metaEntity) {
++		throw new IllegalStateException( "The hosting entity of an AnnotationMetaAttribute cannot be overwritten." );
++	}
+ 
+ 	abstract public String getMetaType();
+ 
+diff --git a/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaEntity.java b/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaEntity.java
+index 8a51bc5..f666d4c 100644
+--- a/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaEntity.java
++++ b/src/main/java/org/hibernate/jpamodelgen/annotation/AnnotationMetaEntity.java
+@@ -99,6 +99,7 @@ public class AnnotationMetaEntity implements MetaEntity {
+ 
+ 	public void mergeInMembers(Collection<MetaAttribute> attributes) {
+ 		for ( MetaAttribute attribute : attributes ) {
++			attribute.setHostingEntity( this );
+ 			members.put( attribute.getPropertyName(), attribute );
+ 		}
+ 	}
+diff --git a/src/main/java/org/hibernate/jpamodelgen/model/MetaAttribute.java b/src/main/java/org/hibernate/jpamodelgen/model/MetaAttribute.java
+index bc1962a..bd0e05a 100644
+--- a/src/main/java/org/hibernate/jpamodelgen/model/MetaAttribute.java
++++ b/src/main/java/org/hibernate/jpamodelgen/model/MetaAttribute.java
+@@ -29,4 +29,6 @@ public interface MetaAttribute {
+ 	String getTypeDeclaration();
+ 
+ 	MetaEntity getHostingEntity();
++	
++	void setHostingEntity(MetaEntity metaEntity);
+ }
+diff --git a/src/main/java/org/hibernate/jpamodelgen/xml/XmlMetaAttribute.java b/src/main/java/org/hibernate/jpamodelgen/xml/XmlMetaAttribute.java
+index 1e95be3..4227680 100644
+--- a/src/main/java/org/hibernate/jpamodelgen/xml/XmlMetaAttribute.java
++++ b/src/main/java/org/hibernate/jpamodelgen/xml/XmlMetaAttribute.java
+@@ -24,7 +24,7 @@ import org.hibernate.jpamodelgen.model.MetaEntity;
+  */
+ public abstract class XmlMetaAttribute implements MetaAttribute {
+ 
+-	private final XmlMetaEntity hostingEntity;
++	private MetaEntity hostingEntity;
+ 	private final String propertyName;
+ 	private final String type;
+ 
+@@ -53,6 +53,10 @@ public abstract class XmlMetaAttribute implements MetaAttribute {
+ 	public MetaEntity getHostingEntity() {
+ 		return hostingEntity;
+ 	}
++	
++	public void setHostingEntity(MetaEntity hostingEntity) {
++		this.hostingEntity = hostingEntity;
++	}
+ 
+ 	@Override
+ 	abstract public String getMetaType();

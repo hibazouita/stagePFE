@@ -1,0 +1,172 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil Courier New;}{\f1\fswiss\fcharset0 Arial;}}
+{\colortbl ;\red63\green95\blue191;\red0\green0\blue0;\red127\green0\blue85;\red100\green100\blue100;\red42\green0\blue255;\red206\green204\blue247;\red0\green0\blue192;\red63\green127\blue95;\red212\green212\blue212;}
+{\*\generator Msftedit 5.41.15.1515;}\viewkind4\uc1\pard\cf1\f0\fs20 /**\cf0\par
+\cf2   \cf1 *\cf2  \cf1 class\cf2  \cf1 TaxGroupMaster\cf2  \cf1 generated\cf2  \cf1 December\cf2  \cf1 16,\cf2  \cf1 2008\cf2  \cf1 1:37:10\cf2  \cf1 PM\cf2  \cf1 EST\cf0\par
+\cf2   \cf1 */\cf0\par
+\cf3\b package\cf2\b0  com.kve.vanguard.data.domain;\cf0\par
+\par
+\cf3\b import\cf2\b0  java.io.Serializable;\cf0\par
+\cf3\b import\cf2\b0  java.util.Set;\cf0\par
+\cf3\b import\cf2\b0  \ul java.math.BigDecimal\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  javax.persistence.*;\cf0\par
+\par
+\cf4 @Entity\cf0\par
+\cf4 @Table\cf2 (name=\cf5 "\highlight6 DBAFREP\highlight0 "\cf2 )\cf0\par
+\cf3\b public\cf2\b0  \cf3\b class\cf2\b0  TaxGroupMaster \cf3\b implements\cf2\b0  Serializable \{\cf0\par
+\cf2   \cf3\b private\cf2\b0  \cf3\b final\cf2\b0  \cf3\b static\cf2\b0  \cf3\b long\cf2\b0  \cf7\i serialVersionUID\cf2\i0 =0;\cf0\par
+\cf2   \cf4 @EmbeddedId\cf0\par
+\cf2   \cf4 @AttributeOverrides\cf2 (\{\cf0\par
+\cf2     \cf4 @AttributeOverride\cf2 (\cf0\par
+\cf2        name  =\cf5 "taxGroupCode"\cf2 ,\cf0\par
+\cf2        column=\cf4 @Column\cf2 (name=\cf5 "AFJ2C4"\cf2 )),\cf0\par
+\cf2     \cf4 @AttributeOverride\cf2 (\cf0\par
+\cf2        name  =\cf5 "locationId"\cf2 ,\cf0\par
+\cf2        column=\cf4 @Column\cf2 (name=\cf5 "AFAZCD"\cf2 ))\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  TaxGroupMaster_PK \cf7 taxGroupMaster_PK\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @Column\cf2 (name=\cf5 "AFNUTX"\cf2 ,length=40)\cf0\par
+\cf2   \cf3\b public\cf2\b0  String \cf7 description\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @OneToMany\cf2 (targetEntity=TaxGroupDetail.\cf3\b class\cf2\b0 )\cf0\par
+\cf2   \cf4 @JoinColumns\cf2 (\{\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "AFAZCD"\cf2 ,referencedColumnName=\cf5 "THAZCD"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "AFJ2C4"\cf2 ,referencedColumnName=\cf5 "THJ2C4"\cf2 )\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  Set<TaxGroupDetail> \cf7 taxGroupDetail\cf2 ;\cf0\par
+\par
+\cf2\}\cf0\par
+\f1 ==============\par
+\cf1\f0 /**\cf0\par
+\cf2   \cf1 *\cf2  \cf1 class\cf2  \cf1 TaxGroupMaster_PK\cf2  \cf1 generated\cf2  \cf1 December\cf2  \cf1 16,\cf2  \cf1 2008\cf2  \cf1 1:37:10\cf2  \cf1 PM\cf2  \cf1 EST\cf0\par
+\cf2   \cf1 */\cf0\par
+\cf3\b package\cf2\b0  com.kve.vanguard.data.domain;\cf0\par
+\par
+\cf3\b import\cf2\b0  \ul javax.persistence.Column\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  \ul javax.persistence.Embeddable\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  \ul javax.persistence.Id\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  \ul java.math.BigDecimal\ulnone ;\cf0\par
+\par
+\cf3\b public\cf2\b0  \cf3\b class\cf2\b0  TaxGroupMaster_PK \cf3\b implements\cf2\b0  java.io.Serializable \{\cf0\par
+\cf2   \cf3\b private\cf2\b0  \cf3\b final\cf2\b0  \cf3\b static\cf2\b0  \cf3\b long\cf2\b0  \cf7\i serialVersionUID\cf2\i0 =0;\cf0\par
+\cf2   \cf8 // constructor \cf0\par
+\cf2   \cf3\b public\cf2\b0  TaxGroupMaster_PK(\cf0\par
+\cf2     String taxGroupCode,\cf0\par
+\cf2     String locationId) \{\cf0\par
+\cf2     \cf3\b this\cf2\b0 .\cf7 taxGroupCode\cf2  = taxGroupCode;\cf0\par
+\cf2     \cf3\b this\cf2\b0 .\cf7 locationId\cf2  = locationId;\cf0\par
+\cf2   \}\cf0\par
+\par
+\cf2   \cf8 // id fields\cf0\par
+\cf2   \cf3\b public\cf2\b0  String \cf7 taxGroupCode\cf2 ;\cf0\par
+\cf2   \cf3\b public\cf2\b0  String \cf7 locationId\cf2 ;\cf0\par
+\cf2\}\cf0\par
+\f1 ==============\par
+\cf1\f0 /**\cf0\par
+\cf2   \cf1 *\cf2  \cf1 class\cf2  \cf1 TaxGroupDetail\cf2  \cf1 generated\cf2  \cf1 December\cf2  \cf1 16,\cf2  \cf1 2008\cf2  \cf1 12:58:42\cf2  \cf1 PM\cf2  \cf1 EST\cf0\par
+\cf2   \cf1 */\cf0\par
+\cf3\b package\cf2\b0  com.kve.vanguard.data.domain;\cf0\par
+\par
+\cf3\b import\cf2\b0  java.io.Serializable;\cf0\par
+\cf3\b import\cf2\b0  java.util.Set;\cf0\par
+\cf3\b import\cf2\b0  \ul java.math.BigDecimal\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  javax.persistence.*;\cf0\par
+\par
+\cf4 @\highlight9 Entity\cf0\highlight0\par
+\cf4 @Table\cf2 (name=\cf5 "D2THREP"\cf2 )\cf0\par
+\cf3\b public\cf2\b0  \cf3\b class\cf2\b0  TaxGroupDetail \cf3\b implements\cf2\b0  Serializable \{\cf0\par
+\cf2   \cf3\b private\cf2\b0  \cf3\b final\cf2\b0  \cf3\b static\cf2\b0  \cf3\b long\cf2\b0  \cf7\i serialVersionUID\cf2\i0 =0;\cf0\par
+\cf2   \cf4 @EmbeddedId\cf0\par
+\cf2   \cf4 @AttributeOverrides\cf2 (\{\cf0\par
+\cf2     \cf4 @AttributeOverride\cf2 (\cf0\par
+\cf2         name  =\cf5 "locationId"\cf2 ,\cf0\par
+\cf2         column=\cf4 @Column\cf2 (name=\cf5 "THAZCD"\cf2 )),\cf0\par
+\cf2     \cf4 @AttributeOverride\cf2 (\cf0\par
+\cf2        name  =\cf5 "taxGroupCode"\cf2 ,\cf0\par
+\cf2        column=\cf4 @Column\cf2 (name=\cf5 "THJ2C4"\cf2 )),\cf0\par
+\cf2     \cf4 @AttributeOverride\cf2 (\cf0\par
+\cf2        name  =\cf5 "taxCode"\cf2 ,\cf0\par
+\cf2        column=\cf4 @Column\cf2 (name=\cf5 "THMZC2"\cf2 ))\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  TaxGroupDetail_PK \cf7 taxGroupDetail_PK\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @OneToMany\cf2 (targetEntity=AR_CustomerTaxLicense.\cf3\b class\cf2\b0 )\cf0\par
+\cf2   \cf4 @JoinColumns\cf2 (\{\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THAZCD"\cf2 ,referencedColumnName=\cf5 "TLAZCD"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THJ2C4"\cf2 ,referencedColumnName=\cf5 "TLJ2C4"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THMZC2"\cf2 ,referencedColumnName=\cf5 "TLMZC2"\cf2 )\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  Set<AR_CustomerTaxLicense> \cf7 ar_CustomerTaxLicense\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @OneToMany\cf2 (targetEntity=OSI_ShipToTaxLicense.\cf3\b class\cf2\b0 )\cf0\par
+\cf2   \cf4 @JoinColumns\cf2 (\{\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THAZCD"\cf2 ,referencedColumnName=\cf5 "TRAZCD"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THJ2C4"\cf2 ,referencedColumnName=\cf5 "TRJ2C4"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THMZC2"\cf2 ,referencedColumnName=\cf5 "TRMZC2"\cf2 )\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  Set<OSI_ShipToTaxLicense> \cf7 osi_ShipToTaxLicense\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @OneToMany\cf2 (targetEntity=OSI_OrderDtlTaxOvrde.\cf3\b class\cf2\b0 )\cf0\par
+\cf2   \cf4 @JoinColumns\cf2 (\{\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THAZCD"\cf2 ,referencedColumnName=\cf5 "TSAZCD"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THJ2C4"\cf2 ,referencedColumnName=\cf5 "TSJ2C4"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THMZC2"\cf2 ,referencedColumnName=\cf5 "TSMZC2"\cf2 )\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  Set<OSI_OrderDtlTaxOvrde> \cf7 osi_OrderDtlTaxOvrde\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @OneToMany\cf2 (targetEntity=OSI_OrderChrgTaxOvrde.\cf3\b class\cf2\b0 )\cf0\par
+\cf2   \cf4 @JoinColumns\cf2 (\{\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THAZCD"\cf2 ,referencedColumnName=\cf5 "TTAZCD"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THJ2C4"\cf2 ,referencedColumnName=\cf5 "TTJ2C4"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THMZC2"\cf2 ,referencedColumnName=\cf5 "TTMZC2"\cf2 )\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  Set<OSI_OrderChrgTaxOvrde> \cf7 osi_OrderChrgTaxOvrde\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @OneToMany\cf2 (targetEntity=POR_PO_DetailTaxOvrde.\cf3\b class\cf2\b0 )\cf0\par
+\cf2   \cf4 @JoinColumns\cf2 (\{\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THAZCD"\cf2 ,referencedColumnName=\cf5 "TVAZCD"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THJ2C4"\cf2 ,referencedColumnName=\cf5 "TVJ2C4"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THMZC2"\cf2 ,referencedColumnName=\cf5 "TVMZC2"\cf2 )\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  Set<POR_PO_DetailTaxOvrde> \cf7 por_PO_DetailTaxOvrde\cf2 ;\cf0\par
+\par
+\cf2   \cf4 @OneToMany\cf2 (targetEntity=AP_MexicanFormCdeXref.\cf3\b class\cf2\b0 )\cf0\par
+\cf2   \cf4 @JoinColumns\cf2 (\{\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THAZCD"\cf2 ,referencedColumnName=\cf5 "IKAZCD"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THJ2C4"\cf2 ,referencedColumnName=\cf5 "IKJ2C4"\cf2 ),\cf0\par
+\cf2     \cf4 @JoinColumn\cf2 (name=\cf5 "THMZC2"\cf2 ,referencedColumnName=\cf5 "IKMZC2"\cf2 )\cf0\par
+\cf2   \})\cf0\par
+\cf2   \cf3\b public\cf2\b0  Set<AP_MexicanFormCdeXref> \cf7 ap_MexicanFormCdeXref\cf2 ;\cf0\par
+\par
+\cf2\}\cf0\par
+\f1 ===============\par
+\cf1\f0 /**\cf0\par
+\cf2   \cf1 *\cf2  \cf1 class\cf2  \cf1 TaxGroupDetail_PK\cf2  \cf1 generated\cf2  \cf1 December\cf2  \cf1 16,\cf2  \cf1 2008\cf2  \cf1 12:58:42\cf2  \cf1 PM\cf2  \cf1 EST\cf0\par
+\cf2   \cf1 */\cf0\par
+\cf3\b package\cf2\b0  com.kve.vanguard.data.domain;\cf0\par
+\par
+\cf3\b import\cf2\b0  \ul javax.persistence.Column\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  \ul javax.persistence.Embeddable\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  \ul javax.persistence.Id\ulnone ;\cf0\par
+\cf3\b import\cf2\b0  \ul java.math.BigDecimal\ulnone ;\cf0\par
+\par
+\cf3\b public\cf2\b0  \cf3\b class\cf2\b0  TaxGroupDetail_PK \cf3\b implements\cf2\b0  java.io.Serializable \{\cf0\par
+\cf2   \cf3\b private\cf2\b0  \cf3\b final\cf2\b0  \cf3\b static\cf2\b0  \cf3\b long\cf2\b0  \cf7\i serialVersionUID\cf2\i0 =0;\cf0\par
+\cf2   \cf8 // constructor \cf0\par
+\cf2   \cf3\b public\cf2\b0  TaxGroupDetail_PK(\cf0\par
+\cf2     String taxGroupCode,\cf0\par
+\cf2     String locationId,\cf0\par
+\cf2     String taxCode) \{\cf0\par
+\cf2     \cf3\b this\cf2\b0 .\cf7 taxGroupCode\cf2  = taxGroupCode;\cf0\par
+\cf2     \cf3\b this\cf2\b0 .\cf7 locationId\cf2  = locationId;\cf0\par
+\cf2     \cf3\b this\cf2\b0 .\cf7 taxCode\cf2  = taxCode;\cf0\par
+\cf2   \}\cf0\par
+\par
+\cf2   \cf8 // id fields\cf0\par
+\cf2   \cf3\b public\cf2\b0  String \cf7 taxGroupCode\cf2 ;\cf0\par
+\cf2   \cf3\b public\cf2\b0  String \cf7 locationId\cf2 ;\cf0\par
+\cf2   \cf3\b public\cf2\b0  String \cf7 taxCode\cf2 ;\cf0\par
+\cf2\}\cf0\par
+\f1\par
+}
+ 

@@ -1,0 +1,53 @@
+Index: src/java/org/hibernate/validator/ClassValidator.java
+===================================================================
+--- src/java/org/hibernate/validator/ClassValidator.java	(revision 15092)
++++ src/java/org/hibernate/validator/ClassValidator.java	(working copy)
+@@ -29,6 +29,7 @@
+ import org.hibernate.mapping.PersistentClass;
+ import org.hibernate.mapping.Property;
+ import org.hibernate.mapping.Component;
++import org.hibernate.proxy.HibernateProxy;
+ import org.hibernate.annotations.common.reflection.Filter;
+ import org.hibernate.annotations.common.reflection.ReflectionManager;
+ import org.hibernate.annotations.common.reflection.XClass;
+@@ -349,7 +350,17 @@
+ 	 * if <code>bean</code> is null, an empty array is returned
+ 	 */
+ 	public InvalidValue[] getInvalidValues(T bean) {
+-		return this.getInvalidValues( bean, new IdentitySet() );
++		T unproxiedBean = bean;
++		if( bean instanceof HibernateProxy ) {
++			if ( Hibernate.isInitialized( bean ) ) {
++				// we need to unproxy the bean instance, so that all access strategies work correctly 
++				unproxiedBean = (T) ( (HibernateProxy) bean).getHibernateLazyInitializer().getSession().getPersistenceContext().unproxy( bean ); 
++			} else {
++				// a proxy that is not initialized can not have been modified so it must be valid 
++				return new InvalidValue[0];
++			}
++		} 
++		return this.getInvalidValues( unproxiedBean, new IdentitySet() );
+ 	}
+ 
+ 	/**
+@@ -498,8 +509,20 @@
+ 			XMember getter = memberGetters.get( i );
+ 			if ( getPropertyName( getter ).equals( propertyName ) ) {
+ 				Object value = getMemberValue( bean, getter );
++				
++				Object unproxiedValue = value;
++				if( value instanceof HibernateProxy ) {
++					if ( Hibernate.isInitialized( value ) ) {
++						// we need to unproxy the bean instance, so that all access strategies work correctly 
++						unproxiedValue = ( (HibernateProxy) value).getHibernateLazyInitializer().getSession().getPersistenceContext().unproxy( value ); 
++					} else {
++						// a proxy that is not initialized can not have been modified so it must be valid 
++						return new InvalidValue[0];
++					}
++				}
++
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
++				if ( !validator.isValid( unproxiedValue ) ) {
+ 					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
+ 				}
+ 			}

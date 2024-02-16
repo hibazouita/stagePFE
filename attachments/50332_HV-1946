@@ -1,0 +1,75 @@
+package com.tpt.ui.common.validators;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+
+import java.util.Set;
+
+import javax.swing.JTextField;
+import javax.validation.ConstraintViolation;
+import javax.validation.Path.Node;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.constraints.Pattern;
+import javax.validation.groups.Default;
+
+import org.hibernate.validator.internal.engine.path.NodeImpl;
+import org.hibernate.validator.internal.engine.path.PathImpl;
+import org.junit.Test;
+
+import com.tpt.common.validators.JTextArrayValueExtractor;
+
+/**
+ * This is a JUnit test to show my problem.  We get our hibernate validation library from version Wildfly 26.1
+ * The name of that jar is hibernate-validator-6.0.23.Final.jar. Maybe this has been fixed?
+ */
+public class PathProblemTest {
+
+  @Test
+  public void testArrayValidationPath() {
+
+    // Add my value extractor to the configuration and make a validator
+    @SuppressWarnings("resource")
+    Validator validator = Validation.byDefaultProvider().configure()
+            .addValueExtractor(new JTextArrayValueExtractor()).buildValidatorFactory().getValidator();
+
+    // Initiate the text class and set bad values in each of the fields
+    ComponentArrayTest componentArrayTest = new ComponentArrayTest();
+    for (int i = 0; i < componentArrayTest.componentValidatorText.length; i++) {
+      componentArrayTest.componentValidatorText[i].setText(Integer.toString(i));
+    }
+
+    // Do the validation, should get 3 violations
+    Set<ConstraintViolation<ComponentArrayTest>> violations =
+            validator.validateValue(ComponentArrayTest.class, "componentValidatorText", componentArrayTest.componentValidatorText, Default.class);
+    assertEquals(3, violations.size());
+
+    // Look at the path in the violations
+    Node firstNode = null;
+    for (ConstraintViolation<ComponentArrayTest> constraintViolation : violations) {
+
+      // This comes from the property path iterator
+      Node node = constraintViolation.getPropertyPath().iterator().next();
+      System.out.println("     Node from path iterator: toString() = " + node.toString() + ", getValue() = " + node.as(org.hibernate.validator.path.PropertyNode.class).getValue());
+
+      // This comes from the same property path, but it is the node returned by PathImpl.getLeafNode()
+      NodeImpl nodeImpl = ((PathImpl)constraintViolation.getPropertyPath()).getLeafNode();
+      System.out.println("Node from path.getNodeLeaf(): toString() = " + nodeImpl.toString() + ", getValue() = " + nodeImpl.getValue());
+
+      // Don't check the first violations path node for sameness
+      if (firstNode == null) {
+        firstNode = node;
+        continue; // The first node is always the same
+      }
+
+      // Should not fail but does
+      assertNotSame(firstNode, node);
+    }
+  }
+}
+
+class ComponentArrayTest {
+
+  @Pattern(regexp="[abc]*")
+  public JTextField[] componentValidatorText = new JTextField[] { new JTextField(), new JTextField(), new JTextField() };
+}

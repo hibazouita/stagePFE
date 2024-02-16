@@ -1,0 +1,39 @@
+Index: org/hibernate/test/annotations/generics/EmbeddedGenericsTest.java
+===================================================================
+--- org/hibernate/test/annotations/generics/EmbeddedGenericsTest.java	(revision 15372)
++++ org/hibernate/test/annotations/generics/EmbeddedGenericsTest.java	(working copy)
+@@ -28,17 +28,12 @@
+ 
+ 	public void setUp() throws Exception {
+ 		super.setUp();
+-		session = getSessions().openSession();
++		session = openSession();
+ 		session.getTransaction().begin();
+ 		edition = new Edition<String>();
+ 		edition.name = "Second";
+ 	}
+ 
+-	public void tearDown() throws Exception {
+-		session.close();
+-		super.tearDown();
+-	}
+-
+ 	public void testWorksWithGenericEmbedded() {
+ 		Book b = new Book();
+ 		b.edition = edition;
+@@ -48,6 +43,7 @@
+ 		assertEquals( "Second", retrieved.edition.name );
+ 		
+ 		clean( Book.class, b.id );
++		session.close();
+ 	}
+ 
+ 	public void testWorksWithGenericCollectionOfElements() {
+@@ -59,6 +55,7 @@
+ 		assertEquals( "Second", retrieved.editions.iterator().next().name );
+ 
+ 		clean( PopularBook.class, b.id );
++		session.close();
+ 	}
+ 
+ 	protected Class[] getMappings() {

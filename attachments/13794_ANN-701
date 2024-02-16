@@ -1,0 +1,237 @@
+package gekko.domain.product;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.IndexColumn;
+import org.hibernate.annotations.Type;
+
+import gekko.domain.AbstractAuditableLogicallyDeletablePersistentEntity;
+import gekko.domain.account.Account;
+import gekko.domain.asset.Land;
+import gekko.type.GekkoDate;
+
+@Entity
+@Table(name = "pr_tenure")
+@AttributeOverride(name = "id", column = @Column(name = "n_key_tenure"))
+public class Tenure extends AbstractAuditableLogicallyDeletablePersistentEntity {
+
+    private TenureStatus status;
+    private TenureType tenureType;
+    private String titleRef;
+    private String tenureRefNo;
+    private String subdivision;
+    private TenurePurpose tenurePurpose;
+    private Proposal proposal;
+    private String source;
+    private Land land;
+    private String fileReference;
+    private GekkoDate expiryDate;
+    private TenureRentType rentType;
+    private List<TenureCustomerRship> tenureCustomerRship = new ArrayList<TenureCustomerRship>();
+    private TenureCustomerRship primaryTenureCustomerRship;
+    private Account mainAccount;
+    private List<Account> accounts = new ArrayList<Account>();
+
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "tenure")
+    @JoinColumn(name = "n_key_tenure")
+    public List<TenureCustomerRship> getTenureCustomerRship() {
+        return tenureCustomerRship;
+    }
+
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "n_key_tenure_customer")
+    public TenureCustomerRship getPrimaryTenureCustomerRship() {
+        return primaryTenureCustomerRship;
+    }
+
+    public void setTenureCustomerRship(List<TenureCustomerRship> tenureCustomerRship)
+    {
+        this.tenureCustomerRship = tenureCustomerRship;
+    }
+
+    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "n_key_land")
+    public Land getLand() {
+        return land;
+    }
+
+    public void setLand(Land land) {
+        this.land = land;
+    }
+
+    @Column(name = "t_source", length = 250)
+    public String getSource() {
+        return source;
+
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {})
+    @JoinColumn(name = "n_key_proposal")
+    public Proposal getProposal() {
+        return proposal;
+    }
+
+    public void setProposal(Proposal proposal) {
+        this.proposal = proposal;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "c_tenure_status")
+    public TenureStatus getStatus() {
+        return status;
+
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "c_tenure_type")
+    public TenureType getTenureType() {
+        return tenureType;
+
+    }
+
+    @Column(name = "t_title_ref")
+    public String getTitleRef() {
+        return titleRef;
+
+    }
+
+    @Column(name = "t_tenure_ref_no")
+    public String getTenureRefNo() {
+        return tenureRefNo;
+
+    }
+
+    @Column(name = "t_file_ref")
+    public String getFileReference() {
+        return fileReference;
+    }
+
+    @Column(name = "t_subdivision")
+    public String getSubdivision() {
+        return subdivision;
+
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "c_lease_purpose")
+    public TenurePurpose getTenurePurpose() {
+        return tenurePurpose;
+
+    }
+
+    @Embedded
+    @AttributeOverride(name = "date", column = @Column(name = "d_expiry", nullable = true))
+    public GekkoDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setStatus(TenureStatus status) {
+        this.status = status;
+    }
+
+    public void setTitleRef(String titleRef) {
+        this.titleRef = titleRef;
+    }
+
+    public void setTenureRefNo(String tenureRefNo) {
+        this.tenureRefNo = tenureRefNo;
+    }
+
+    public void setSubdivision(String subdivision) {
+        this.subdivision = subdivision;
+    }
+
+    public void setTenureType(TenureType tenureType) {
+        this.tenureType = tenureType;
+    }
+
+    public void setTenurePurpose(TenurePurpose tenurePurpose) {
+        this.tenurePurpose = tenurePurpose;
+    }
+
+    public void setPrimaryTenureCustomerRship(TenureCustomerRship primaryTenureCustomerRship)
+    {
+        this.primaryTenureCustomerRship = primaryTenureCustomerRship;
+    }
+
+    public void setFileReference(String fileReference) {
+        this.fileReference = fileReference;
+    }
+
+    public void setExpiryDate(GekkoDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "c_rent_type")
+    public TenureRentType getRentType() {
+        return rentType;
+    }
+
+    public void setRentType(TenureRentType rentType) {
+        this.rentType = rentType;
+    }
+    
+//    @OneToMany(cascade = { CascadeType.ALL }, fetch=FetchType.LAZY)
+//    @JoinColumn(name = "n_key_tenure", nullable=false)
+    @CollectionOfElements
+    @JoinTable(
+        name = "pr_tenure_account",
+        joinColumns = @JoinColumn(name = "n_key_tenure"))
+    // I would prefer to map this with a surrogate key, but the HB schema
+    // generation stuff seems not to understand the @CollectionId mapping
+    @CollectionId(
+        columns = @Column(name = "n_key_account"), 
+        type = @Type(type = "Integer"), 
+        generator = "increment")
+    @IndexColumn(name = "n_index_order")
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+    
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+    
+//    @ManyToOne(cascade = { CascadeType.ALL })
+//    @JoinColumn(name = "n_key_main_account", nullable=true)
+    public Account getMainAccount() {
+        return mainAccount;
+    }
+    
+    public void setMainAccount(Account mainAccount) {
+//        if (mainAccount.getType()!=AccountType.MAIN) {
+//            throw new IllegalArgumentException("Invalid Account Type for main account");
+//        }
+        this.mainAccount = mainAccount;
+    }
+
+   
+
+
+}

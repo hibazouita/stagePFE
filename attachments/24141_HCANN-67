@@ -1,0 +1,92 @@
+package org.rc.contacts.init;
+
+import java.util.Properties;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.rc.contacts.dao.Address;
+import org.rc.contacts.dao.Contact;
+import org.rc.contacts.dao.Phone;
+
+public class ContactsInit
+{
+
+	public static void main(String[] args)
+	{
+		ContactsInit init = new ContactsInit();
+		init.go(args);
+	}
+	
+	private void say(String format, Object ... args)
+	{
+		System.out.printf(format + "%n", args);
+	}
+	
+	public void go(String[] args)
+	{
+		if (args != null && args[0].equalsIgnoreCase("create"))
+		{
+			say("creating database");
+			Properties properties = new Properties();
+			properties.put("hibernate.hbm2ddl.auto", "create");
+			setSessionFactory(properties);
+		}
+		
+		Contact me = new Contact();
+		me.setFirstName("Ralph");
+		me.setLastName("Cook");
+		
+//		Address address = new Address("10 Saint James Ct.", "Durham", Address.State.NC, "27713");
+//		me.setAddress(address);
+//		
+//		Phone mobile = new Phone("919 413 4591", Phone.Type.MOBILE);
+//		Phone home = new Phone("919 544 6375", Phone.Type.HOME);
+//		me.addPhone(mobile);
+//		me.addPhone(home);
+		
+		addContact(me);
+		
+	}
+	
+	private void addContact(Contact contact)
+	{
+		Session session = getSession();
+		Transaction transaction = session.beginTransaction();
+		session.persist(contact);
+		transaction.commit();
+		session.close();
+		say("contact <%s> added", contact.getFirstName());
+	}
+	
+	private SessionFactory globalFactory;
+	
+	private void setSessionFactory(Properties properties)
+	{
+		if (globalFactory == null)
+		{
+			Configuration configuration = new Configuration();
+			configuration.configure(); // using whatever is on the default path
+			if (properties != null)
+			{
+				configuration.addProperties(properties);
+			}
+			globalFactory = configuration.buildSessionFactory();
+		}
+	}
+	
+	private SessionFactory getSessionFactory()
+	{
+		setSessionFactory(null);
+		return globalFactory;
+	}
+	
+	private Session getSession()
+	{
+		SessionFactory factory = getSessionFactory();
+		Session session = factory.openSession();
+		return session;
+	}
+
+}

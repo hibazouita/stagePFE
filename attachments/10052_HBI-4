@@ -1,0 +1,648 @@
+Index: hibernate.properties
+===================================================================
+RCS file: /cvsroot/hibernate/Hibernate/hibernate.properties,v
+retrieving revision 1.96
+diff -a -u -r1.96 hibernate.properties
+--- hibernate.properties	27 Dec 2002 11:54:48 -0000	1.96
++++ hibernate.properties	20 May 2003 10:15:23 -0000
+@@ -181,23 +181,81 @@
+ ### Apache DBCP Connection Pool ###
+ ###################################
+ 
+-# connection pool
++# optional query to validate pooled connections:
++#hibernate.dbcp.validationQuery select 1 from dual
++
++# ---- Connection Pool ---------------------------------------------------------
+ 
+-#hibernate.dbcp.maxActive 100
++# If a property is not specified, the default value from
++# org.apache.commons.pool.impl.GenericObjectPool is taken
++
++# Maximum number of checked out connections for DBCP connection pool
++#hibernate.dbcp.maxActive 10
++
++# Action to take in case of an exhausted DBCP connection pool ( 0 = fail, 1 = block, 2= grow)
+ #hibernate.dbcp.whenExhaustedAction 1
+-#hibernate.dbcp.maxWait 120000
+-#hibernate.dbcp.maxIdle 10
+ 
+-## prepared statement cache
++# Maximum idle time for connections in DBCP connection pool (ms)
++# throwing an exception when the pool is exhausted and the "when exhausted" action is WHEN_EXHAUSTED_BLOCK.
++#hibernate.dbcp.maxWait 2000
++
++# Maximum number of idle connections for DBCP connection pool
++#hibernate.dbcp.maxIdle 20
++
++# testOnBorrow whether or not to validate objects before they are returned
++#hibernate.dbcp.testOnBorrow true
++
++# testOnReturn whether or not to validate objects after they are returned
++#hibernate.dbcp.testOnReturn false
++
++# timeBetweenEvictionRunsMillis the amount of time (in milliseconds) to sleep between examining idle objects for eviction
++#hibernate.dbcp.timeBetweenEvictionRunsMillis 900000
++
++# numTestsPerEvictionRun the number of idle objects to examine per run within the idle object eviction thread (if any)
++#hibernate.dbcp.numTestsPerEvictionRun 10
++
++# minEvictableIdleTimeMillis the minimum number of milliseconds an object can sit idle in the pool before it is eligable for eviction
++#hibernate.dbcp.minEvictableIdleTimeMillis 1800000
++
++# testWhileIdle whether or not to validate objects in the idle object eviction thread, if any
++#hibernate.dbcp.testWhileIdle true
+ 
+-#hibernate.dbcp.ps.maxActive 100
++
++# ---- prepared statement cache ------------------------------------------------
++
++# If a property is not specified, the default value from
++# org.apache.commons.pool.impl.GenericKeyedObjectPool is taken
++
++# Maximum number of checked out statements for DBCP
++#hibernate.dbcp.ps.maxActive 10
++
++# Action to take in case of an exhausted DBCP statement pool ( 0 = fail, 1 = block, 2= grow)
+ #hibernate.dbcp.ps.whenExhaustedAction 1
+-#hibernate.dbcp.ps.maxWait 120000
+-#hibernate.dbcp.ps.maxIdle 100
+ 
+-# optional query to validate pooled connections:
++# Maximum idle time for statements in DBCP (ms)
++# throwing an exception when the pool is exhausted and the "when exhausted" action is WHEN_EXHAUSTED_BLOCK.
++#hibernate.dbcp.ps.maxWait 2000
+ 
+-#hibernate.dbcp.validationQuery select 1 from dual
++# Maximum number of idle statements for DBCP
++#hibernate.dbcp.ps.maxIdle 20
++
++# testOnBorrow whether or not to validate objects before they are returned
++#hibernate.dbcp.ps.testOnBorrow true
++
++# testOnReturn whether or not to validate objects after they are returned
++#hibernate.dbcp.ps.testOnReturn false
++
++# timeBetweenEvictionRunsMillis the amount of time (in milliseconds) to sleep between examining idle objects for eviction
++#hibernate.dbcp.ps.timeBetweenEvictionRunsMillis 900000
++
++# numTestsPerEvictionRun the number of idle objects to examine per run within the idle object eviction thread (if any)
++#hibernate.dbcp.ps.numTestsPerEvictionRun 10
++
++# minEvictableIdleTimeMillis the minimum number of milliseconds an object can sit idle in the pool before it is eligable for eviction
++#hibernate.dbcp.ps.minEvictableIdleTimeMillis 1800000
++
++# testWhileIdle whether or not to validate objects in the idle object eviction thread, if any
++#hibernate.dbcp.ps.testWhileIdle true
+ 
+ 
+ 
+Index: cirrus/hibernate/Environment.java
+===================================================================
+RCS file: /cvsroot/hibernate/Hibernate/cirrus/hibernate/Environment.java,v
+retrieving revision 1.86
+diff -a -u -r1.86 Environment.java
+--- cirrus/hibernate/Environment.java	30 Apr 2003 07:46:35 -0000	1.86
++++ cirrus/hibernate/Environment.java	20 May 2003 10:15:24 -0000
+@@ -161,42 +161,120 @@
+ 	 */
+ 	public static final String C3P0_VALIDATE_CONNECTION = "hibernate.c3p0.validate";
+ 
++
++	// ---- Validation query for DBCP ------------------------------------------
++
++	/**
++	 * Query to execute for connection validation (optional)
++	 */
++	public static final String DBCP_VALIDATION_QUERY = "hibernate.dbcp.validationQuery";
++
++
++	// ---- GenericObjectPool settings -----------------------------------------
++
+ 	/**
+ 	 * Maximum number of checked out connections for DBCP connection pool
+ 	 */
+ 	public static final String DBCP_MAXACTIVE = "hibernate.dbcp.maxActive";
++
+ 	/**
+-	 * Maximum number of idle connections for DBCP connection pool
++	 * Action to take in case of an exhausted DBCP connection pool ( 0 = fail, 1 = block, 2= grow)
+ 	 */
+-	public static final String DBCP_MAXIDLE = "hibernate.dbcp.maxIdle";
++	public static final String DBCP_WHENEXHAUSTED = "hibernate.dbcp.whenExhaustedAction";
++
+ 	/**
+ 	 * Maximum idle time for connections in DBCP connection pool (ms)
+ 	 */
+ 	public static final String DBCP_MAXWAIT = "hibernate.dbcp.maxWait";
++
+ 	/**
+-	 * Action to take in case of an exhausted DBCP connection pool ( 0 = fail, 1 = block, 2= grow)
++	 * Maximum number of idle connections for DBCP connection pool
+ 	 */
+-	public static final String DBCP_WHENEXHAUSTED = "hibernate.dbcp.whenExhaustedAction";
++	public static final String DBCP_MAXIDLE = "hibernate.dbcp.maxIdle";
++
+ 	/**
+-	 * Query to execute for connection validation (optional)
++	 * testOnBorrow whether or not to validate objects before they are returned
+ 	 */
+-	public static final String DBCP_VALIDATION_QUERY = "hibernate.dbcp.validationQuery";
++	public static final String DBCP_TEST_ON_BORROW = "hibernate.dbcp.testOnBorrow";
++
++	/**
++	 * testOnReturn whether or not to validate objects after they are returned
++	 */
++	public static final String DBCP_TEST_ON_RESTURN = "hibernate.dbcp.testOnReturn";
++
++	/**
++	 * timeBetweenEvictionRunsMillis the amount of time (in milliseconds) to sleep between examining idle objects for eviction
++	 */
++	public static final String DBCP_TIME_BETWEEN_EVICTION_RUNS_MILLIS = "hibernate.dbcp.timeBetweenEvictionRunsMillis";
++
++	/**
++	 * numTestsPerEvictionRun the number of idle objects to examine per run within the idle object eviction thread (if any)
++	 */
++	public static final String DBCP_NUM_TESTS_PER_EVICTION_RUN = "hibernate.dbcp.numTestsPerEvictionRun";
++
++	/**
++	 * minEvictableIdleTimeMillis the minimum number of milliseconds an object can sit idle in the pool before it is eligable for evcition
++	 */
++	public static final String DBCP_MIN_EVICTABLE_IDLE_TIME_MILLIS = "hibernate.dbcp.minEvictableIdleTimeMillis";
++
++	/**
++	 * testWhileIdle whether or not to validate objects in the idle object eviction thread, if any
++	 */
++	public static final String DBCP_TEST_WHILE_IDLE = "hibernate.dbcp.testWhileIdle";
++
++
++	// ---- GenericKeyedObjectPool settings ------------------------------------
++
+ 	/**
+ 	 * Maximum number of checked out statements for DBCP
+ 	 */
+ 	public static final String DBCP_PS_MAXACTIVE = "hibernate.dbcp.ps.maxActive";
++
+ 	/**
+-	 * Maximum number of idle statements for DBCP
++	 * Action to take in case of an exhausted DBCP statement pool ( 0 = fail, 1 = block, 2= grow)
+ 	 */
+-	public static final String DBCP_PS_MAXIDLE = "hibernate.dbcp.ps.maxIdle";
++	public static final String DBCP_PS_WHENEXHAUSTED = "hibernate.dbcp.ps.whenExhaustedAction";
++
+ 	/**
+ 	 * Maximum idle time for statements in DBCP (ms)
+ 	 */
+ 	public static final String DBCP_PS_MAXWAIT = "hibernate.dbcp.ps.maxWait";
++
+ 	/**
+-	 * Action to take in case of an exhausted DBCP statement pool ( 0 = fail, 1 = block, 2= grow)
++	 * Maximum number of idle statements for DBCP
+ 	 */
+-	public static final String DBCP_PS_WHENEXHAUSTED = "hibernate.dbcp.ps.whenExhaustedAction";
++	public static final String DBCP_PS_MAXIDLE = "hibernate.dbcp.ps.maxIdle";
++
++	/**
++	 * testOnBorrow whether or not to validate objects before they are returned
++	 */
++	public static final String DBCP_PS_TEST_ON_BORROW = "hibernate.dbcp.ps.testOnBorrow";
++
++	/**
++	 * testOnReturn whether or not to validate objects after they are returned
++	 */
++	public static final String DBCP_PS_TEST_ON_RESTURN = "hibernate.dbcp.ps.testOnReturn";
++
++	/**
++	 * timeBetweenEvictionRunsMillis the amount of time (in milliseconds) to sleep between examining idle objects for eviction
++	 */
++	public static final String DBCP_PS_TIME_BETWEEN_EVICTION_RUNS_MILLIS = "hibernate.dbcp.ps.timeBetweenEvictionRunsMillis";
++
++	/**
++	 * numTestsPerEvictionRun the number of idle objects to examine per run within the idle object eviction thread (if any)
++	 */
++	public static final String DBCP_PS_NUM_TESTS_PER_EVICTION_RUN = "hibernate.dbcp.ps.numTestsPerEvictionRun";
++
++	/**
++	 * minEvictableIdleTimeMillis the minimum number of milliseconds an object can sit idle in the pool before it is eligable for evcition
++	 */
++	public static final String DBCP_PS_MIN_EVICTABLE_IDLE_TIME_MILLIS = "hibernate.dbcp.ps.minEvictableIdleTimeMillis";
++
++	/**
++	 * testWhileIdle whether or not to validate objects in the idle object eviction thread, if any
++	 */
++	public static final String DBCP_PS_TEST_WHILE_IDLE = "hibernate.dbcp.ps.testWhileIdle";
++
+ 
+ 	/**
+ 	 * <tt>TransactionFactory</tt> implementor to use for creating <tt>Transaction</tt>s
+Index: cirrus/hibernate/connection/DBCPConnectionProvider.java
+===================================================================
+RCS file: /cvsroot/hibernate/Hibernate/cirrus/hibernate/connection/DBCPConnectionProvider.java,v
+retrieving revision 1.7
+diff -a -u -r1.7 DBCPConnectionProvider.java
+--- cirrus/hibernate/connection/DBCPConnectionProvider.java	15 Jan 2003 10:28:39 -0000	1.7
++++ cirrus/hibernate/connection/DBCPConnectionProvider.java	20 May 2003 10:15:24 -0000
+@@ -15,129 +15,249 @@
+ import org.apache.commons.logging.LogFactory;
+ import org.apache.commons.pool.KeyedObjectPoolFactory;
+ import org.apache.commons.pool.ObjectPool;
++import org.apache.commons.pool.impl.GenericKeyedObjectPool;
+ import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
+ import org.apache.commons.pool.impl.GenericObjectPool;
+ 
+ import cirrus.hibernate.Environment;
+ import cirrus.hibernate.HibernateException;
+ import cirrus.hibernate.helpers.JDBCExceptionReporter;
++import cirrus.hibernate.helpers.PropertiesHelper;
+ 
+ /**
+- * A connection provider that uses an Apache commons DBCP connection pool. Hibernate will 
++ * A connection provider that uses an Apache commons DBCP connection pool. Hibernate will
+  * use this by default if the <tt>hibernate.dbcp.*</tt> properties are set.
+  * @see ConnectionProvider
+  */
+ public class DBCPConnectionProvider implements ConnectionProvider {
+-		
+-	private DataSource ds;
+-	private Integer isolation;
++
++    private DataSource ds;
++    private Integer isolation;
+ 
+     private static final Log log = LogFactory.getLog(DBCPConnectionProvider.class);
+ 
+-	public Connection getConnection() throws SQLException {
+-		try {
+-			final Connection c = ds.getConnection();
+-			if (isolation!=null) c.setTransactionIsolation( isolation.intValue() );
+-			c.setAutoCommit(false);
+-			return c;
+-		}
+-		catch (SQLException sqle) {
+-			JDBCExceptionReporter.logExceptions(sqle);
+-			throw sqle;
+-		}
+-	}
+-	
+-	public boolean isStatementCache() {
+-		return true;
+-	}
+-
+-	public void closeConnection(Connection conn) throws SQLException {
+-		try {
+-			conn.close();
+-		}
+-		catch (SQLException sqle) {
+-			JDBCExceptionReporter.logExceptions(sqle);
+-			throw sqle;
+-		}
+-	}
+-    
++    public Connection getConnection() throws SQLException {
++        try {
++            final Connection c = ds.getConnection();
++            if (isolation!=null) c.setTransactionIsolation( isolation.intValue() );
++            c.setAutoCommit(false);
++            return c;
++        }
++        catch (SQLException sqle) {
++            JDBCExceptionReporter.logExceptions(sqle);
++            throw sqle;
++        }
++    }
++
++    public boolean isStatementCache() {
++        return true;
++    }
++
++    public void closeConnection(Connection conn) throws SQLException {
++        try {
++            conn.close();
++        }
++        catch (SQLException sqle) {
++            JDBCExceptionReporter.logExceptions(sqle);
++            throw sqle;
++        }
++    }
++
+     public void configure(Properties props) throws HibernateException {
+-    	String jdbcDriverClass = props.getProperty(Environment.DRIVER);
+-    	String jdbcUrl = props.getProperty(Environment.URL);
+-    	Properties connectionProps = ConnectionProviderFactory.getConnectionProperties(props);
+-    	
+-    	log.info("DBCP using driver: " + jdbcDriverClass + " at URL: " + jdbcUrl);
+-    	log.info("Connection properties: " + connectionProps);
+-
+-		if (jdbcDriverClass==null) {
+-			log.warn("No JDBC Driver class was specified by property " + Environment.DRIVER);
+-		}
+-		else {
+-			try {
+-				Class.forName(jdbcDriverClass);
+-			}
+-			catch (ClassNotFoundException cnfe) {
+-				String msg = "JDBC Driver class not found: " + jdbcDriverClass;
+-				log.fatal(msg);
+-				throw new HibernateException(msg);
+-			}
+-		}
+-		
+-    	try {
+-	
+-	        // We'll need a ObjectPool that serves as the
+-	        // actual pool of connections.
+-	        ObjectPool connectionPool = new GenericObjectPool(
+-	        	null, 
+-	        	Integer.parseInt( props.getProperty(Environment.DBCP_MAXACTIVE) ), 
+-	        	Byte.parseByte( props.getProperty(Environment.DBCP_WHENEXHAUSTED) ),
+-	        	Long.parseLong( props.getProperty(Environment.DBCP_MAXWAIT) ),
+-	        	Integer.parseInt( props.getProperty(Environment.DBCP_MAXIDLE) )
+-	        );
+-	        
+-	        // We'll need a KeyedObjectPoolFactory that serves as the
+-	        // actual pool of prepared statements.
+-	        KeyedObjectPoolFactory statementPool = new GenericKeyedObjectPoolFactory(
+-	        	null, 
+-	        	Integer.parseInt( props.getProperty(Environment.DBCP_PS_MAXACTIVE) ), 
+-	        	Byte.parseByte( props.getProperty(Environment.DBCP_PS_WHENEXHAUSTED) ),
+-	        	Long.parseLong( props.getProperty(Environment.DBCP_PS_MAXWAIT) ),
+-	        	Integer.parseInt( props.getProperty(Environment.DBCP_PS_MAXIDLE) )
+-			);
+-
+-	        // Next, we'll create a ConnectionFactory that the
+-	        // pool will use to create Connections.
+-	        // We'll use the DriverManagerConnectionFactory.
+-	        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(jdbcUrl, connectionProps);
+-	
+-	        // Now we'll create the PoolableConnectionFactory, which wraps
+-	        // the "real" Connections created by the ConnectionFactory with
+-	        // the classes that implement the pooling functionality.
+-	        String validationQuery = props.getProperty(Environment.DBCP_VALIDATION_QUERY);
+-	        new PoolableConnectionFactory(connectionFactory, connectionPool, statementPool, validationQuery, false, false);
+-	
+-	        // Finally, we create the PoolingDriver itself,
+-	        // passing in the object pool we created.
+-	        ds = new PoolingDataSource(connectionPool);
+-
+-	    	
+-    	}
+-    	catch (Exception e) {
+-    		log.fatal("could not instantiate DBCP connection pool", e);
+-    		throw new HibernateException( "Could not instantiate DBCP connection pool", e );
+-    	}
+-    	
+-		String i = props.getProperty(Environment.ISOLATION);
+-		if (i==null) {
+-			isolation=null;
+-		}
+-		else {
+-			isolation = new Integer(i);
+-			log.info("JDBC isolation level: " + Environment.isolationLevelToString( isolation.intValue() ) );
+-		}
+-		
++        String jdbcDriverClass = props.getProperty(Environment.DRIVER);
++        String jdbcUrl = props.getProperty(Environment.URL);
++        Properties connectionProps = ConnectionProviderFactory.getConnectionProperties(props);
++
++        log.info("DBCP using driver: " + jdbcDriverClass + " at URL: " + jdbcUrl);
++        log.info("Connection properties: " + connectionProps);
++
++        if (jdbcDriverClass==null) {
++            log.warn("No JDBC Driver class was specified by property " + Environment.DRIVER);
++        }
++        else {
++            try {
++                Class.forName(jdbcDriverClass);
++            }
++            catch (ClassNotFoundException cnfe) {
++                String msg = "JDBC Driver class not found: " + jdbcDriverClass;
++                log.fatal(msg);
++                throw new HibernateException(msg);
++            }
++        }
++
++        try {
++            int maxActive            = PropertiesHelper.getInt(
++                                            Environment.DBCP_MAXACTIVE, props,
++                                            GenericObjectPool.DEFAULT_MAX_ACTIVE );
++
++            byte whenExhaustedAction = PropertiesHelper.getByte(
++                                            Environment.DBCP_WHENEXHAUSTED, props,
++                                            GenericObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION );
++
++            long maxWait             = PropertiesHelper.getLong(
++                                            Environment.DBCP_MAXWAIT, props,
++                                            GenericObjectPool.DEFAULT_MAX_WAIT );
++
++            int maxIdle              = PropertiesHelper.getInt(
++                                            Environment.DBCP_MAXIDLE, props,
++                                            GenericObjectPool.DEFAULT_MAX_IDLE );
++
++            boolean testOnBorrow     = PropertiesHelper.getBoolean(
++                                            Environment.DBCP_TEST_ON_BORROW, props,
++                                            GenericObjectPool.DEFAULT_TEST_ON_BORROW );
++
++            boolean testOnReturn     = PropertiesHelper.getBoolean(
++                                            Environment.DBCP_TEST_ON_RESTURN, props,
++                                            GenericObjectPool.DEFAULT_TEST_ON_RETURN );
++
++            boolean testWhileIdle    = PropertiesHelper.getBoolean(
++                                            Environment.DBCP_TEST_WHILE_IDLE, props,
++                                            GenericObjectPool.DEFAULT_TEST_WHILE_IDLE );
++
++            long timeBetweenEvictionRunsMillis = PropertiesHelper.getLong(
++                                            Environment.DBCP_TIME_BETWEEN_EVICTION_RUNS_MILLIS, props,
++                                            GenericObjectPool.DEFAULT_TIME_BETWEEN_EVICTION_RUNS_MILLIS );
++
++            int numTestsPerEvictionRun      = PropertiesHelper.getInt(
++                                            Environment.DBCP_NUM_TESTS_PER_EVICTION_RUN, props,
++                                            GenericObjectPool.DEFAULT_NUM_TESTS_PER_EVICTION_RUN );
++
++            long minEvictableIdleTimeMillis = PropertiesHelper.getLong(
++                                            Environment.DBCP_MIN_EVICTABLE_IDLE_TIME_MILLIS, props,
++                                            GenericObjectPool.DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS );
++
++            StringBuffer sb = new StringBuffer();
++            sb.append( "maxActive                    : " ).append( maxActive ).append( "\n" );
++            sb.append( "whenExhaustedAction          : " ).append( whenExhaustedAction ).append( "\n" );
++            sb.append( "maxWait                      : " ).append( maxWait ).append( "\n" );
++            sb.append( "maxIdle                      : " ).append( maxIdle ).append( "\n" );
++            sb.append( "testOnBorrow                 : " ).append( testOnBorrow ).append( "\n" );
++            sb.append( "testOnReturn                 : " ).append( testOnReturn ).append( "\n" );
++            sb.append( "testWhileIdle                : " ).append( testWhileIdle ).append( "\n" );
++            sb.append( "timeBetweenEvictionRunsMillis: " ).append( timeBetweenEvictionRunsMillis ).append( "\n" );
++            sb.append( "numTestsPerEvictionRun       : " ).append( numTestsPerEvictionRun ).append( "\n" );
++            sb.append( "minEvictableIdleTimeMillis   : " ).append( minEvictableIdleTimeMillis ).append( "\n" );
++
++            log.info( "Settings for GenericObjectPool:\n" + sb.toString() );
++
++            // We'll need a ObjectPool that serves as the
++            // actual pool of connections.
++            GenericObjectPool connectionPool = new GenericObjectPool(
++                null,
++                maxActive,
++                whenExhaustedAction,
++                maxWait,
++                maxIdle,
++                testOnBorrow,
++                testOnReturn,
++                timeBetweenEvictionRunsMillis,
++                numTestsPerEvictionRun,
++                minEvictableIdleTimeMillis,
++                testWhileIdle
++            );
++
++            int ps_maxActive            = PropertiesHelper.getInt(
++                                            Environment.DBCP_PS_MAXACTIVE, props,
++                                            GenericKeyedObjectPool.DEFAULT_MAX_ACTIVE );
++
++            byte ps_whenExhaustedAction = PropertiesHelper.getByte(
++                                            Environment.DBCP_PS_WHENEXHAUSTED, props,
++                                            GenericKeyedObjectPool.DEFAULT_WHEN_EXHAUSTED_ACTION );
++
++            long ps_maxWait             = PropertiesHelper.getLong(
++                                            Environment.DBCP_PS_MAXWAIT, props,
++                                            GenericKeyedObjectPool.DEFAULT_MAX_WAIT );
++
++            int ps_maxIdle              = PropertiesHelper.getInt(
++                                            Environment.DBCP_PS_MAXIDLE, props,
++                                            GenericKeyedObjectPool.DEFAULT_MAX_IDLE );
++
++            boolean ps_testOnBorrow     = PropertiesHelper.getBoolean(
++                                            Environment.DBCP_PS_TEST_ON_BORROW, props,
++                                            GenericKeyedObjectPool.DEFAULT_TEST_ON_BORROW );
++
++            boolean ps_testOnReturn     = PropertiesHelper.getBoolean(
++                                            Environment.DBCP_PS_TEST_ON_RESTURN, props,
++                                            GenericKeyedObjectPool.DEFAULT_TEST_ON_RETURN );
++
++            boolean ps_testWhileIdle    = PropertiesHelper.getBoolean(
++                                            Environment.DBCP_PS_TEST_WHILE_IDLE, props,
++                                            GenericKeyedObjectPool.DEFAULT_TEST_WHILE_IDLE );
++
++            long ps_timeBetweenEvictionRunsMillis = PropertiesHelper.getLong(
++                                            Environment.DBCP_PS_TIME_BETWEEN_EVICTION_RUNS_MILLIS, props,
++                                            GenericKeyedObjectPool.DEFAULT_TIME_BETWEEN_EVICTION_RUNS_MILLIS );
++
++            int ps_numTestsPerEvictionRun      = PropertiesHelper.getInt(
++                                            Environment.DBCP_PS_NUM_TESTS_PER_EVICTION_RUN, props,
++                                            GenericKeyedObjectPool.DEFAULT_NUM_TESTS_PER_EVICTION_RUN );
++
++            long ps_minEvictableIdleTimeMillis = PropertiesHelper.getLong(
++                                            Environment.DBCP_PS_MIN_EVICTABLE_IDLE_TIME_MILLIS, props,
++                                            GenericKeyedObjectPool.DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS );
++
++            StringBuffer ps_sb = new StringBuffer();
++            ps_sb.append( "ps_maxActive                    : " ).append( ps_maxActive ).append( "\n" );
++            ps_sb.append( "ps_whenExhaustedAction          : " ).append( ps_whenExhaustedAction ).append( "\n" );
++            ps_sb.append( "ps_maxWait                      : " ).append( ps_maxWait ).append( "\n" );
++            ps_sb.append( "ps_maxIdle                      : " ).append( ps_maxIdle ).append( "\n" );
++            ps_sb.append( "ps_testOnBorrow                 : " ).append( ps_testOnBorrow ).append( "\n" );
++            ps_sb.append( "ps_testOnReturn                 : " ).append( ps_testOnReturn ).append( "\n" );
++            ps_sb.append( "ps_testWhileIdle                : " ).append( ps_testWhileIdle ).append( "\n" );
++            ps_sb.append( "ps_timeBetweenEvictionRunsMillis: " ).append( ps_timeBetweenEvictionRunsMillis ).append( "\n" );
++            ps_sb.append( "ps_numTestsPerEvictionRun       : " ).append( ps_numTestsPerEvictionRun ).append( "\n" );
++            ps_sb.append( "ps_minEvictableIdleTimeMillis   : " ).append( ps_minEvictableIdleTimeMillis ).append( "\n" );
++
++            log.info( "Settings for GenericKeyedObjectPoolFactory:\n" + ps_sb.toString() );
++
++            // We'll need a KeyedObjectPoolFactory that serves as the
++            // actual pool of prepared statements.
++            KeyedObjectPoolFactory statementPool = new GenericKeyedObjectPoolFactory(
++                null,
++                ps_maxActive,
++                ps_whenExhaustedAction,
++                ps_maxWait,
++                ps_maxIdle,
++                ps_testOnBorrow,
++                ps_testOnReturn,
++                ps_timeBetweenEvictionRunsMillis,
++                ps_numTestsPerEvictionRun,
++                ps_minEvictableIdleTimeMillis,
++                ps_testWhileIdle
++            );
++
++            // Next, we'll create a ConnectionFactory that the
++            // pool will use to create Connections.
++            // We'll use the DriverManagerConnectionFactory.
++            ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(jdbcUrl, connectionProps);
++
++            // Now we'll create the PoolableConnectionFactory, which wraps
++            // the "real" Connections created by the ConnectionFactory with
++            // the classes that implement the pooling functionality.
++            String validationQuery = props.getProperty(Environment.DBCP_VALIDATION_QUERY);
++            log.info( "Validation query: " + validationQuery );
++
++            new PoolableConnectionFactory(connectionFactory, connectionPool, statementPool, validationQuery, false, false);
++
++            // Finally, we create the PoolingDriver itself,
++            // passing in the object pool we created.
++            ds = new PoolingDataSource(connectionPool);
++        }
++        catch (Exception e) {
++            log.fatal("could not instantiate DBCP connection pool", e);
++            throw new HibernateException( "Could not instantiate DBCP connection pool", e );
++        }
++
++        String i = props.getProperty(Environment.ISOLATION);
++        if (i==null) {
++            isolation=null;
++        }
++        else {
++            isolation = new Integer(i);
++            log.info("JDBC isolation level: " + Environment.isolationLevelToString( isolation.intValue() ) );
++        }
++
+     }
+ 
+ }
+ 
+-                                                           
+\ No newline at end of file
+Index: cirrus/hibernate/helpers/PropertiesHelper.java
+===================================================================
+RCS file: /cvsroot/hibernate/Hibernate/cirrus/hibernate/helpers/PropertiesHelper.java,v
+retrieving revision 1.3
+diff -a -u -r1.3 PropertiesHelper.java
+--- cirrus/hibernate/helpers/PropertiesHelper.java	26 Nov 2002 03:35:42 -0000	1.3
++++ cirrus/hibernate/helpers/PropertiesHelper.java	20 May 2003 10:15:24 -0000
+@@ -13,12 +13,24 @@
+ 		return Boolean.valueOf( properties.getProperty(property) ).booleanValue();
+ 	}
+ 
++	public static boolean getBoolean(String property, Properties properties, boolean defaultValue) {
++		return Boolean.valueOf( properties.getProperty(property) ).booleanValue();
++	}
++
++	public static byte getByte(String property, Properties properties, byte defaultValue) {
++		String propValue = properties.getProperty(property);
++		return (propValue==null) ? defaultValue : Byte.parseByte(propValue);
++	}
++
+ 	public static int getInt(String property, Properties properties, int defaultValue) {
+ 		String propValue = properties.getProperty(property);
+ 		return (propValue==null) ? defaultValue : Integer.parseInt(propValue);
+ 	}
+-	
+ 
++	public static long getLong(String property, Properties properties, long defaultValue) {
++		String propValue = properties.getProperty(property);
++		return (propValue==null) ? defaultValue : Long.parseLong(propValue);
++	}
+ 
+ 	public static Integer getInteger(String property, Properties properties) {
+ 		String propValue = properties.getProperty(property);
+@@ -39,11 +51,11 @@
+ 		}
+ 		return map;
+ 	}
+-	
++
+ 	public static String[] toStringArray(String property, String delim, Properties properties) {
+ 		return toStringArray( properties.getProperty(property), delim );
+ 	}
+-	
++
+ 	public static String[] toStringArray(String propValue, String delim) {
+ 		if (propValue!=null) {
+ 			return StringHelper.split(delim, propValue);

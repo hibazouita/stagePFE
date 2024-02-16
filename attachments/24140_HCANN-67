@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver					</property>
+		<property name="hibernate.connection.url"         >jdbc:derby://localhost:1527/databaseName;create=true	</property> 
+		<property name="hibernate.connection.username"    >admin												</property>
+		<property name="hibernate.connection.password"    >admin												</property>
+		<property name="hibernate.dialect"				  >org.hibernate.dialect.DerbyDialect					</property>
+		<property name="hibernate.show_sql"				  >true													</property>
+		
+		<!-- moved this to code; it is only used when wiping out an existing database and
+			 creating a new one
+		 -->
+		<!-- <property name="hibernate.hbm2ddl.auto"           >create                                               </property> -->
+		
+		<!-- <mapping class="test.message.Message"/> -->
+		
+		<!-- <mapping class="org.rc.contacts.dao.Address"/> -->
+		<mapping class="org.rc.contacts.dao.Contact"/>
+		<!-- <mapping class="org.rc.contacts.dao.Employer"/> -->
+		<!-- <mapping class="org.rc.contacts.dao.Phone"/> -->
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,14 @@
+Index: AnnotationConfiguration.java
+===================================================================
+--- AnnotationConfiguration.java	(revision 14205)
++++ AnnotationConfiguration.java	(working copy)
+@@ -395,7 +395,8 @@
+ 							if ( f1.hashCode() < f2.hashCode() ) {
+ 								compare = -1;
+ 							}
+-							else if ( f1.hashCode() == f2.hashCode() ) {
++							// Check for object equality (do not use the hashCode as two objects can have identical hashCode values)
++							else if ( f1 == f2 ) {
+ 								compare = 0;
+ 							}
+ 							else {

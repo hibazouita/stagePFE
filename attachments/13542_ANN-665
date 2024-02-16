@@ -1,0 +1,147 @@
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.hibernate.annotations.*;
+
+import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.List;
+
+
+@Entity
+@Table(catalog = "raredomains", name = "staff", uniqueConstraints = @UniqueConstraint(columnNames={"email"}))
+@SQLInsert(sql = "insert into raredomains.staff (email, fax, fname, lname, des_password, phone, title, id) values (?, ?, ?, ?, encrypt(?), ?, ?, ?)")
+@SQLUpdate(sql = "update raredomains.staff set email=?, fax=?, fname=?, lname=?, des_password=encrypt(?), phone=?, title=? where id=?")
+//This @SQLInsert and @SQLUpdate will work, but if SQL column definition will be changed, parameters wouldn't be set properly.
+public class Employee implements Serializable {
+
+    private static final long serialVersionUID = 4888611771508815068L;
+
+    @Id
+    @Column(name = "id")
+    private String username;
+
+    @Column(name = "des_password")
+    private String password;
+
+    @Column(name = "fname")
+    private String firstName;
+
+    @Column(name = "lname")
+    private String lastName;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "fax")
+    private String fax;
+
+    @Column(name = "email")
+    private String email;
+
+    @Fetch(value = FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(catalog = "raredomains", name = "groups",
+            joinColumns = {@JoinColumn(name = "id")}, inverseJoinColumns = {@JoinColumn(name = "groupname")})
+    private List<EmployeeGroup> groups;
+
+
+    public Employee() {
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<EmployeeGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<EmployeeGroup> groups) {
+        this.groups = groups;
+    }
+    
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(username).append(password).append(firstName)
+                .append(lastName).append(title).append(phone).append(fax).append(email).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj instanceof Employee) return false;
+        Employee employee = (Employee) obj;
+        return new EqualsBuilder().append(this.username, employee.username).append(this.password, employee.password)
+                .append(this.firstName, employee.firstName).append(this.lastName, employee.lastName).append(this.title, employee.title)
+                .append(this.phone, employee.phone).append(this.fax, employee.fax).append(this.email, employee.email)
+                .isEquals();
+    }
+}

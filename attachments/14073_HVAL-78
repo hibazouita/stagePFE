@@ -1,0 +1,55 @@
+Index: src/java/org/hibernate/validator/ClassValidator.java
+===================================================================
+--- src/java/org/hibernate/validator/ClassValidator.java	(revision 15019)
++++ src/java/org/hibernate/validator/ClassValidator.java	(working copy)
+@@ -212,10 +212,12 @@
+ 
+ 		//Check on all selected classes
+ 		for ( XClass currClass : classes ) {
++			Map<String, XMethod> getterMap = new HashMap<String, XMethod>();
+ 			List<XMethod> methods = currClass.getDeclaredMethods();
+ 			for ( XMethod method : methods ) {
+-				createMemberValidator( method );
++				createMemberValidator( method, null );
+ 				createChildValidator( method );
++				getterMap.put( getPropertyName( method ), method );
+ 			}
+ 
+ 			List<XProperty> fields = currClass.getDeclaredProperties(
+@@ -222,7 +224,7 @@
+ 					"field", GET_ALL_FILTER
+ 			);
+ 			for ( XProperty field : fields ) {
+-				createMemberValidator( field );
++				createMemberValidator( field, getterMap.get( getPropertyName(field) ) );
+ 				createChildValidator( field );
+ 			}
+ 		}
+@@ -298,8 +300,11 @@
+ 		}
+ 	}
+ 
+-	private void createMemberValidator(XMember member) {
++	private void createMemberValidator(XMember member, XMember getter) {
+ 		boolean validatorPresent = false;
++		if( getter == null) {
++			getter = member;
++		}
+ 		Annotation[] memberAnnotations = member.getAnnotations();
+ 		for ( Annotation methodAnnotation : memberAnnotations ) {
+ 			Validator propertyValidator = createValidator( methodAnnotation );
+@@ -305,11 +310,11 @@
+ 			Validator propertyValidator = createValidator( methodAnnotation );
+ 			if ( propertyValidator != null ) {
+ 				memberValidators.add( propertyValidator );
+-				setAccessible( member );
+-				memberGetters.add( member );
++				setAccessible( getter );
++				memberGetters.add( getter );
+ 				validatorPresent = true;
+ 			}
+-			boolean agrValidPresent = handleAggregateAnnotations( methodAnnotation, member );
++			boolean agrValidPresent = handleAggregateAnnotations( methodAnnotation, getter );
+ 			validatorPresent = validatorPresent || agrValidPresent;
+ 		}
+ 		if ( validatorPresent && !member.isTypeResolved() ) {

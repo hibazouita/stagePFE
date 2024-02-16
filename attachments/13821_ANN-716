@@ -1,0 +1,11 @@
+Exception in thread "main" org.hibernate.AnnotationException: Cannot find the expected secondary table: no Tperson_address available for test.Address
+	at org.hibernate.cfg.Ejb3Column.getJoin(Ejb3Column.java:293)
+	at org.hibernate.cfg.Ejb3Column.getTable(Ejb3Column.java:272)
+	at org.hibernate.cfg.AnnotationBinder.bindManyToOne(AnnotationBinder.java:1946)
+	at org.hibernate.cfg.AnnotationBinder.processElementAnnotations(AnnotationBinder.java:1368)
+	at org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:754)
+	at org.hibernate.cfg.AnnotationConfiguration.processArtifactsOfType(AnnotationConfiguration.java:534)
+	at org.hibernate.cfg.AnnotationConfiguration.secondPassCompile(AnnotationConfiguration.java:286)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1292)
+	at org.hibernate.cfg.AnnotationConfiguration.buildSessionFactory(AnnotationConfiguration.java:859)
+	at Test.main(Test.java:13)

@@ -1,0 +1,66 @@
+Index: ClassValidator.java
+===================================================================
+--- ClassValidator.java	(revision 15900)
++++ ClassValidator.java	(working copy)
+@@ -26,9 +26,6 @@
+ import org.hibernate.AssertionFailure;
+ import org.hibernate.Hibernate;
+ import org.hibernate.MappingException;
+-import org.hibernate.mapping.PersistentClass;
+-import org.hibernate.mapping.Property;
+-import org.hibernate.mapping.Component;
+ import org.hibernate.annotations.common.reflection.Filter;
+ import org.hibernate.annotations.common.reflection.ReflectionManager;
+ import org.hibernate.annotations.common.reflection.XClass;
+@@ -36,6 +33,12 @@
+ import org.hibernate.annotations.common.reflection.XMethod;
+ import org.hibernate.annotations.common.reflection.XProperty;
+ import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
++import org.hibernate.engine.SessionImplementor;
++import org.hibernate.mapping.Component;
++import org.hibernate.mapping.PersistentClass;
++import org.hibernate.mapping.Property;
++import org.hibernate.proxy.HibernateProxy;
++import org.hibernate.proxy.LazyInitializer;
+ import org.hibernate.util.IdentitySet;
+ import org.hibernate.validator.interpolator.DefaultMessageInterpolatorAggregator;
+ import org.slf4j.Logger;
+@@ -369,6 +372,20 @@
+ 			throw new IllegalArgumentException( "not an instance of: " + bean.getClass() );
+ 		}
+ 
++		// unproxy bean instance
++		if (bean instanceof HibernateProxy && Hibernate.isInitialized(bean)) {
++			LazyInitializer lazyInitializer = ((HibernateProxy) bean).getHibernateLazyInitializer();
++			SessionImplementor sessionImplementor = lazyInitializer.getSession();
++			// check if the given bean still has a session instance attached
++			if (sessionImplementor != null) {
++				// use the unproxy method of the persistenceContext class
++				bean = (T) sessionImplementor.getPersistenceContext().unproxy(bean);
++			} else {
++				// return the wrapped bean instance if there's no active session instance available
++				bean = (T) lazyInitializer.getImplementation();
++			}
++		}
++
+ 		List<InvalidValue> results = new ArrayList<InvalidValue>();
+ 
+ 		for ( int i = 0; i < beanValidators.size() ; i++ ) {
+@@ -382,10 +399,13 @@
+ 			XMember getter = memberGetters.get( i );
+ 			if ( Hibernate.isPropertyInitialized( bean, getPropertyName( getter ) ) ) {
+ 				Object value = getMemberValue( bean, getter );
+-				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
+-					String propertyName = getPropertyName( getter );
+-					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
++				// make sure we only call validators for initialized bean properties
++				if (Hibernate.isInitialized( value ) ) {
++					Validator validator = memberValidators.get( i );
++					if ( !validator.isValid( value ) ) {
++						String propertyName = getPropertyName( getter );
++						results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
++					}
+ 				}
+ 			}
+ 		}

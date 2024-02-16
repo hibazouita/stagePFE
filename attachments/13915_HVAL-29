@@ -1,0 +1,31 @@
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import org.hibernate.validator.ValidatorClass;
+
+/**
+ * The annotated element has to be in the appropriate range. Apply on BigDecimal values.
+ * Usage:
+ * <pre>
+ * @BigDecimalRange(minPrecision=0, maxPrecision=13, scale=2)
+ *	public BigDecimal getFoo() {
+ *		return this.foo;
+ *	}</pre>
+ * @author Priyatam Mudivarti
+ */
+@Documented
+@ValidatorClass(BigDecimalRangeValidator.class)
+@Target({METHOD, FIELD})
+@Retention(RUNTIME)
+public @interface BigDecimalRange {
+	long minPrecision() default Long.MIN_VALUE;
+	long maxPrecision() default Long.MAX_VALUE;
+	int scale() default 0;
+
+	String message() default "precision must be in the range of {minPrecision} to {maxPrecision} with scale<= {scale}";
+}

@@ -1,0 +1,1224 @@
+Index: src/test/org/hibernate/ejb/test/callbacks/CallbacksTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/callbacks/CallbacksTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/callbacks/CallbacksTest.java	(cópia de trabalho)
+@@ -14,7 +14,7 @@
+ public class CallbacksTest extends TestCase {
+ 
+ 	public void testCallbackMethod() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Cat c = new Cat();
+ 		c.setName( "Kitty" );
+ 		c.setDateOfBirth( new Date( 90, 11, 15 ) );
+@@ -36,7 +36,7 @@
+ 	}
+ 
+ 	public void testEntityListener() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Cat c = new Cat();
+ 		c.setName( "Kitty" );
+ 		c.setLength( 12 );
+@@ -63,7 +63,7 @@
+ 
+ 
+ 	public void testPostPersist() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Cat c = new Cat();
+ 		em.getTransaction().begin();
+ 		c.setLength( 23 );
+@@ -80,7 +80,7 @@
+ 
+ 	//Not a test since the spec did not make the proper change on listeners
+ 	public void listenerAnnotation() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Translation tl = new Translation();
+ 		em.getTransaction().begin();
+ 		tl.setInto( "France" );
+@@ -102,7 +102,7 @@
+ 	}
+ 
+ 	public void testPrePersistOnCascade() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Television tv = new Television();
+ 		RemoteControl rc = new RemoteControl();
+@@ -116,7 +116,7 @@
+ 	}
+ 
+ 	public void testCallBackListenersHierarchy() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Television tv = new Television();
+ 		em.persist( tv );
+@@ -131,7 +131,7 @@
+ 	}
+ 
+ 	public void testException() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Rythm r = new Rythm();
+ 		try {
+@@ -154,7 +154,7 @@
+ 	public void testIdNullSetByPrePersist() throws Exception {
+ 		Plant plant = new Plant();
+ 		plant.setName( "Origuna plantula gigantic" );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( plant );
+ 		em.flush();
+Index: src/test/org/hibernate/ejb/test/callbacks/CallbackAndDirtyTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/callbacks/CallbackAndDirtyTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/callbacks/CallbackAndDirtyTest.java	(cópia de trabalho)
+@@ -13,7 +13,7 @@
+ public class CallbackAndDirtyTest extends TestCase {
+ 
+ 	public void testDirtyButNotDirty() throws Exception {
+-		EntityManager manager = factory.createEntityManager();
++		EntityManager manager = getOrCreateEntityManager();
+ 		manager.getTransaction().begin();
+ 		Employee mark = new Employee();
+ 		mark.setName( "Mark" );
+Index: src/test/org/hibernate/ejb/test/cascade/DeleteOrphanTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/cascade/DeleteOrphanTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/cascade/DeleteOrphanTest.java	(cópia de trabalho)
+@@ -20,7 +20,7 @@
+ 	public void testDeleteOrphan() throws Exception {
+ 		EntityTransaction tx;
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		Troop disney = new Troop();
+@@ -33,7 +33,7 @@
+ 		tx.commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		Troop troop = em.find( Troop.class, disney.getId() );
+@@ -45,14 +45,14 @@
+ 		troop.getSoldiers().remove( soldier );
+ 		troop = (Troop) unserialize( serialize( troop ) );
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		em.merge( troop );
+ 		tx.commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		soldier = em.find( Soldier.class, mickey.getId() );
+Index: src/test/org/hibernate/ejb/test/cascade/FetchTest2.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/cascade/FetchTest2.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/cascade/FetchTest2.java	(cópia de trabalho)
+@@ -8,7 +8,7 @@
+ 
+ 	public void testProxyTransientStuff() throws Exception {
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 
+ 		Troop2 disney = new Troop2();
+@@ -24,7 +24,7 @@
+ 		em.getTransaction().commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 
+ 		Soldier2 soldier = em.find( Soldier2.class, mickey.getId() );
+@@ -39,7 +39,7 @@
+ 		em.getTransaction().commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 
+ 		//load troop wo a proxy
+Index: src/test/org/hibernate/ejb/test/cascade/CascadeTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/cascade/CascadeTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/cascade/CascadeTest.java	(cópia de trabalho)
+@@ -14,7 +14,7 @@
+ 
+ 	public void testCascade() throws Exception {
+ 		
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		
+ 		Teacher teacher = null;
+@@ -33,7 +33,7 @@
+ 		em.getTransaction().commit();
+ 	
+ 		System.out.println("***************************");
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		
+ 		Teacher foundTeacher = (Teacher) em.createQuery( "select t from Teacher as t" ).getSingleResult();
+@@ -59,7 +59,7 @@
+ 
+ 		e1.setAuthor(e2);
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		EntityTransaction tx = em.getTransaction();
+ 		tx.begin();
+ 		em.persist(e2);
+@@ -67,7 +67,7 @@
+ 		tx.commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 
+ 		e1 = em.find(Song.class, e1.getId());
+ 		e2 = null;
+Index: src/test/org/hibernate/ejb/test/cascade/FetchTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/cascade/FetchTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/cascade/FetchTest.java	(cópia de trabalho)
+@@ -17,7 +17,7 @@
+ public class FetchTest extends TestCase {
+ 
+ 	public void testCascadeAndFetchCollection() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Troop disney = new Troop();
+ 		disney.setName( "Disney" );
+@@ -28,7 +28,7 @@
+ 		em.getTransaction().commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Troop troop = em.find( Troop.class, disney.getId() );
+ 		assertFalse( Hibernate.isInitialized( troop.getSoldiers() ) );
+@@ -36,7 +36,7 @@
+ 		assertFalse( Hibernate.isInitialized( troop.getSoldiers() ) );
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		troop = em.find( Troop.class, disney.getId() );
+ 		em.remove( troop );
+@@ -46,7 +46,7 @@
+ 	}
+ 
+ 	public void testCascadeAndFetchEntity() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Troop disney = new Troop();
+ 		disney.setName( "Disney" );
+@@ -57,14 +57,14 @@
+ 		em.getTransaction().commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Soldier soldier = em.find( Soldier.class, mickey.getId() );
+ 		assertFalse( Hibernate.isInitialized( soldier.getTroop() ) );
+ 		em.getTransaction().commit();
+ 		assertFalse( Hibernate.isInitialized( soldier.getTroop() ) );
+ 		em.close();
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Troop troop = em.find( Troop.class, disney.getId() );
+ 		em.remove( troop );
+@@ -76,7 +76,7 @@
+ 	public void testTwoLevelDeepPersist() throws Exception {
+ 		EntityTransaction tx;
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		Conference jbwBarcelona = new Conference();
+@@ -94,7 +94,7 @@
+ 		tx.commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		jbwBarcelona = em.find( Conference.class, jbwBarcelona.getId() );
+@@ -112,7 +112,7 @@
+ 
+ 	public void testTwoLevelDeepPersistOnManyToOne() throws Exception {
+ 		EntityTransaction tx;
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		Grandson gs = new Grandson();
+@@ -121,7 +121,7 @@
+ 		em.persist( gs );
+ 		tx.commit();
+ 		em.close();
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		tx = em.getTransaction();
+ 		tx.begin();
+ 		gs = em.find( Grandson.class, gs.getId() );
+@@ -134,7 +134,7 @@
+ 	}
+ 
+ 	public void testPerfCascadeAndFetchEntity() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		//init data
+ 		em.getTransaction().begin();
+ 		int loop = 50;
+@@ -150,7 +150,7 @@
+ 		em.close();
+ 
+ 		//Warm up loop
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		for ( int i = 0; i < loop ; i++ ) {
+ 			//Soldier soldier = em.find( Soldier.class, new Integer(i) );
+@@ -167,7 +167,7 @@
+ 
+ 		//do not evict
+ 		for ( int j = 0; j < 10 ; j++ ) {
+-			em = factory.createEntityManager();
++			em = getOrCreateEntityManager();
+ 			em.getTransaction().begin();
+ 			for ( int i = 0; i < loop ; i++ ) {
+ 				Troop troop = em.find( Troop.class, new Integer( i ) );
+@@ -182,7 +182,7 @@
+ 			em.close();
+ 
+ 			//evict
+-			em = factory.createEntityManager();
++			em = getOrCreateEntityManager();
+ 			em.getTransaction().begin();
+ 			for ( int i = 0; i < loop ; i++ ) {
+ 				//Soldier soldier = em.find( Soldier.class, new Integer(i) );
+Index: src/test/org/hibernate/ejb/test/emops/MergeTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/emops/MergeTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/emops/MergeTest.java	(cópia de trabalho)
+@@ -16,7 +16,7 @@
+ 		race.competitors.add( new Competitor("Name") );
+ 		race.competitors.add( new Competitor() );
+ 		race.competitors.add( new Competitor() );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( race );
+ 		em.flush();
+@@ -40,7 +40,7 @@
+ 		competition.getCompetitors().add( new Competitor("Name") );
+ 		competition.getCompetitors().add( new Competitor() );
+ 		competition.getCompetitors().add( new Competitor() );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( competition );
+ 		em.flush();
+@@ -64,7 +64,7 @@
+ 		competition.getCompetitors().add( new Competitor("Name") );
+ 		competition.getCompetitors().add( new Competitor() );
+ 		competition.getCompetitors().add( new Competitor() );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( competition );
+ 		em.flush();
+@@ -86,7 +86,7 @@
+ 
+ 	public void testRemoveAndMerge() {
+ 		Race race = new Race();
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( race );
+ 		em.flush();
+@@ -111,7 +111,7 @@
+ 	public void testConcurrentMerge() {
+ 		Race race = new Race();
+ 		race.name = "Derby";
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( race );
+ 		em.flush();
+@@ -120,7 +120,7 @@
+ 
+ 		race.name = "Magnicourt";
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Race race2 = em.find(Race.class, race.id );
+ 		race2.name = "Mans";
+@@ -130,7 +130,7 @@
+ 		em.getTransaction().commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		race2 = em.find(Race.class, race.id );
+ 		assertEquals( "Last commit win in merge", "Magnicourt", race2.name );
+@@ -141,7 +141,7 @@
+ 	}
+ 
+ 	public void testMergeUnidirectionalOneToMany() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Empire roman = new Empire();
+ 		em.persist( roman );
+Index: src/test/org/hibernate/ejb/test/emops/cascade/CascadePersistTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/emops/cascade/CascadePersistTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/emops/cascade/CascadePersistTest.java	(cópia de trabalho)
+@@ -13,7 +13,7 @@
+ public class CascadePersistTest extends TestCase {
+ 
+ 	public void testLazyCollectionsStayLazyOnPersist() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		//initialize
+ 		A a = new A();
+Index: src/test/org/hibernate/ejb/test/emops/FlushTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/emops/FlushTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/emops/FlushTest.java	(cópia de trabalho)
+@@ -26,7 +26,7 @@
+ 
+ 	//Test for EJBTHREE-722
+ 	public void testFlushOnDetached() throws Exception {
+-		EntityManager manager = factory.createEntityManager( );
++		EntityManager manager = getOrCreateEntityManager( );
+ 
+ 		manager.getTransaction().begin();
+ 		Pet p1 = createCat("Toonses", 15.0, 9, manager);
+Index: src/test/org/hibernate/ejb/test/emops/RemoveTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/emops/RemoveTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/emops/RemoveTest.java	(cópia de trabalho)
+@@ -16,7 +16,7 @@
+ 		race.competitors.add( new Competitor() );
+ 		race.competitors.add( new Competitor() );
+ 		race.competitors.add( new Competitor() );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( race );
+ 		em.flush();
+@@ -28,7 +28,7 @@
+ 
+ 	public void testRemoveAndFind() {
+ 		Race race = new Race();
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( race );
+ 		em.remove( race );
+@@ -40,26 +40,27 @@
+ 	public void testUpdatedAndRemove() {
+ 		Music music = new Music();
+ 		music.setName( "Classical" );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( music );
+ 		em.getTransaction().commit();
+ 
+ 		em.clear();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		EntityManager em2 = factory.createEntityManager();
+-		em2.getTransaction().begin();
+ 
+-		//read music from 2nd EM
+-		music = em2.find( Music.class, music.getId() );
+-
+ 		//change music
+ 		em.find( Music.class, music.getId() ).setName( "Rap" );
+ 		em.getTransaction().commit();
+ 
+ 		try {
++			em2.getTransaction().begin();
++
++			//read music from 2nd EM
++			music = em2.find( Music.class, music.getId() );
++
+ 			em2.remove( music ); //remove changed music
+ 			em2.flush();
+ 			fail("should have an optimistic lock exception");
+Index: src/test/org/hibernate/ejb/test/emops/GetReferenceTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/emops/GetReferenceTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/emops/GetReferenceTest.java	(cópia de trabalho)
+@@ -12,7 +12,7 @@
+ public class GetReferenceTest extends TestCase {
+ 
+ 	public void testWrongIdType() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		try {
+ 			Competitor c = em.getReference( Competitor.class, new String("30") );
+ 			fail("Expected IllegalArgumentException");
+Index: src/test/org/hibernate/ejb/test/emops/RefreshTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/emops/RefreshTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/emops/RefreshTest.java	(cópia de trabalho)
+@@ -11,7 +11,7 @@
+ public class RefreshTest extends TestCase {
+ 
+ 	public void testRefreshNonManaged() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Race race = new Race();
+ 		em.persist( race );
+Index: src/test/org/hibernate/ejb/test/QueryTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/QueryTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/QueryTest.java	(cópia de trabalho)
+@@ -17,7 +17,7 @@
+ public class QueryTest extends TestCase {
+ 
+ 	public void testPagedQuery() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 		em.persist( item );
+@@ -36,7 +36,7 @@
+ 	}
+ 
+ 	public void testAggregationReturnType() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 		em.persist( item );
+@@ -53,7 +53,7 @@
+ 		final Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 		final Item item2 = new Item( "Computer", "D�ll computer" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		em.persist( item2 );
+@@ -97,7 +97,7 @@
+ //		auchan.setName("Auchan");
+ //		item.addDistributor(auchan);
+ //
+-//		EntityManager em = factory.createEntityManager();
++//		EntityManager em = getOrCreateEntityManager();
+ //		em.getTransaction().begin();
+ //		em.persist(fnac);
+ //		em.persist(auchan);
+@@ -125,7 +125,7 @@
+ 		final Item item = new Item( "Mouse", "Micro_oft mouse" );
+ 		final Item item2 = new Item( "Computer", "D�ll computer" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		em.persist( item2 );
+@@ -148,7 +148,7 @@
+ 
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		assertTrue( em.contains( item ) );
+@@ -169,7 +169,7 @@
+ 
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		assertTrue( em.contains( item ) );
+@@ -188,7 +188,7 @@
+ 	}
+ 
+ 	public void testExplicitPositionalParameter() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Wallet w = new Wallet();
+ 		w.setBrand( "Lacoste" );
+@@ -213,7 +213,7 @@
+ 	}
+ 
+ 	public void testNativeQuestionMarkParameter() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Wallet w = new Wallet();
+ 		w.setBrand( "Lacoste" );
+@@ -235,7 +235,7 @@
+ 
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		assertTrue( em.contains( item ) );
+@@ -260,7 +260,7 @@
+ 	}
+ 
+ 	public void testDistinct() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.createQuery( "delete Item" ).executeUpdate();
+ 		em.createQuery( "delete Distributor" ).executeUpdate();
+@@ -288,7 +288,7 @@
+ 	}
+ 
+ 	public void testIsNull() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Distributor d1 = new Distributor();
+ 		d1.setName( "Fnac" );
+@@ -324,7 +324,7 @@
+ 
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		assertTrue( em.contains( item ) );
+@@ -349,7 +349,7 @@
+ 	public void testUnavailableNamedQuery() throws Exception {
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		try {
+Index: src/test/org/hibernate/ejb/test/transaction/FlushAndTransactionTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/transaction/FlushAndTransactionTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/transaction/FlushAndTransactionTest.java	(cópia de trabalho)
+@@ -21,7 +21,7 @@
+ 	public void testAlwaysTransactionalOperations() throws Exception {
+ 		Book book = new Book();
+ 		book.name = "Le petit prince";
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( book );
+ 		em.getTransaction().commit();
+@@ -47,7 +47,7 @@
+ //	public void testTransactionalOperationsWhenTransactional() throws Exception {
+ //		Book book = new Book();
+ //		book.name = "Le petit prince";
+-//		EntityManager em = factory.createEntityManager( PersistenceContextType.TRANSACTION );
++//		EntityManager em = getOrCreateEntityManager( PersistenceContextType.TRANSACTION );
+ //		try {
+ //			em.persist( book );
+ //			fail("flush has to be inside a Tx");
+@@ -75,7 +75,7 @@
+ 	public void testTransactionalOperationsWhenExtended() throws Exception {
+ 		Book book = new Book();
+ 		book.name = "Le petit prince";
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Statistics stats = ( (HibernateEntityManagerFactory) factory ).getSessionFactory().getStatistics();
+ 		stats.clear();
+ 		stats.setStatisticsEnabled( true );
+@@ -118,7 +118,7 @@
+ 	public void testMergeWhenExtended() throws Exception {
+ 		Book book = new Book();
+ 		book.name = "Le petit prince";
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Statistics stats = ( (HibernateEntityManagerFactory) factory ).getSessionFactory().getStatistics();
+ 
+ 		em.getTransaction().begin();
+@@ -159,7 +159,7 @@
+ 	}
+ 
+ 	public void testCloseAndTransaction() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Book book = new Book();
+ 		book.name = "Java for Dummies";
+@@ -176,7 +176,7 @@
+ 		}
+ 		em.getTransaction().commit();
+ 		assertFalse( em.isOpen() );
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		book = em.find( Book.class, book.id );
+ 		assertEquals( "C# for Dummies", book.name );
+@@ -186,14 +186,14 @@
+ 	}
+ 
+ 	public void testTransactionCommitDoesNotFlush() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Book book = new Book();
+ 		book.name = "Java for Dummies";
+ 		em.persist( book );
+ 		em.getTransaction().commit();
+ 		em.close();
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		List result = em.createQuery("select book from Book book where book.name = :title").
+ 				setParameter( "title", book.name ).getResultList();
+@@ -203,14 +203,14 @@
+ 	}
+ 
+ 	public void testTransactionAndContains() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Book book = new Book();
+ 		book.name = "Java for Dummies";
+ 		em.persist( book );
+ 		em.getTransaction().commit();
+ 		em.close();
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		List result = em.createQuery("select book from Book book where book.name = :title").
+ 				setParameter( "title", book.name ).getResultList();
+@@ -225,7 +225,7 @@
+ 		Book book = new Book();
+ 		book.name = "Stolen keys";
+ 		book.id = null; //new Integer( 50 );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		try {
+ 			em.persist( book );
+@@ -260,7 +260,7 @@
+ 		Book book = new Book();
+ 		book.name = "Stolen keys";
+ 		book.id = null; //new Integer( 50 );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( book );
+ 		em.flush();
+@@ -287,7 +287,7 @@
+ 	public void testRollbackClearPC() throws Exception {
+ 		Book book = new Book();
+ 		book.name = "Stolen keys";
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( book );
+ 		em.getTransaction().commit();
+Index: src/test/org/hibernate/ejb/test/EntityManagerTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/EntityManagerTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/EntityManagerTest.java	(cópia de trabalho)
+@@ -49,7 +49,7 @@
+ //
+ //		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ //
+-//		EntityManager em = factory.createEntityManager();
++//		EntityManager em = getOrCreateEntityManager();
+ //		em.getTransaction().begin();
+ //		em.persist( item );
+ //		assertTrue( em.contains( item ) );
+@@ -95,7 +95,7 @@
+ 
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		assertTrue( em.contains( item ) );
+@@ -148,7 +148,7 @@
+ 		stats.clear();
+ 		stats.setStatisticsEnabled( true );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 
+ 		em.persist( res );
+@@ -161,7 +161,7 @@
+ 		assertEquals( 1, stats.getSecondLevelCachePutCount() );
+ 		assertEquals( 0, stats.getSecondLevelCacheHitCount() );
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Item second = em.find( Item.class, item.getName() );
+ 		assertEquals( 1, second.getDistributors().size() );
+@@ -169,7 +169,7 @@
+ 		em.getTransaction().commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		second = em.find( Item.class, item.getName() );
+ 		assertEquals( 1, second.getDistributors().size() );
+@@ -184,7 +184,7 @@
+ 	}
+ 
+ 	public void testContains() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Integer nonManagedObject = new Integer( 4 );
+ 		try {
+@@ -198,7 +198,7 @@
+ 		finally {
+ 			em.close();
+ 		}
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Item item = new Item();
+ 		item.setDescr( "Mine" );
+@@ -214,7 +214,7 @@
+ 	}
+ 
+ 	public void testClear() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Wallet w = new Wallet();
+ 		w.setBrand( "Lacoste" );
+@@ -229,7 +229,7 @@
+ 	}
+ 
+ 	public void testFlushMode() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.setFlushMode( FlushModeType.COMMIT );
+ 		assertEquals( FlushModeType.COMMIT, em.getFlushMode() );
+ 		( (HibernateEntityManager) em ).getSession().setFlushMode( FlushMode.ALWAYS );
+@@ -238,7 +238,7 @@
+ 	}
+ 
+ 	public void testPersistNoneGenerator() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Wallet w = new Wallet();
+ 		w.setBrand( "Lacoste" );
+@@ -255,7 +255,7 @@
+ 	}
+ 
+ 	public void testSerializableException() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		try {
+ 			Query query = em.createQuery( "SELECT p FETCH JOIN p.distributors FROM Item p" );
+@@ -297,7 +297,7 @@
+ 	}
+ 
+ 	public void testIsOpen() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		assertTrue( em.isOpen() );
+ 		em.getTransaction().begin();
+ 		assertTrue( em.isOpen() );
+@@ -308,7 +308,7 @@
+ 
+ 	//EJB-9
+ //	public void testGet() throws Exception {
+-//		EntityManager em = factory.createEntityManager();
++//		EntityManager em = getOrCreateEntityManager();
+ //		em.getTransaction().begin();
+ //		Item item = (Item) em.get(Item.class, "nonexistentone");
+ //		try {
+Index: src/test/org/hibernate/ejb/test/lock/LockTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/lock/LockTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/lock/LockTest.java	(cópia de trabalho)
+@@ -14,7 +14,7 @@
+ 	public void testLockRead() throws Exception {
+ 		Lock lock = new Lock();
+ 		lock.setName( "name" );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( lock );
+ 		em.getTransaction().commit();
+@@ -35,7 +35,7 @@
+ 	public void testLockWrite() throws Exception {
+ 		Lock lock = new Lock();
+ 		lock.setName( "second" );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( lock );
+ 		em.getTransaction().commit();
+@@ -61,7 +61,7 @@
+ 	public void testLockWriteOnUnversioned() throws Exception {
+ 		UnversionedLock lock = new UnversionedLock();
+ 		lock.setName( "second" );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( lock );
+ 		em.getTransaction().commit();
+Index: src/test/org/hibernate/ejb/test/inheritance/InheritanceTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/inheritance/InheritanceTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/inheritance/InheritanceTest.java	(cópia de trabalho)
+@@ -11,7 +11,7 @@
+ public class InheritanceTest extends TestCase {
+ 
+ 	public void testFind() throws Exception {
+-		EntityManager firstSession = factory.createEntityManager( );
++		EntityManager firstSession = getOrCreateEntityManager( );
+         Strawberry u = new Strawberry();
+ 		u.setSize( 12l );
+ 		firstSession.getTransaction().begin();
+Index: src/test/org/hibernate/ejb/test/TestCase.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/TestCase.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/TestCase.java	(cópia de trabalho)
+@@ -7,9 +7,13 @@
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Properties;
++
++import javax.persistence.EntityManager;
+ import javax.persistence.EntityManagerFactory;
+ import javax.persistence.Persistence;
+ 
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
+ import org.hibernate.cfg.Environment;
+ import org.hibernate.dialect.Dialect;
+ import org.hibernate.ejb.HibernatePersistence;
+@@ -20,6 +24,8 @@
+  */
+ public abstract class TestCase extends junit.framework.TestCase {
+ 	protected EntityManagerFactory factory;
++	protected EntityManager em;
++	private static Log log = LogFactory.getLog( TestCase.class );
+ 
+ 	public TestCase() {
+ 		super();
+@@ -36,7 +42,43 @@
+ 	public void tearDown() {
+ 		factory.close();
+ 	}
++	
++	@Override
++	public void runTest() throws Throwable {
++		try {
++			em = getOrCreateEntityManager();
++			super.runTest();
++			if (em.getTransaction().isActive()) {
++				em.getTransaction().rollback();
++				fail("You left an open transaction! Fix your test case. For now, we are closing it for you.");
++			}
++		} catch (Throwable t) {
++			if (em.getTransaction().isActive())  
++				em.getTransaction().rollback();
++			throw t;
++		} finally {
++			if (em.isOpen()) {
++				em.close();
++				log.warn("The test case didn't closed the Entity Manager. Make sure you close it always!");
++			}
++		}
++	}
++	
++	protected EntityManager getOrCreateEntityManager() {
++		if (em == null || !em.isOpen()) 
++			em = factory.createEntityManager();
++		return em;
++	}
+ 
++	/** always reopen a new EM and clse the existing one */
++	protected EntityManager createEntityManager(Map properties) {
++		if (em != null && em.isOpen() ) {
++			em.close();
++		}
++		em = factory.createEntityManager(properties);
++		return em;
++	}
++
+ 	public abstract Class[] getAnnotatedClasses();
+ 
+ 	public String[] getEjb3DD() {
+Index: src/test/org/hibernate/ejb/test/exception/ExceptionTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/exception/ExceptionTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/exception/ExceptionTest.java	(cópia de trabalho)
+@@ -15,7 +15,7 @@
+ public class ExceptionTest extends TestCase {
+ 
+ 	public void testOptimisticLockingException() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		EntityManager em2 = factory.createEntityManager();
+ 		em.getTransaction().begin();
+ 		Music music = new Music();
+@@ -50,7 +50,7 @@
+ 	}
+ 
+ 	public void testEntityNotFoundException() throws Exception {
+-		EntityManager em = factory.createEntityManager( );
++		EntityManager em = getOrCreateEntityManager( );
+ 		Music music = em.getReference( Music.class, new Integer(-1) );
+ 		try {
+ 			music.getName();
+Index: src/test/org/hibernate/ejb/test/xml/XmlTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/xml/XmlTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/xml/XmlTest.java	(cópia de trabalho)
+@@ -10,7 +10,7 @@
+  */
+ public class XmlTest extends TestCase {
+ 	public void testXmlMappingCorrectness() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.close();
+ 	}
+ 
+Index: src/test/org/hibernate/ejb/test/xml/XmlAttributeOverrideTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/xml/XmlAttributeOverrideTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/xml/XmlAttributeOverrideTest.java	(cópia de trabalho)
+@@ -11,7 +11,7 @@
+ public class XmlAttributeOverrideTest extends TestCase {
+ 
+ 	public void testAttributeOverriding() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 
+         Employee e = new Employee();
+@@ -29,7 +29,7 @@
+ 	}
+ 
+ 	public void testDefaultEventListener() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 
+ 		CounterListener.reset();
+Index: src/test/org/hibernate/ejb/test/ops/MergeNewTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/ops/MergeNewTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/ops/MergeNewTest.java	(cópia de trabalho)
+@@ -14,7 +14,7 @@
+ 		Workload load = new Workload();
+ 		load.name = "Cleaning";
+ 		load.load = 10;
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		load = em.merge( load );
+ 		assertNotNull( load.id );
+@@ -28,20 +28,20 @@
+ 		Workload load = new Workload();
+ 		load.name = "Cleaning";
+ 		load.load = 10;
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		load = em.merge( load );
+ 		em.flush();
+ 		em.getTransaction().commit();
+ 		em.close();
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		load = em.find( Workload.class, load.id );
+ 		em.remove( load );
+ 		em.flush();
+ 		em.getTransaction().commit();
+ 		em.close();
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.merge( load );
+ 		em.flush();
+Index: src/test/org/hibernate/ejb/test/ops/FindTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/ops/FindTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/ops/FindTest.java	(cópia de trabalho)
+@@ -14,7 +14,7 @@
+ 		Mammal mammal = new Mammal();
+ 		mammal.setMamalNbr( 2 );
+ 		mammal.setName( "Human" );
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( mammal );
+ 		em.flush();
+Index: src/test/org/hibernate/ejb/test/PackagedEntityManagerTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/PackagedEntityManagerTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/PackagedEntityManagerTest.java	(cópia de trabalho)
+@@ -258,7 +258,7 @@
+ //
+ //		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ //
+-//		EntityManager em = factory.createEntityManager();
++//		EntityManager em = getOrCreateEntityManager();
+ //		em.getTransaction().begin();
+ //		em.persist( item );
+ //		assertTrue( em.contains( item ) );
+@@ -307,7 +307,7 @@
+ 
+ 		Item item = new Item( "Mouse", "Micro$oft mouse" );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		em.persist( item );
+ 		assertTrue( em.contains( item ) );
+@@ -360,7 +360,7 @@
+ 		stats.clear();
+ 		stats.setStatisticsEnabled( true );
+ 
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 
+ 		em.persist( res );
+@@ -373,7 +373,7 @@
+ 		assertEquals( 1, stats.getSecondLevelCachePutCount() );
+ 		assertEquals( 0, stats.getSecondLevelCacheHitCount() );
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Item second = em.find( Item.class, item.getName() );
+ 		assertEquals( 1, second.getDistributors().size() );
+@@ -381,7 +381,7 @@
+ 		em.getTransaction().commit();
+ 		em.close();
+ 
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		second = em.find( Item.class, item.getName() );
+ 		assertEquals( 1, second.getDistributors().size() );
+@@ -398,7 +398,7 @@
+ 	}
+ 
+ 	public void testExternalJar() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Scooter s = new Scooter();
+ 		s.setModel( "Abadah" );
+ 		s.setSpeed( 85l );
+@@ -406,7 +406,7 @@
+ 		em.persist( s );
+ 		em.getTransaction().commit();
+ 		em.close();
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		s = em.find( Scooter.class, s.getModel() );
+ 		assertEquals( new Long( 85 ), s.getSpeed() );
+@@ -416,7 +416,7 @@
+ 	}
+ 
+ 	public void testORMFileOnMainAndExplicitJars() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		Seat seat = new Seat();
+ 		seat.setNumber( "3B" );
+ 		Airplane plane = new Airplane();
+Index: src/test/org/hibernate/ejb/test/lob/BlobTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/lob/BlobTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/lob/BlobTest.java	(cópia de trabalho)
+@@ -18,7 +18,7 @@
+ public class BlobTest extends TestCase {
+ 
+ 	public void testBlobSerialization() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Map image = new HashMap();
+ 		image.put( "meta", "metadata" );
+@@ -31,7 +31,7 @@
+ 		em.persist( reader );
+ 		em.getTransaction().commit();
+ 		em.close(); //useless but y'a know
+-		em = factory.createEntityManager();
++		em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		reader = em.find( ImageReader.class, reader.getId() );
+ 		ObjectInputStream ois = new ObjectInputStream( reader.getImage().getBinaryStream() );
+Index: src/test/org/hibernate/ejb/test/association/AssociationTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/association/AssociationTest.java	(revisão 15951)
++++ src/test/org/hibernate/ejb/test/association/AssociationTest.java	(cópia de trabalho)
+@@ -10,7 +10,7 @@
+  */
+ public class AssociationTest extends TestCase {
+ 	public void testBidirOneToOne() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		String id = "10";
+ 		Incident i = em.find( Incident.class, id );
+@@ -30,7 +30,7 @@
+ 	}
+ 
+ 	public void testMergeAndBidirOneToOne() throws Exception {
+-		EntityManager em = factory.createEntityManager();
++		EntityManager em = getOrCreateEntityManager();
+ 		em.getTransaction().begin();
+ 		Oven oven = new Oven();
+ 		Kitchen kitchen = new Kitchen();

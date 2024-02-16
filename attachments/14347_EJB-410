@@ -1,0 +1,42 @@
+Index: build.xml
+===================================================================
+--- build.xml	(revisão 15789)
++++ build.xml	(cópia de trabalho)
+@@ -223,22 +223,32 @@
+     </target>
+ 
+     <!-- Run a single unit test. -->
+-    <target name="junitsingle" depends="compiletest"
++    <target name="junitsingle" depends="compiletest,test-resources"
+             description="Run a single test suite (requires testname and jdbc.driver properties)">
+         <mkdir dir="${test.out.dir}"/>
++    	<echo message="${test.dir}"/>
+         <junit printsummary="yes" fork="yes" haltonfailure="yes">
+             <classpath>
+                 <fileset dir="${jdbc.dir}">
+                     <include name="**/*.jar"/>
+                     <include name="**/*.zip"/>
+                 </fileset>
++                <dirset dir="${build.testresources.dir}">
++                    <include name="**/*.jar"/>
++                    <include name="**/*.par"/>
++                </dirset>
++
++                <fileset dir="${build.testresources.dir}">
++                    <include name="**/*.jar"/>
++                    <include name="**/*.par"/>
++                </fileset>
+                 <path refid="lib.class.path"/>
+-                <pathelement path="build/test.par"/>
+-                <pathelement path="target/hibernate-entitymanager/hibernate-entitymanager.jar"/>
++                <pathelement path="${classes.dir}"/>
++                <dirset dir="${testclasses.dir}">
++                    <exclude name="**/pack/**.*"/>
++                </dirset>
+                 <pathelement path="${src.dir}"/>
+-                <!-- pick up properties from here -->
+                 <pathelement path="${test.dir}"/>
+-                <!-- pick up mappings from here -->
+             </classpath>
+             <formatter type="plain"/>
+             <formatter type="xml"/>

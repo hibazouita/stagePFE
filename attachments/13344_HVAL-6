@@ -1,0 +1,32 @@
+Index: validator/src/java/org/hibernate/validator/AbstractLuhnValidator.java
+===================================================================
+--- validator/src/java/org/hibernate/validator/AbstractLuhnValidator.java	(revision 12754)
++++ validator/src/java/org/hibernate/validator/AbstractLuhnValidator.java	(working copy)
+@@ -19,9 +19,10 @@
+ 
+ 		List<Integer> ints = new ArrayList<Integer>();
+ 		for (char c : chars) {
+-			if ( Character.isDigit( c ) ) ints.add( c - '0' );
++			if ( Character.isDigit( c ) && Character.UnicodeBlock.of( c ) == Character.UnicodeBlock.BASIC_LATIN ) ints.add( c - '0' );
+ 		}
+ 		int length = ints.size();
++		if ( length == 0 ) return false;
+ 		int sum = 0;
+ 		boolean even = false;
+ 		for ( int index = length - 1 ; index >= 0 ; index-- ) {
+Index: validator/src/java/org/hibernate/validator/EANValidator.java
+===================================================================
+--- validator/src/java/org/hibernate/validator/EANValidator.java	(revision 12754)
++++ validator/src/java/org/hibernate/validator/EANValidator.java	(working copy)
+@@ -23,9 +23,10 @@
+ 
+ 		List<Integer> ints = new ArrayList<Integer>();
+ 		for (char c : chars) {
+-			if ( Character.isDigit( c ) ) ints.add( c - '0' );
++			if ( Character.isDigit( c ) && Character.UnicodeBlock.of( c ) == Character.UnicodeBlock.BASIC_LATIN ) ints.add( c - '0' );
+ 		}
+ 		int length = ints.size();
++		if ( length == 0 ) return false;
+ 		int sum = 0;
+ 		boolean even = false;
+ 		for ( int index = length - 1 ; index >= 0 ; index-- ) {

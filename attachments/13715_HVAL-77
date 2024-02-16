@@ -1,0 +1,103 @@
+Index: src/test/org/hibernate/validator/test/valid/Child.java
+===================================================================
+--- src/test/org/hibernate/validator/test/valid/Child.java	(revision 0)
++++ src/test/org/hibernate/validator/test/valid/Child.java	(revision 0)
+@@ -0,0 +1,18 @@
++package org.hibernate.validator.test.valid;
++
++import org.hibernate.validator.NotEmpty;
++
++public class Child {
++    
++    private String name;
++    
++    @NotEmpty
++    public String getName() {
++        return name;
++    }
++    
++    public void setName(String name) {
++        this.name = name;
++    }
++    
++}
+Index: src/test/org/hibernate/validator/test/valid/Parent.java
+===================================================================
+--- src/test/org/hibernate/validator/test/valid/Parent.java	(revision 0)
++++ src/test/org/hibernate/validator/test/valid/Parent.java	(revision 0)
+@@ -0,0 +1,18 @@
++package org.hibernate.validator.test.valid;
++
++import java.util.List;
++
++
++public class Parent {
++    
++    private List<Child> children;
++    
++    public List<Child> getChildren() {
++        return children;
++    }
++    
++    public void setChildren(List<Child> children) {
++        this.children = children;
++    }
++    
++}
+Index: src/test/org/hibernate/validator/test/valid/ValidTest.java
+===================================================================
+--- src/test/org/hibernate/validator/test/valid/ValidTest.java	(revision 14283)
++++ src/test/org/hibernate/validator/test/valid/ValidTest.java	(working copy)
+@@ -1,7 +1,11 @@
+-//$Id: $
++// $Id: $
+ package org.hibernate.validator.test.valid;
+ 
++import java.util.ArrayList;
++import java.util.List;
++
+ import junit.framework.TestCase;
++
+ import org.hibernate.validator.ClassValidator;
+ import org.hibernate.validator.InvalidValue;
+ 
+@@ -9,14 +13,29 @@
+  * @author Emmanuel Bernard
+  */
+ public class ValidTest extends TestCase {
+-	public void testDeepValid() throws Exception {
+-		ClassValidator<Form> formValidator = new ClassValidator<Form>(Form.class);
+-		Address a = new Address();
+-		Member m = new Member();
+-		m.setAddress( a );
+-		Form f = new Form();
+-		f.setMember(m);
+-		InvalidValue[] values = formValidator.getInvalidValues( f );
+-		assertEquals( 1, values.length );
+-	}
++    
++    public void testDeepValid() throws Exception {
++        ClassValidator<Form> formValidator = new ClassValidator<Form>(Form.class);
++        Address a = new Address();
++        Member m = new Member();
++        m.setAddress(a);
++        Form f = new Form();
++        f.setMember(m);
++        InvalidValue[] values = formValidator.getInvalidValues(f);
++        assertEquals(1, values.length);
++    }
++
++    public void testValidCollection() throws Exception {
++        Parent parent = new Parent();
++        List<Child> children = new ArrayList<Child>();
++        Child child = new Child();
++        children.add(child);
++        parent.setChildren(children);
++
++        ClassValidator<Parent> validator = new ClassValidator<Parent>(Parent.class);
++
++        InvalidValue[] values = validator.getInvalidValues(parent);
++
++        assertEquals(1, values.length);
++    }
+ }

@@ -1,0 +1,2112 @@
+Index: src/test/java/org/hibernate/annotations/common/test/annotationfactory/AnnotationFactoryTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/annotationfactory/AnnotationFactoryTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/annotationfactory/AnnotationFactoryTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.annotationfactory;
+ 
+ import junit.framework.TestCase;
+@@ -11,6 +35,7 @@
+ public class AnnotationFactoryTest extends TestCase {
+ 
+ 	public void testCreatesProxyInstancesOfAnnotations() {
++
+ 		// Step 1: define the annotation descriptor.
+ 		//
+ 		// What you can/must do:
+Index: src/test/java/org/hibernate/annotations/common/test/annotationfactory/TestAnnotation.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/annotationfactory/TestAnnotation.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/annotationfactory/TestAnnotation.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ /**
+  * 
+  */
+Index: src/test/java/org/hibernate/annotations/common/test/annotationfactory/AnnotationProxyTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/annotationfactory/AnnotationProxyTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/annotationfactory/AnnotationProxyTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.annotationfactory;
+ 
+ import java.lang.reflect.Method;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Son.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Son.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Son.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ /**
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/BigBlob.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/BigBlob.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/BigBlob.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.util.Collection;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Neighbour.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Neighbour.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Neighbour.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.util.Set;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TypeUtilsTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TypeUtilsTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TypeUtilsTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.lang.reflect.Type;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Language.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Language.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Language.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ //$Id$
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/SonOfBlob.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/SonOfBlob.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/SonOfBlob.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.util.List;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Dad.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Dad.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Dad.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.util.List;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/ApproximatingTypeEnvironmentTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/ApproximatingTypeEnvironmentTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/ApproximatingTypeEnvironmentTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.lang.reflect.ParameterizedType;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TestAnnotation.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TestAnnotation.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TestAnnotation.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import static java.lang.annotation.ElementType.*;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Grandpa.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Grandpa.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/Grandpa.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.io.Serializable;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Subclass1.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Subclass1.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Subclass1.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+ import org.hibernate.annotations.common.test.reflection.java.generics.deep.DummySubclass;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Subclass2.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Subclass2.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Subclass2.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+ import org.hibernate.annotations.common.test.reflection.java.generics.deep.DummySubclass;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/GenericSuperclass1.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/GenericSuperclass1.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/GenericSuperclass1.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+ import org.hibernate.annotations.common.test.reflection.java.generics.deep.Dummy;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/GenericSuperclass2.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/GenericSuperclass2.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/GenericSuperclass2.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+ import org.hibernate.annotations.common.test.reflection.java.generics.deep.Dummy;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DeepGenericsInheritance.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DeepGenericsInheritance.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DeepGenericsInheritance.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ //$Id: $
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Dummy.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Dummy.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/Dummy.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+ public class Dummy {
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DummySubclass.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DummySubclass.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DummySubclass.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+ import org.hibernate.annotations.common.test.reflection.java.generics.deep.Dummy;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DeepGenericsContainment.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DeepGenericsContainment.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/DeepGenericsContainment.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ //$Id: $
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/ANN612IssueTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/ANN612IssueTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/deep/ANN612IssueTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ //$Id: $
+ package org.hibernate.annotations.common.test.reflection.java.generics.deep;
+ 
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TypeEnvironmentFactoryTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TypeEnvironmentFactoryTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/generics/TypeEnvironmentFactoryTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java.generics;
+ 
+ import java.lang.reflect.ParameterizedType;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaXClassTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaXClassTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaXClassTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+ import java.io.Serializable;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/Sex.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/Sex.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/Sex.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ //$Id: $
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/Foo.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/Foo.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/Foo.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+ import java.util.List;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaReflectionManagerTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaReflectionManagerTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaReflectionManagerTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+ import junit.framework.TestCase;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/TestAnnotation.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/TestAnnotation.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/TestAnnotation.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+ import static java.lang.annotation.ElementType.*;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/XAnnotatedElementTestCase.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/XAnnotatedElementTestCase.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/XAnnotatedElementTestCase.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+ import junit.framework.TestCase;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/FooFather.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/FooFather.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/FooFather.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+ import java.util.List;
+Index: src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaXPropertyTest.java
+===================================================================
+--- src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaXPropertyTest.java	(revision 20976)
++++ src/test/java/org/hibernate/annotations/common/test/reflection/java/JavaXPropertyTest.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.test.reflection.java;
+ 
+ import java.util.LinkedList;
+Index: src/main/java/org/hibernate/annotations/common/AssertionFailure.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/AssertionFailure.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/AssertionFailure.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+@@ -23,10 +23,8 @@
+  */
+ package org.hibernate.annotations.common;
+ 
+-import org.slf4j.LoggerFactory;
+-import org.slf4j.Logger;
++import org.jboss.logging.Logger;
+ 
+-
+ /**
+  * Indicates failure of an assertion: a possible bug in Hibernate.
+  * <p/>
+@@ -36,19 +34,16 @@
+  * @auhor Emmanuel Bernard
+  */
+ public class AssertionFailure extends RuntimeException {
++    private static final Logger log = Logger.getLogger( AssertionFailure.class );
+ 
+-	private static final Logger log = LoggerFactory.getLogger(AssertionFailure.class);
++    public AssertionFailure(String s) {
++        super( s );
++        log.error( "an assertion failure occured (this may indicate a bug in Hibernate)", this );
++    }
+ 
+-	private static final String MESSAGE = "an assertion failure occured (this may indicate a bug in Hibernate)";
++    public AssertionFailure(String s, Throwable t) {
++        super( s, t );
++        log.error( "an assertion failure occured (this may indicate a bug in Hibernate)", t );
++    }
+ 
+-	public AssertionFailure(String s) {
+-		super(s);
+-		log.error(MESSAGE, this);
+-	}
+-
+-	public AssertionFailure(String s, Throwable t) {
+-		super(s, t);
+-		log.error(MESSAGE, t);
+-	}
+-
+ }
+Index: src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationFactory.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationFactory.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationFactory.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationDescriptor.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationDescriptor.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationDescriptor.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationProxy.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationProxy.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/annotationfactory/AnnotationProxy.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/Version.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/Version.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/Version.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+@@ -23,20 +23,27 @@
+  */
+ package org.hibernate.annotations.common;
+ 
+-import org.slf4j.Logger;
+-import org.slf4j.LoggerFactory;
++import org.jboss.logging.Logger;
+ 
+ /**
+  * @author Emmanuel Bernard
+  */
+ public class Version {
+-	public static final String VERSION = "3.2.1-SNAPSHOT";
+-	private static Logger log = LoggerFactory.getLogger( Version.class );
++    private static final Logger log = Logger.getLogger( Version.class );
+ 
+-	static {
+-		log.info( "Hibernate Commons Annotations {}", VERSION );
+-	}
++    public static String getVersionString() {
++        return "[WORKING]";
++    }
+ 
+-	public static void touch() {
+-	}
++    static {
++        log.info( "Hibernate Commons Annotations {" + getVersionString() + "}" );
++    }
++
++    public static void touch() {
++    }
++
++    public static void main(String[] args) {
++        System.out.println( "Hibernate Commons Annotations {" + getVersionString() + "}"  );
++    }
++
+ }
+Index: src/main/java/org/hibernate/annotations/common/reflection/XAnnotatedElement.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/XAnnotatedElement.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/XAnnotatedElement.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/XMember.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/XMember.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/XMember.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaAnnotationReader.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaAnnotationReader.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaAnnotationReader.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXClass.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXClass.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXClass.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXMember.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXMember.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXMember.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXArrayType.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXArrayType.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXArrayType.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXMethod.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXMethod.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXMethod.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXType.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXType.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXType.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXProperty.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXProperty.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXProperty.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/IdentityTypeEnvironment.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/IdentityTypeEnvironment.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/IdentityTypeEnvironment.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/SimpleTypeEnvironment.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/SimpleTypeEnvironment.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/SimpleTypeEnvironment.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeUtils.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeUtils.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeUtils.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeSwitch.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeSwitch.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeSwitch.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeEnvironment.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeEnvironment.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeEnvironment.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/ApproximatingTypeEnvironment.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/ApproximatingTypeEnvironment.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/ApproximatingTypeEnvironment.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeFactory.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeFactory.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeFactory.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/CompoundTypeEnvironment.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/CompoundTypeEnvironment.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/CompoundTypeEnvironment.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeEnvironmentFactory.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeEnvironmentFactory.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/generics/TypeEnvironmentFactory.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXAnnotatedElement.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXAnnotatedElement.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXAnnotatedElement.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXPackage.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXPackage.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXPackage.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXSimpleType.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXSimpleType.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXSimpleType.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaReflectionManager.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaReflectionManager.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaReflectionManager.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaXCollectionType.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaXCollectionType.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaXCollectionType.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/Pair.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/Pair.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/Pair.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/java/JavaMetadataProvider.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/java/JavaMetadataProvider.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/java/JavaMetadataProvider.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.reflection.java;
+ 
+ import java.util.Map;
+Index: src/main/java/org/hibernate/annotations/common/reflection/XPackage.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/XPackage.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/XPackage.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/Filter.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/Filter.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/Filter.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/ReflectionManager.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/ReflectionManager.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/ReflectionManager.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/ReflectionUtil.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/ReflectionUtil.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/ReflectionUtil.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/XMethod.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/XMethod.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/XMethod.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/MetadataProviderInjector.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/MetadataProviderInjector.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/MetadataProviderInjector.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.reflection;
+ 
+ /**
+Index: src/main/java/org/hibernate/annotations/common/reflection/MetadataProvider.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/MetadataProvider.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/MetadataProvider.java	(working copy)
+@@ -1,3 +1,27 @@
++/*
++ * Hibernate, Relational Persistence for Idiomatic Java
++ *
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++ * indicated by the @author tags or express copyright attribution
++ * statements applied by the authors.  All third-party contributions are
++ * distributed under license by Red Hat Inc.
++ *
++ * This copyrighted material is made available to anyone wishing to use, modify,
++ * copy, or redistribute it subject to the terms and conditions of the GNU
++ * Lesser General Public License, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++ * for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this distribution; if not, write to:
++ * Free Software Foundation, Inc.
++ * 51 Franklin Street, Fifth Floor
++ * Boston, MA  02110-1301  USA
++ */
++
+ package org.hibernate.annotations.common.reflection;
+ 
+ import java.util.Map;
+Index: src/main/java/org/hibernate/annotations/common/reflection/XProperty.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/XProperty.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/XProperty.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/AnnotationReader.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/AnnotationReader.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/AnnotationReader.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/reflection/XClass.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/reflection/XClass.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/reflection/XClass.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/util/ReflectHelper.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/util/ReflectHelper.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/util/ReflectHelper.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/java/org/hibernate/annotations/common/util/StringHelper.java
+===================================================================
+--- src/main/java/org/hibernate/annotations/common/util/StringHelper.java	(revision 20976)
++++ src/main/java/org/hibernate/annotations/common/util/StringHelper.java	(working copy)
+@@ -1,10 +1,10 @@
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+- * Copyright (c) 2008, Red Hat Middleware LLC or third-party contributors as
++ * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+  * indicated by the @author tags or express copyright attribution
+  * statements applied by the authors.  All third-party contributions are
+- * distributed under license by Red Hat Middleware LLC.
++ * distributed under license by Red Hat Inc.
+  *
+  * This copyrighted material is made available to anyone wishing to use, modify,
+  * copy, or redistribute it subject to the terms and conditions of the GNU
+Index: src/main/javadoc/package.html
+===================================================================
+--- src/main/javadoc/package.html	(revision 20976)
++++ src/main/javadoc/package.html	(working copy)
+@@ -1 +1,25 @@
++<!--
++  ~ Hibernate, Relational Persistence for Idiomatic Java
++  ~
++  ~ Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++  ~ indicated by the @author tags or express copyright attribution
++  ~ statements applied by the authors.  All third-party contributions are
++  ~ distributed under license by Red Hat Inc.
++  ~
++  ~ This copyrighted material is made available to anyone wishing to use, modify,
++  ~ copy, or redistribute it subject to the terms and conditions of the GNU
++  ~ Lesser General Public License, as published by the Free Software Foundation.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++  ~ or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++  ~ for more details.
++  ~
++  ~ You should have received a copy of the GNU Lesser General Public License
++  ~ along with this distribution; if not, write to:
++  ~ Free Software Foundation, Inc.
++  ~ 51 Franklin Street, Fifth Floor
++  ~ Boston, MA  02110-1301  USA
++  -->
++
+ <body></body>
+Index: pom.xml
+===================================================================
+--- pom.xml	(revision 20976)
++++ pom.xml	(working copy)
+@@ -1,5 +1,31 @@
+-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++<!--
++  ~ Hibernate, Relational Persistence for Idiomatic Java
++  ~
++  ~ Copyright (c) 2011, Red Hat Inc. or third-party contributors as
++  ~ indicated by the @author tags or express copyright attribution
++  ~ statements applied by the authors.  All third-party contributions are
++  ~ distributed under license by Red Hat Inc.
++  ~
++  ~ This copyrighted material is made available to anyone wishing to use, modify,
++  ~ copy, or redistribute it subject to the terms and conditions of the GNU
++  ~ Lesser General Public License, as published by the Free Software Foundation.
++  ~
++  ~ This program is distributed in the hope that it will be useful,
++  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
++  ~ or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
++  ~ for more details.
++  ~
++  ~ You should have received a copy of the GNU Lesser General Public License
++  ~ along with this distribution; if not, write to:
++  ~ Free Software Foundation, Inc.
++  ~ 51 Franklin Street, Fifth Floor
++  ~ Boston, MA  02110-1301  USA
++  -->
+ 
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
+     <modelVersion>4.0.0</modelVersion>
+ 
+     <groupId>org.hibernate</groupId>
+@@ -18,11 +44,11 @@
+     </organization>
+ 
+     <licenses>
+-		<license>
+-			<name>GNU LESSER GENERAL PUBLIC LICENSE</name>
+-			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+-		</license>
+-	</licenses>
++        <license>
++            <name>GNU LESSER GENERAL PUBLIC LICENSE</name>
++            <url>http://www.gnu.org/licenses/lgpl.txt</url>
++        </license>
++    </licenses>
+ 
+     <developers>
+         <developer>
+@@ -75,15 +101,26 @@
+ 
+     <scm>
+         <connection>scm:svn:https://svn.jboss.org/repos/hibernate/commons-annotations/trunk</connection>
+-        <developerConnection>scm:svn:https://svn.jboss.org/repos/hibernate/commons-annotations/trunk</developerConnection>
++        <developerConnection>scm:svn:https://svn.jboss.org/repos/hibernate/commons-annotations/trunk
++        </developerConnection>
+         <url>https://svn.jboss.org/repos/hibernate/commons-annotations/trunk</url>
+     </scm>
+-
++    <properties>
++        <jbossLoggingVersion>3.0.0.GA</jbossLoggingVersion>
++        <jbossLoggingProcessorVersion>1.0.0.Beta7</jbossLoggingProcessorVersion>
++        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
++    </properties>
+     <dependencies>
+         <dependency>
+-            <groupId>org.slf4j</groupId>
+-            <artifactId>slf4j-api</artifactId>
++            <groupId>org.jboss.logging</groupId>
++            <artifactId>jboss-logging</artifactId>
++            <version>${jbossLoggingVersion}</version>
+         </dependency>
++        <dependency>
++            <groupId>org.jboss.logging</groupId>
++            <artifactId>jboss-logging-processor</artifactId>
++            <version>${jbossLoggingProcessorVersion}</version>
++        </dependency>
+         <!-- test-scoped dependencies for common testing dependencies -->
+         <dependency>
+             <groupId>junit</groupId>
+@@ -91,43 +128,8 @@
+             <version>3.8.1</version>
+             <scope>test</scope>
+         </dependency>
+-        <dependency>
+-            <groupId>org.slf4j</groupId>
+-            <artifactId>jcl-over-slf4j</artifactId>
+-            <version>${slf4jVersion}</version>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.slf4j</groupId>
+-            <artifactId>slf4j-log4j12</artifactId>
+-            <version>${slf4jVersion}</version>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>commons-logging</groupId>
+-            <artifactId>commons-logging</artifactId>
+-            <version>99.0-does-not-exist</version>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>commons-logging</groupId>
+-            <artifactId>commons-logging-api</artifactId>
+-            <version>99.0-does-not-exist</version>
+-            <scope>test</scope>
+-        </dependency>
+-        <!-- / test-scoped dependencies for common testing dependencies -->
+     </dependencies>
+ 
+-    <dependencyManagement>
+-        <dependencies>
+-            <dependency>
+-                <groupId>org.slf4j</groupId>
+-                <artifactId>slf4j-api</artifactId>
+-                <version>${slf4jVersion}</version>
+-            </dependency>
+-        </dependencies>
+-    </dependencyManagement>
+-
+     <distributionManagement>
+         <repository>
+             <id>jboss-releases-repository</id>
+@@ -141,20 +143,110 @@
+         </snapshotRepository>
+     </distributionManagement>
+ 
+-    <properties>
+-        <slf4jVersion>1.5.8</slf4jVersion>
+-    </properties>
+ 
+     <build>
+         <plugins>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-jar-plugin</artifactId>
++                <version>2.3.1</version>
++                <configuration>
++                    <archive>
++                        <manifestEntries>
++                            <Implementation-Title>${project.name}</Implementation-Title>
++                            <Implementation-Version>${project.version}</Implementation-Version>
++                            <Implementation-Vendor>hibernate.org</Implementation-Vendor>
++                            <Implementation-Vendor-Id>hibernate.org</Implementation-Vendor-Id>
++                            <Implementation-URL>http://hibernate.org</Implementation-URL>
++                        </manifestEntries>
++                        <manifest>
++                            <mainClass>org.hibernate.annotations.common.Version</mainClass>
++                        </manifest>
++
++                    </archive>
++                </configuration>
++                <executions>
++                    <execution>
++                        <id>build-test-jar</id>
++                        <goals>
++                            <goal>test-jar</goal>
++                        </goals>
++                        <configuration>
++                            <archive>
++                                <manifest>
++                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
++                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
++                                </manifest>
++                            </archive>
++                        </configuration>
++                    </execution>
++                </executions>
++            </plugin>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
++                <version>2.3.2</version>
+                 <configuration>
+-                    <source>1.5</source>
+-                    <target>1.5</target>
++                    <source>1.6</source>
++                    <target>1.6</target>
++                    <encoding>UTF-8</encoding>
+                 </configuration>
+             </plugin>
++            <plugin>
++                <groupId>org.jboss.maven.plugins</groupId>
++                <artifactId>maven-injection-plugin</artifactId>
++                <version>1.0.2</version>
++                <executions>
++                    <execution>
++                        <phase>compile</phase>
++                        <goals>
++                            <goal>bytecode</goal>
++                        </goals>
++                    </execution>
++                </executions>
++                <configuration>
++                    <bytecodeInjections>
++                        <bytecodeInjection>
++                            <expression>${project.version}</expression>
++                            <targetMembers>
++                                <methodBodyReturn>
++                                    <className>org.hibernate.annotations.common.Version</className>
++                                    <methodName>getVersionString</methodName>
++                                </methodBodyReturn>
++                            </targetMembers>
++                        </bytecodeInjection>
++                    </bytecodeInjections>
++                </configuration>
++            </plugin>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-surefire-plugin</artifactId>
++                <version>2.7.2</version>
++                <configuration>
++                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
++                </configuration>
++            </plugin>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-source-plugin</artifactId>
++                <version>2.1.2</version>
++                <executions>
++                    <execution>
++                        <id>attach-sources</id>
++                        <phase>verify</phase>
++                        <goals>
++                            <goal>jar-no-fork</goal>
++                        </goals>
++                    </execution>
++                </executions>
++            </plugin>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-release-plugin</artifactId>
++                <configuration>
++                    <goals>deploy assembly:assembly</goals>
++                </configuration>
++            </plugin>
+         </plugins>
+     </build>
+ 

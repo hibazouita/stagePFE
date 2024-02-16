@@ -1,0 +1,74 @@
+Index: D:/data/workspace/hibernate3-ext-svn/annotations/src/test/org/hibernate/test/annotations/collectionelement/CollectionElementTest.java
+===================================================================
+--- D:/data/workspace/hibernate3-ext-svn/annotations/src/test/org/hibernate/test/annotations/collectionelement/CollectionElementTest.java	(revision 11422)
++++ D:/data/workspace/hibernate3-ext-svn/annotations/src/test/org/hibernate/test/annotations/collectionelement/CollectionElementTest.java	(working copy)
+@@ -5,6 +5,7 @@
+ 
+ import org.hibernate.Session;
+ import org.hibernate.Transaction;
++import org.hibernate.criterion.Example;
+ import org.hibernate.test.annotations.Country;
+ import org.hibernate.test.annotations.TestCase;
+ 
+@@ -154,7 +155,30 @@
+ 		s.close();
+ 	}
+ 
++  public void testExampleEagerFetchJoin() {
++    Session s = openSession();
++    s.getTransaction().begin();
+ 
++    Boy boy = new Boy();
++    boy.setFirstName( "John" );
++    boy.getScorePerNickName().put( "Johnny", new Integer( 3 ) );
++    boy.getScorePerNickName().put( "Thing", new Integer( 5 ) );
++    s.persist( boy );
++    s.getTransaction().commit();
++    s.clear();
++
++    Transaction tx = s.beginTransaction();
++    boy = (Boy) s.get( Boy.class, boy.getId() );
++    assertEquals(2, boy.getScorePerNickName().size());
++    Boy criteria = new Boy();
++    criteria.setFirstName( "John" );
++    List oneBoy = s.createCriteria(Boy.class).add(Example.create(criteria)).list();
++    assertEquals(1, oneBoy.size());
++    s.delete( boy );
++    tx.commit();
++    s.close();
++  }
++
+ 	protected Class[] getMappings() {
+ 		return new Class[]{
+ 				Boy.class,
+Index: D:/data/workspace/hibernate3-ext-svn/annotations/src/test/org/hibernate/test/annotations/collectionelement/Boy.java
+===================================================================
+--- D:/data/workspace/hibernate3-ext-svn/annotations/src/test/org/hibernate/test/annotations/collectionelement/Boy.java	(revision 11422)
++++ D:/data/workspace/hibernate3-ext-svn/annotations/src/test/org/hibernate/test/annotations/collectionelement/Boy.java	(working copy)
+@@ -5,6 +5,7 @@
+ import java.util.HashSet;
+ import java.util.Map;
+ import java.util.Set;
++
+ import javax.persistence.AttributeOverride;
+ import javax.persistence.AttributeOverrides;
+ import javax.persistence.Column;
+@@ -18,6 +19,8 @@
+ import javax.persistence.JoinTable;
+ 
+ import org.hibernate.annotations.CollectionOfElements;
++import org.hibernate.annotations.Fetch;
++import org.hibernate.annotations.FetchMode;
+ import org.hibernate.annotations.IndexColumn;
+ 
+ /**
+@@ -75,7 +78,8 @@
+ 		this.nickNames = nickName;
+ 	}
+ 
+-	@CollectionOfElements
++  @Fetch(FetchMode.JOIN)
++	@CollectionOfElements(fetch=FetchType.EAGER)
+ 	@JoinTable(name = "ScorePerNickName", joinColumns = @JoinColumn(name = "BoyId"))
+ 	@Column(name = "score", nullable = false)
+ 	public Map<String, Integer> getScorePerNickName() {

@@ -1,0 +1,85 @@
+Index: src/test/org/hibernate/ejb/test/exception/ExceptionTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/exception/ExceptionTest.java	(revision 15256)
++++ src/test/org/hibernate/ejb/test/exception/ExceptionTest.java	(working copy)
+@@ -1,4 +1,4 @@
+-// $Id:$
++// $Id$
+ package org.hibernate.ejb.test.exception;
+ 
+ import java.util.Map;
+@@ -27,15 +27,29 @@
+ 		EntityManager em2 = factory.createEntityManager();
+ 		em.getTransaction().begin();
+ 		Music music = new Music();
+-		music.setName( "Old Country" );
+-		em.persist( music );
+-		em.getTransaction().commit();
++		
++		try {
++			music.setName( "Old Country" );
++			em.persist( music );
++			em.getTransaction().commit();
++		} catch (Exception e) {
++			em.getTransaction().rollback();
++			throw e;
++		} finally {
++			em.close();
++		}
+ 
+ 		em2.getTransaction().begin();
+-		Music music2 = em2.find( Music.class, music.getId() );
+-		music2.setName( "HouseMusic" );
+-		em2.getTransaction().commit();
+-		em2.close();
++		try {
++			Music music2 = em2.find( Music.class, music.getId() );
++			music2.setName( "HouseMusic" );
++			em2.getTransaction().commit();
++		} catch (Exception e) {
++			em2.getTransaction().rollback();
++			throw e;
++		} finally {
++			em2.close();
++		}
+ 
+ 		em.getTransaction().begin();
+ 		music.setName( "Rock" );
+@@ -75,15 +89,21 @@
+ 	public void testConstraintViolationException() throws Exception {
+ 		EntityManager em = factory.createEntityManager( );
+ 		em.getTransaction().begin();
+-		Music music = new Music();
+-		music.setName( "Jazz" );
+-		em.persist( music );
+-		Musician lui = new Musician();
+-		lui.setName("Lui Armstrong");
+-		lui.setFavouriteMusic(music);
+-		em.persist(lui);
+-		em.getTransaction().commit();
+ 		try {
++			Music music = new Music();
++			music.setName( "Jazz" );
++			em.persist( music );
++			Musician lui = new Musician();
++			lui.setName("Lui Armstrong");
++			lui.setFavouriteMusic(music);
++			em.persist(lui);
++			em.getTransaction().commit();
++		} catch (Exception e) {
++			em.getTransaction().rollback();
++			throw e;
++		}
++		
++		try {
+ 			em.getTransaction().begin();
+ 			String hqlDelete = "delete Music where name = :name";
+ 			em.createQuery( hqlDelete ).setParameter( "name", "Jazz" ).executeUpdate();
+@@ -91,6 +111,7 @@
+ 			fail();
+ 		}
+ 		catch( PersistenceException e ) {
++			em.getTransaction().rollback();
+ 			Throwable t = e.getCause();
+ 			assertTrue("Should be a constraint violation", t instanceof ConstraintViolationException);
+ 		}

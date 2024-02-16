@@ -1,0 +1,176 @@
+package gekko.domain.account;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import gekko.domain.annotations.GekkoMandatory;
+import gekko.domain.customer.Address;
+import gekko.type.GekkoDate;
+import gekko.type.GekkoMoney;
+
+//@Entity
+//@Table(name = "pr_tenure_account")
+//@AttributeOverride(name = "id", column = @Column(name = "n_key_account"))
+@Embeddable
+public class Account {// extends AbstractAuditableLogicallyDeletablePersistentEntity {
+
+	private AccountType type;
+	private boolean residential;
+	private String custReference;
+	private GekkoDate commencementDate;
+	private GekkoDate expiryDate;
+	private GekkoMoney deposit;
+	private GekkoMoney purchasePrice;
+	private FinalPaymentCertificate finalPaymentCert;
+	private String serviceAddressee;
+	private Address serviceAddress;
+	private FinancialGroup financialGroup;
+	private LegislativeGroup legislativeGroup;
+//	private Tenure tenure;
+		
+    @GekkoMandatory(value=true)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "c_account_type", nullable = false)
+	public AccountType getType() {
+		return type;
+	}
+
+	public void setType(AccountType type) {
+		this.type = type;
+	}
+
+	@GekkoMandatory(value=false)
+	@Column(name = "f_residential", nullable = true)
+	public boolean isResidential() {
+		return residential;
+	}
+
+	public void setResidential(boolean residential) {
+		this.residential = residential;
+	}
+
+	@GekkoMandatory(value=false)
+	@Column(name = "t_customer_ref", nullable = true)
+	public String getCustReference() {
+		return custReference;
+	}
+
+	public void setCustReference(String custReference) {
+		this.custReference = custReference;
+	}
+
+	@GekkoMandatory(value=true)
+	@Embedded
+	@AttributeOverride(name="date", column=@Column(name="d_commencement_date", nullable=false))
+	public GekkoDate getCommencementDate() {
+		return commencementDate;
+	}
+
+	public void setCommencementDate(GekkoDate commencementDate) {
+		this.commencementDate = commencementDate;
+	}
+
+	@GekkoMandatory(value=false)
+	@Embedded
+	@AttributeOverride(name="date", column=@Column(name="d_expiry_date", nullable=true))
+	public GekkoDate getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(GekkoDate expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	@GekkoMandatory(value=false)
+	@Embedded
+	@AttributeOverride(name="value", column=@Column(name="n_deposit", nullable=true))
+	public GekkoMoney getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(GekkoMoney deposit) {
+		this.deposit = deposit;
+	}
+
+	@GekkoMandatory(value=false)
+	@Embedded
+	@AttributeOverride(name="value", column=@Column(name="n_purchase_price", nullable=true))
+	public GekkoMoney getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(GekkoMoney purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	@GekkoMandatory(value=false)
+	@Embedded
+	public FinalPaymentCertificate getFinalPaymentCert() {
+		return finalPaymentCert;
+	}
+
+	public void setFinalPaymentCert(FinalPaymentCertificate finalPaymentCert) {
+		this.finalPaymentCert = finalPaymentCert;
+	}
+
+	@GekkoMandatory(value=true)
+	@Column(name = "t_service_addressee", nullable = false)
+	public String getServiceAddressee() {
+		return serviceAddressee;
+	}
+
+	public void setServiceAddressee(String serviceAddressee) {
+		this.serviceAddressee = serviceAddressee;
+	}
+
+	@GekkoMandatory(value=true)
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "n_key_service_address", nullable = false)
+	public Address getServiceAddress() {
+		return serviceAddress;
+	}
+
+	public void setServiceAddress(Address serviceAddress) {
+		this.serviceAddress = serviceAddress;
+	}
+	
+	@GekkoMandatory(value=true)
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "n_key_financial_group", nullable = false)
+	public FinancialGroup getFinancialGroup() {
+		return financialGroup;
+	}
+
+	public void setFinancialGroup(FinancialGroup financialGroup) {
+		this.financialGroup = financialGroup;
+	}
+
+	@GekkoMandatory(value=true)
+	@ManyToOne(optional = false)
+        @JoinColumn(name = "n_key_ligislative_group", nullable = false)
+	public LegislativeGroup getLegislativeGroup() {
+		return legislativeGroup;
+	}
+
+	public void setLegislativeGroup(LegislativeGroup legislativeGroup) {
+		this.legislativeGroup = legislativeGroup;
+	}
+
+//	@ManyToOne()
+//    public Tenure getTenure() {
+//        return tenure;
+//    }
+//
+//    public void setTenure(Tenure tenure) {
+//        this.tenure = tenure;
+//    }
+//	
+	
+	
+}

@@ -1,0 +1,22 @@
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 version="1.0"
+        >
+    <table-generator name="catIdGenerator" table="PRIMARY_KEY_MANAGER"
+                pk-column-name="ID" pk-column-value="123000" allocation-size="1"
+                value-column-name="CURRENT_KEY_CHUNK_START"/>
+    <entity class="org.hibernate.test.annotations.id.Cat" >
+        <table name="CAT"/>
+        <attribute-override name="id">
+            <column name="CAT_ID"/>
+        </attribute-override>
+        <attribute-override name="name">
+            <column name="NAME"/>
+        </attribute-override>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="TABLE" generator="catIdGenerator"/>
+            </id>
+        </attributes>
+    </entity>
+</entity-mappings>

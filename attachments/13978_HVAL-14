@@ -1,0 +1,53 @@
+package br.com.kinomaxx.kinosystem;
+
+import junit.framework.Assert;
+
+import org.hibernate.validator.ClassValidator;
+import org.hibernate.validator.InvalidValue;
+import org.junit.Test;
+
+public class CustomerTest {
+	
+	private EntityManagerWrapper emw;
+	
+	
+	@Test
+	public void test() {
+		ClassValidator<Customer> validator = new ClassValidator<Customer>(
+				Customer.class);
+
+		Customer customer = new Customer();
+
+		InvalidValue[] invalidValues = validator.getInvalidValues(customer);
+
+		Assert.assertEquals(1, invalidValues.length);
+
+		Address address = new Address();
+		customer.setAddress(address);
+
+		invalidValues = validator.getInvalidValues(customer);
+
+		Assert.assertEquals(1, invalidValues.length);
+
+		address.setStreet("Street 1");
+
+		invalidValues = validator.getInvalidValues(customer);
+
+		Assert.assertEquals(0, invalidValues.length);
+
+		//Only persist the object and close transaction (ejb).
+		customer = emw.persist(customer);
+
+		Assert.assertNotNull(customer);
+
+		customer.setId(null);
+		customer.setAddress2(new Address());
+		
+		invalidValues = validator.getInvalidValues(customer);
+
+		Assert.assertEquals(0, invalidValues.length);
+
+		customer = emw.persist(customer);
+	}
+
+}

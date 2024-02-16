@@ -1,0 +1,40 @@
+Index: org/hibernate/ejb/test/emops/RemoveTest.java
+===================================================================
+--- org/hibernate/ejb/test/emops/RemoveTest.java	(revisão 16371)
++++ org/hibernate/ejb/test/emops/RemoveTest.java	(cópia de trabalho)
+@@ -37,7 +37,7 @@
+ 		em.close();
+ 	}
+ 
+-	public void testUpdatedAndRemove() {
++	public void testUpdatedAndRemove() throws Exception {
+ 		Music music = new Music();
+ 		music.setName( "Classical" );
+ 		EntityManager em = getOrCreateEntityManager();
+@@ -51,16 +51,21 @@
+ 		em.getTransaction().begin();
+ 		EntityManager em2 = factory.createEntityManager();
+ 
++		try {
++			em2.getTransaction().begin();
++			//read music from 2nd EM
++			music = em2.find( Music.class, music.getId() );
++		} catch (Exception e) {
++			em2.getTransaction().rollback();
++			em2.close();
++			throw e;
++		}
++
+ 		//change music
+ 		em.find( Music.class, music.getId() ).setName( "Rap" );
+ 		em.getTransaction().commit();
+ 
+ 		try {
+-			em2.getTransaction().begin();
+-
+-			//read music from 2nd EM
+-			music = em2.find( Music.class, music.getId() );
+-
+ 			em2.remove( music ); //remove changed music
+ 			em2.flush();
+ 			fail("should have an optimistic lock exception");

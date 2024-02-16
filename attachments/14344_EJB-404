@@ -1,0 +1,13 @@
+Index: org/hibernate/ejb/test/QueryTest.java
+===================================================================
+--- org/hibernate/ejb/test/QueryTest.java	(revisão 15697)
++++ org/hibernate/ejb/test/QueryTest.java	(cópia de trabalho)
+@@ -302,7 +302,7 @@
+ 		em.flush();
+ 		em.clear();
+ 		Query q = em.createQuery(
+-				"select i from Item i where (i.descr is null and :descr is null) or i.descr = :descr"
++				"select i from Item i where i.descr = :descr or (i.descr is null and cast(:descr as string) is null)"
+ 		);
+ 		//Query q = em.createQuery( "select i from Item i where (i.descr is null and :descr is null) or (i.descr = :descr");
+ 		q.setParameter( "descr", "dd" );

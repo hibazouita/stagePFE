@@ -1,0 +1,322 @@
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/AssertTrue.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/AssertTrue.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/AssertTrue.java	(working copy)
+@@ -19,4 +19,7 @@
+ @Retention(RUNTIME)
+ public @interface AssertTrue {
+ 	String message() default "{validator.assertTrue}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/EAN.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/EAN.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/EAN.java	(working copy)
+@@ -20,4 +20,7 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface EAN {
+ 	String message() default "{validator.ean}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Past.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Past.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Past.java	(working copy)
+@@ -19,4 +19,7 @@
+ @Retention(RUNTIME)
+ public @interface Past {
+ 	String message() default "{validator.past}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/ClassValidator.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/ClassValidator.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/ClassValidator.java	(working copy)
+@@ -23,14 +23,14 @@
+ import java.util.Set;
+ import java.util.StringTokenizer;
+ 
++import org.apache.commons.jexl.ExpressionFactory;
++import org.apache.commons.jexl.JexlContext;
++import org.apache.commons.jexl.JexlHelper;
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+ import org.hibernate.AssertionFailure;
+ import org.hibernate.Hibernate;
+ import org.hibernate.MappingException;
+-import org.hibernate.mapping.PersistentClass;
+-import org.hibernate.mapping.Property;
+-import org.hibernate.mapping.Component;
+ import org.hibernate.annotations.common.reflection.Filter;
+ import org.hibernate.annotations.common.reflection.ReflectionManager;
+ import org.hibernate.annotations.common.reflection.XClass;
+@@ -38,6 +38,9 @@
+ import org.hibernate.annotations.common.reflection.XMethod;
+ import org.hibernate.annotations.common.reflection.XProperty;
+ import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
++import org.hibernate.mapping.Component;
++import org.hibernate.mapping.PersistentClass;
++import org.hibernate.mapping.Property;
+ import org.hibernate.util.IdentitySet;
+ import org.hibernate.validator.interpolator.DefaultMessageInterpolatorAggerator;
+ 
+@@ -382,7 +385,9 @@
+ 			if ( Hibernate.isPropertyInitialized( bean, getPropertyName( getter ) ) ) {
+ 				Object value = getMemberValue( bean, getter );
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
++				String applyIfExpression = defaultInterpolator.getAnnotationApplyIf( validator );
++				
++				if (isApplyValidator(applyIfExpression, bean) && !validator.isValid( value ) ) {
+ 					String propertyName = getPropertyName( getter );
+ 					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
+ 				}
+@@ -498,7 +503,9 @@
+ 			if ( getPropertyName( getter ).equals( propertyName ) ) {
+ 				Object value = getMemberValue( bean, getter );
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
++				String applyIfExpression = defaultInterpolator.getAnnotationApplyIf( validator );
++				
++				if (isApplyValidator(applyIfExpression, bean) && !validator.isValid( value ) ) {
+ 					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
+ 				}
+ 			}
+@@ -520,7 +527,9 @@
+ 			XMember getter = memberGetters.get( i );
+ 			if ( getPropertyName( getter ).equals( propertyName ) ) {
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
++				String applyIfExpression = defaultInterpolator.getAnnotationApplyIf( validator );
++				
++				if (isApplyValidator(applyIfExpression, value) && !validator.isValid( value ) ) {
+ 					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, null ) );
+ 				}
+ 			}
+@@ -754,4 +763,18 @@
+ 		}
+ 		return property;
+ 	}
++	
++	private boolean isApplyValidator(String expression, Object value) {
++		if (value == null || expression == null || expression.equals(""))
++			return true;
++		
++		try {
++			org.apache.commons.jexl.Expression e = ExpressionFactory.createExpression(expression);
++			JexlContext jc = JexlHelper.createContext();
++			jc.getVars().put("value", value); //value is bean
++			return (Boolean) e.evaluate(jc);
++		} catch (Exception e) {
++			throw new RuntimeException(e);
++		}
++	}
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/AssertFalse.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/AssertFalse.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/AssertFalse.java	(working copy)
+@@ -19,4 +19,7 @@
+ @Retention(RUNTIME)
+ public @interface AssertFalse {
+ 	String message() default "{validator.assertFalse}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/CreditCardNumber.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/CreditCardNumber.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/CreditCardNumber.java	(working copy)
+@@ -20,4 +20,7 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface CreditCardNumber {
+ 	String message() default "{validator.creditCard}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Pattern.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Pattern.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Pattern.java	(working copy)
+@@ -25,4 +25,7 @@
+ 	int flags() default 0;
+ 
+ 	String message() default "{validator.pattern}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Digits.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Digits.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Digits.java	(working copy)
+@@ -22,4 +22,7 @@
+     int integerDigits();
+     int fractionalDigits() default 0;
+     String message() default "{validator.digits}";
++    
++	/** apply this validator if... (some condition in el) */
++    String applyIf() default "";
+ }
+\ No newline at end of file
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Min.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Min.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Min.java	(working copy)
+@@ -21,4 +21,7 @@
+ 	long value();
+ 
+ 	String message() default "{validator.min}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Max.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Max.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Max.java	(working copy)
+@@ -21,4 +21,7 @@
+ 	long value();
+ 
+ 	String message() default "{validator.max}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Range.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Range.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Range.java	(working copy)
+@@ -24,4 +24,7 @@
+ 	long min() default Long.MIN_VALUE;
+ 
+ 	String message() default "{validator.range}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/interpolator/DefaultMessageInterpolatorAggerator.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/interpolator/DefaultMessageInterpolatorAggerator.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/interpolator/DefaultMessageInterpolatorAggerator.java	(working copy)
+@@ -54,4 +54,11 @@
+ 		if (message == null) throw new AssertionFailure("Validator not registred to the messageInterceptorAggregator");
+ 		return message;
+ 	}
++	
++	public String getAnnotationApplyIf(Validator validator) {
++		DefaultMessageInterpolator defaultMessageInterpolator = interpolators.get( validator );
++		
++		if (defaultMessageInterpolator == null) throw new AssertionFailure("Validator not registred to the messageInterceptorAggregator");
++		return defaultMessageInterpolator.getApplyIf();
++	}
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/interpolator/DefaultMessageInterpolator.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/interpolator/DefaultMessageInterpolator.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/interpolator/DefaultMessageInterpolator.java	(working copy)
+@@ -31,6 +31,7 @@
+ 	private transient ResourceBundle defaultMessageBundle;
+ 	private String annotationMessage;
+ 	private String interpolateMessage;
++	private String applyIf;
+ 
+ 	//not an interface method
+ 	public void initialize(ResourceBundle messageBundle, ResourceBundle defaultMessageBundle) {
+@@ -63,6 +64,7 @@
+ 		if (annotationMessage == null) {
+ 			throw new IllegalArgumentException( "Annotation " + clazz + " does not have an (accessible) message attribute");
+ 		}
++		applyIf = (String) annotationParameters.get( "applyIf" );
+ 		//do not resolve the property eagerly to allow validator.apply to work wo interpolator
+     }
+ 
+@@ -132,4 +134,8 @@
+ 	public String getAnnotationMessage() {
+ 		return annotationMessage;
+ 	}
++
++	public String getApplyIf() {
++		return applyIf;
++	}
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Size.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Size.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Size.java	(working copy)
+@@ -23,4 +23,7 @@
+ 	int min() default 0;
+ 
+ 	String message() default "{validator.size}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Future.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Future.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Future.java	(working copy)
+@@ -19,4 +19,7 @@
+ @Retention(RUNTIME)
+ public @interface Future {
+ 	String message() default "{validator.future}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/NotEmpty.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/NotEmpty.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/NotEmpty.java	(working copy)
+@@ -19,4 +19,7 @@
+ @Retention( RetentionPolicy.RUNTIME )
+ public @interface NotEmpty {
+ 	String message() default "{validator.notEmpty}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Length.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Length.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Length.java	(working copy)
+@@ -23,4 +23,7 @@
+ 	int min() default 0;
+ 
+ 	String message() default "{validator.length}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Email.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Email.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/Email.java	(working copy)
+@@ -19,4 +19,7 @@
+ @Retention(RUNTIME)
+ public @interface Email {
+ 	String message() default "{validator.email}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }
+Index: C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/NotNull.java
+===================================================================
+--- C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/NotNull.java	(revision 13935)
++++ C:/java/projetos/workspace-testes/hibernate-validator/src/java/org/hibernate/validator/NotNull.java	(working copy)
+@@ -19,4 +19,7 @@
+ @Retention(RUNTIME)
+ public @interface NotNull {
+ 	String message() default "{validator.notNull}";
++	
++	/** apply this validator if... (some condition in el) */
++	String applyIf() default "";
+ }

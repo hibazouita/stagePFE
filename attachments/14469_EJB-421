@@ -1,0 +1,28 @@
+Index: common-build.xml
+===================================================================
+--- common-build.xml	(revisão 16238)
++++ common-build.xml	(cópia de trabalho)
+@@ -207,14 +207,14 @@
+ 	</target>
+ 	
+ 	<target name="get.deps.core" depends="init"
+-		description="retrieve the core dependencies">
++		description="retrieve the core dependencies" unless="disable.ivy">
+ 		<ivy:resolve conf="default"/>
+ 		<ivy:retrieve pattern="${ivy.dep.dir}/core/[artifact].[ext]"
+ 			conf="default"/>
+ 	</target>	
+ 	
+ 	<target name="get.deps.test" depends="init"
+-		description="retrieve the test dependencies">
++		description="retrieve the test dependencies" unless="disable.ivy">
+ 		<ivy:resolve conf="test"/>
+ 		<ivy:retrieve pattern="${ivy.dep.dir}/test/[artifact].[ext]" conf="test"/>
+ 	</target>	
+@@ -452,4 +452,4 @@
+ 		</artifact:deploy>
+ 	</target>
+ 	
+-</project>
+\ No newline at end of file
++</project>

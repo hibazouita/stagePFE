@@ -1,0 +1,98 @@
+package hibernatebugs;
+
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.junit.Test;
+
+public class TestOneToOneMapping {
+
+	@Test
+	public void testOneToOneCorrectMappedByNPE() {
+		new AnnotationConfiguration()
+			.addAnnotatedClass(GoodOne.class)
+			.addAnnotatedClass(GoodTwo.class)
+			.setProperty("hibernate.dialect","org.hibernate.dialect.PostgreSQLDialect")
+			.buildSessionFactory();
+	}
+	
+	@Test
+	public void testOneToOneIncorrectMappedByNPE() {
+		new AnnotationConfiguration()
+			.addAnnotatedClass(BadOne.class)
+			.addAnnotatedClass(BadTwo.class)
+			.setProperty("hibernate.dialect","org.hibernate.dialect.PostgreSQLDialect")
+			.buildSessionFactory();
+	}
+	
+	@Entity
+	public class BadOne implements Serializable {
+		private static final long serialVersionUID = 1L;
+		private Integer id;
+		private BadTwo badTwo;
+		
+		@OneToOne
+		public BadTwo getBadTwo() {return badTwo;}
+		public void setBadTwo(BadTwo badTwo) {this.badTwo = badTwo;}
+		
+		@Id
+		public Integer getId() {return id;}
+		public void setId(Integer id) {this.id = id;}
+		
+		
+	}
+	
+	@Entity
+	public class BadTwo implements Serializable {
+		private static final long serialVersionUID = 1L;
+		private Integer id;
+		private BadOne badOne;
+		
+		@OneToOne(mappedBy = "wrong")
+		public BadOne getBadOne() {return badOne;}
+		public void setBadOne(BadOne badOne) {this.badOne = badOne;}
+		
+		@Id
+		public Integer getId() {return id;}
+		public void setId(Integer id) {this.id = id;}
+	}
+	
+	@Entity
+	public class GoodOne implements Serializable {
+		private static final long serialVersionUID = 1L;
+		private Integer id;
+		private GoodTwo goodTwo;
+		
+		@OneToOne
+		public GoodTwo getGoodTwo() {return goodTwo;}
+		public void setGoodTwo(GoodTwo goodTwo) {this.goodTwo = goodTwo;}
+		
+		@Id
+		public Integer getId() {return id;}
+		public void setId(Integer id) {this.id = id;}
+		
+		
+	}
+	
+	@Entity
+	public class GoodTwo implements Serializable {
+		private static final long serialVersionUID = 1L;
+		private Integer id;
+		private GoodOne goodOne;
+		
+		@OneToOne(mappedBy = "goodTwo")
+		public GoodOne getGoodOne() {return goodOne;}
+		public void setGoodOne(GoodOne goodOne) {this.goodOne = goodOne;}
+		
+		@Id
+		public Integer getId() {return id;}
+		public void setId(Integer id) {this.id = id;}
+	}
+	
+
+}

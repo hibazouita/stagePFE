@@ -1,0 +1,106 @@
+diff --git a/src/main/java/org/hibernate/jpamodelgen/ClassWriter.java b/src/main/java/org/hibernate/jpamodelgen/ClassWriter.java
+index a31f8e5..d116716 100644
+--- a/src/main/java/org/hibernate/jpamodelgen/ClassWriter.java
++++ b/src/main/java/org/hibernate/jpamodelgen/ClassWriter.java
+@@ -21,7 +21,10 @@ import java.io.IOException;
+ import java.io.OutputStream;
+ import java.io.PrintWriter;
+ import java.io.StringWriter;
++import java.text.SimpleDateFormat;
++import java.util.Date;
+ import java.util.List;
++
+ import javax.annotation.Generated;
+ import javax.annotation.processing.FilerException;
+ import javax.lang.model.element.Element;
+@@ -45,6 +48,13 @@ import org.hibernate.jpamodelgen.model.MetaEntity;
+  */
+ public final class ClassWriter {
+ 	private static final String META_MODEL_CLASS_NAME_SUFFIX = "_";
++	private static final ThreadLocal<SimpleDateFormat> ISO_8601_SIMPLE_DATE_FORMAT = new ThreadLocal<SimpleDateFormat>() {
++		@Override
++		public SimpleDateFormat get() {
++			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
++		}
++	};
++
+ 
+ 	private ClassWriter() {
+ 	}
+@@ -97,7 +107,7 @@ public final class ClassWriter {
+ 		try {
+ 			pw = new PrintWriter( sw );
+ 			if ( context.isAddGeneratedAnnotation() ) {
+-				pw.println( writeGeneratedAnnotation( entity ) );
++				pw.println( writeGeneratedAnnotation( entity, context ) );
+ 			}
+ 			pw.println( writeStaticMetaModelAnnotation( entity ) );
+ 			printClassDeclaration( entity, pw, context );
+@@ -174,8 +184,14 @@ public final class ClassWriter {
+ 		return fullyQualifiedClassName;
+ 	}
+ 
+-	private static String writeGeneratedAnnotation(MetaEntity entity) {
+-		return "@" + entity.importType( Generated.class.getName() ) + "(\"JPA MetaModel for " + entity.getQualifiedName() + "\")";
++	private static String writeGeneratedAnnotation(MetaEntity entity, Context context) {
++		String tmp = "@" + entity.importType( Generated.class.getName() ) + "(value = \"" +
++				JPAMetaModelEntityProcessor.class.getName();
++		if ( context.isRemoveDateFromGeneratedAnnotation() ) {
++			return tmp + "\")";
++		} else {
++			return tmp + "\", date = \"" + ISO_8601_SIMPLE_DATE_FORMAT.get().format(new Date()) + "\")";
++		}
+ 	}
+ 
+ 	private static String writeStaticMetaModelAnnotation(MetaEntity entity) {
+diff --git a/src/main/java/org/hibernate/jpamodelgen/Context.java b/src/main/java/org/hibernate/jpamodelgen/Context.java
+index 06c1327..965a08f 100644
+--- a/src/main/java/org/hibernate/jpamodelgen/Context.java
++++ b/src/main/java/org/hibernate/jpamodelgen/Context.java
+@@ -62,6 +62,7 @@ public final class Context {
+ 
+ 	private boolean isPersistenceUnitCompletelyXmlConfigured;
+ 	private boolean addGeneratedAnnotation;
++	private boolean removeDateFromGeneratedAnnotation;
+ 	private AccessType persistenceUnitDefaultAccessType;
+ 
+ 	public Context(ProcessingEnvironment pe) {
+@@ -108,6 +109,15 @@ public final class Context {
+ 		this.addGeneratedAnnotation = addGeneratedAnnotation;
+ 	}
+ 
++	public void setRemoveDateFromGeneratedAnnotation(
++			boolean removeDateFromGeneratedAnnotation) {
++		this.removeDateFromGeneratedAnnotation = removeDateFromGeneratedAnnotation;
++	}
++
++	public boolean isRemoveDateFromGeneratedAnnotation() {
++		return removeDateFromGeneratedAnnotation;
++	}
++
+ 	public Elements getElementUtils() {
+ 		return pe.getElementUtils();
+ 	}
+diff --git a/src/main/java/org/hibernate/jpamodelgen/JPAMetaModelEntityProcessor.java b/src/main/java/org/hibernate/jpamodelgen/JPAMetaModelEntityProcessor.java
+index 35c8e29..b6df58b 100644
+--- a/src/main/java/org/hibernate/jpamodelgen/JPAMetaModelEntityProcessor.java
++++ b/src/main/java/org/hibernate/jpamodelgen/JPAMetaModelEntityProcessor.java
+@@ -79,6 +79,7 @@ public class JPAMetaModelEntityProcessor extends AbstractProcessor {
+ 	public static final String FULLY_ANNOTATION_CONFIGURED_OPTION = "fullyAnnotationConfigured";
+ 	public static final String LAZY_XML_PARSING = "lazyXmlParsing";
+ 	public static final String ADD_GENERATED_ANNOTATION = "addGeneratedAnnotation";
++	public static final String REMOVE_DATE_FROM_GENERATED_ANNOTATION = "removeDateFromGeneratedAnnotation";
+ 
+ 	private static final Boolean ALLOW_OTHER_PROCESSORS_TO_CLAIM_ANNOTATIONS = Boolean.FALSE;
+ 
+@@ -95,6 +96,10 @@ public class JPAMetaModelEntityProcessor extends AbstractProcessor {
+ 		boolean addGeneratedAnnotation = Boolean.parseBoolean( tmp );
+ 		context.setAddGeneratedAnnotation( addGeneratedAnnotation );
+ 
++		tmp = env.getOptions().get( JPAMetaModelEntityProcessor.REMOVE_DATE_FROM_GENERATED_ANNOTATION );
++		boolean removeDateFromGeneratedAnnotation = Boolean.parseBoolean( tmp );
++		context.setRemoveDateFromGeneratedAnnotation( removeDateFromGeneratedAnnotation );
++
+ 		tmp = env.getOptions().get( JPAMetaModelEntityProcessor.FULLY_ANNOTATION_CONFIGURED_OPTION );
+ 		boolean fullyAnnotationConfigured = Boolean.parseBoolean( tmp );
+ 

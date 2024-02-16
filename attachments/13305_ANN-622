@@ -1,0 +1,40 @@
+package org.hibernate.test.annotations.id;
+
+import org.hibernate.annotations.AccessType;
+
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Id;
+import javax.persistence.Basic;
+
+@MappedSuperclass
+@AccessType("property")
+public class Base {
+    private int id;
+    private String name;
+
+    public Base() {
+    }
+
+    public Base(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Id
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}

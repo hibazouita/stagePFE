@@ -1,0 +1,72 @@
+package org.hibernate.validator;
+
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import org.junit.Test;
+
+/**
+ * Created by IntelliJ IDEA.
+ *
+ * @author Scott Leberknight
+ */
+public class NotEmptyValidatorClassCastExceptionBugTest {
+
+    @Test
+    public void testIsValidThrowsClassCastExceptionForNonNullWrapperTypes() {
+        NotEmptyValidator validator = new NotEmptyValidator();
+        Object[] values = createNonNullPrimitiveWrapperTestData();
+        for (Object value : values) {
+            try {
+                validator.isValid(value);
+                fail("expected ClassCastException");
+            }
+            catch (Exception e) {
+                assertEquals(ClassCastException.class, e.getClass());
+            }
+        }
+    }
+
+    private Object[] createNonNullPrimitiveWrapperTestData() {
+        Object[] values = new Object[]{ (byte) 1, (short) 54, (int) 755, 9L, 5.6F, 7.88, 'c', true };
+        return values;
+    }
+
+    // A possible fix to the logic...
+    static class NotEmptyValidatorSuggestedFix {
+
+        public boolean isValid(Object value) {
+            if (value == null) {
+                return false;
+            }
+            if (value.getClass().isArray()) {
+                return Array.getLength(value) > 0;
+            }
+            else if (value instanceof Collection) {
+                return ((Collection) value).size() > 0;
+            }
+            else if (value instanceof Map) {
+                return ((Map) value).size() > 0;
+            }
+            // logic changed from here down
+            else if (value instanceof String) {
+                return ((String) value).length() > 0;
+            }
+            return true;  // not sure if true or false better here; are there any other cases other than wrappers???
+        }
+    }
+
+    @Test
+    public void testIsValidFixedLogic() {
+        NotEmptyValidatorSuggestedFix validator = new NotEmptyValidatorSuggestedFix();
+        Object[] values = createNonNullPrimitiveWrapperTestData();
+        for (Object value : values) {
+            assertTrue(value + " unexpectedly failed validation", validator.isValid(value));
+        }
+    }
+
+}

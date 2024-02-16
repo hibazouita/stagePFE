@@ -1,0 +1,1961 @@
+hibernate3.jar: 3.2.5.ga
+hibernate-annotations.jar: 3.3.0.GA
+hibernate-commons-annotations.jar: 3.0.0.GA
+hibernate-validator.jar: 3.0.0.GA
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+@Entity
+public class Dummy<K> {
+  
+  @Id
+  private Long id;
+  
+  @Transient
+  transient private K dummyField;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public K getDummyField() {
+    return dummyField;
+  }
+
+  public void setDummyField(K dummyField) {
+    this.dummyField = dummyField;
+  }
+
+}
+
+
+
+log:
+
+[SERVER]  INFO [main] - Hibernate Annotations 3.3.0.GA
+[SERVER]  INFO [main] - Hibernate 3.2.5
+[SERVER]  INFO [main] - hibernate.properties not found
+[SERVER]  INFO [main] - Bytecode provider name : cglib
+[SERVER]  INFO [main] - using JDK 1.4 java.sql.Timestamp handling
+[SERVER]  INFO [main] - Hibernate EntityManager 3.3.1.GA
+[SERVER] DEBUG [main] - Look up for persistence unit: gena_test
+[SERVER] DEBUG [main] - Analyse of persistence.xml: file:/C:/Programme/eclipse3.3/eclipse/workspace/Gena_4_Model/bin/META-INF/persistence.xml
+[SERVER]  WARN [main] - Warning parsing XML: XML InputStream(4) SchemaLocation: schemaLocation value = 'http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd' must have even number of URIs.
+[SERVER] DEBUG [main] - Persistent Unit name from persistence.xml: gena_demo
+[SERVER] DEBUG [main] - Persistent Unit name from persistence.xml: gena_test
+[SERVER] DEBUG [main] - PersistenceMetadata [
+  name: gena_demo
+  jtaDataSource: null
+  nonJtaDataSource: null
+  transactionType: RESOURCE_LOCAL
+  provider: org.hibernate.ejb.HibernatePersistence
+  classes[
+  ]
+  packages[
+  ]
+  mappingFiles[
+  ]
+  jarFiles[
+  ]
+  hbmfiles: 0
+  properties[
+    hibernate.c3p0.timeout: 300
+    hibernate.default_schema: gena_demo
+    hibernate.connection.driver_class: org.gjt.mm.mysql.Driver
+    hibernate.c3p0.max_statements: 50
+    hibernate.c3p0.max_size: 20
+    hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate.c3p0.idle_test_period: 3000
+    hibernate.format_sql: true
+    hibernate.c3p0.min_size: 5
+    hibernate.connection.username: root
+    hibernate.hbm2ddl.auto: update
+    hibernate.archive.autodetection: class
+    hibernate.connection.url: jdbc:mysql://localhost/gena_demo
+    hibernate.show_sql: true
+    hibernate.connection.password: root
+  ]]
+[SERVER] DEBUG [main] - PersistenceMetadata [
+  name: gena_test
+  jtaDataSource: null
+  nonJtaDataSource: null
+  transactionType: RESOURCE_LOCAL
+  provider: org.hibernate.ejb.HibernatePersistence
+  classes[
+  ]
+  packages[
+  ]
+  mappingFiles[
+  ]
+  jarFiles[
+  ]
+  hbmfiles: 0
+  properties[
+    hibernate.c3p0.timeout: 300
+    hibernate.default_schema: gena_test
+    hibernate.connection.driver_class: org.gjt.mm.mysql.Driver
+    hibernate.c3p0.max_statements: 50
+    hibernate.c3p0.max_size: 20
+    hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate.c3p0.idle_test_period: 3000
+    hibernate.format_sql: true
+    hibernate.c3p0.min_size: 5
+    hibernate.connection.username: root
+    hibernate.hbm2ddl.auto: create
+    hibernate.archive.autodetection: class
+    hibernate.connection.url: jdbc:mysql://localhost/gena_test
+    hibernate.show_sql: true
+    hibernate.connection.password: root
+  ]]
+[SERVER] DEBUG [main] - JAR URL from URL Entry: file:/C:/Programme/eclipse3.3/eclipse/workspace/Gena_4_Model/bin/META-INF/persistence.xml >> file:/C:/Programme/eclipse3.3/eclipse/workspace/Gena_4_Model/bin
+[SERVER] DEBUG [main] - Detect class: true; detect hbm: false
+[SERVER] DEBUG [main] - Searching mapped entities in jar/par: file:/C:/Programme/eclipse3.3/eclipse/workspace/Gena_4_Model/bin
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.file.GuiCardFile
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.file.GuiCardItemArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.file.GuiFile
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.file.GuiFolder
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.card.DirectionViews
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.card.ItemGroup
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.card.VisualEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.BFSAlgorithm
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Cube3d
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.DepthSortComparator
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Dimetric
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Directions
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Object25D
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$CellNeighboursSearcher
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$FloodFill$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$FloodFill$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$FloodFill
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$FloodFillCallBack
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$GridObjectVisitor
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D$InserectingVolumesSearcher
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25D
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Space25DCallback
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.SpaceForm
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.client.isoengine.metric.SpaceForm
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.Vector
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.client.isoengine.metric.Vector
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.VectorInt
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.client.isoengine.metric.VectorInt
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.WindRose
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.isoengine.metric.ZIndexComparator
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.ArrayDeque$DeqIterator
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.ArrayDeque$DescendingIterator
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.ArrayDeque
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.Arrays16
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.ArrayUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.Color
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.CyclusException
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.Deque
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.HasModel$ModelHelper
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.HasModel
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.Iterable
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.LongRunningProcess
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.LongRunningProcessRunner$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.LongRunningProcessRunner
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.PathImage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.PropertiesUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.Size
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.StopWatch
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.UnknownPathImage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.utils.Validateable
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.client.Version
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.GeneratedMetaClassRegistry
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Composition
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Delegates
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.DisplayType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.EffectEditorViewConnector
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.GwtViewConnector
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.GwtViewConntectorEnum
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Hidden
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Label
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Model
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Model3DViewConnector
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.MultiLine
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.NotModel
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Password
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.RelationEnum
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Template
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.annotations.Verb
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.AuthenticationException
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.BinaryBlobType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.ClientLoginInfo
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.GenaContext
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.GenaSession
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.log.GLog
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.log.SerializationLogger
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.log.SerializationLogReader
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.log.SerializationLogWriter
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.log.SerialLog
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.LongId
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.LongIdService
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.LongIdUserType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.MapClobUserType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.ModifyableFloat
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.ModifyableInt
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.ModifyableNumber
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.NumberModifier
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.persistence.BlobRef
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.lang.persistence.BlobRef
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.persistence.EntityManagerSingleton
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.persistence.Ghostable
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.persistence.HasVersion
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.persistence.LoginSession
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.lang.persistence.LoginSession
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.persistence.SafePersistence
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.persistence.UniqueSequenceTable
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.lang.persistence.UniqueSequenceTable
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.reflection.BaseMetaClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.reflection.BaseMetaField
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.reflection.Labeler
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.reflection.MetaClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.reflection.MetaClassRegistry
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.reflection.MetaField
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.reflection.MetaObject
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.rpc.NilCallback
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.rpc.OkCallback
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.rpc.Predicate
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.rpc.SerRunException
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.rpc.TypedId
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.SequenceBlock
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.service.GenaIsoEngineServer
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.service.GenaIsoEngineServerAsync
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.service.GenaServer
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.service.GenaServerAsync
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.service.ServiceConstants
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.validation.Length
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.validation.Size
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.validation.Validation
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.validation.Validator
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.valueset.ListResponse
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.valueset.ValueSet$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.valueset.ValueSet
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.valueset.ValueSetDB
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.valueset.ValueSetDBSimple
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.valueset.ValueSetEnum
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.lang.XStreamUserType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassAchievement
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassActorLevelSource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassAttackBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassAttackRangeBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassCloseCombatAttack
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassCritical
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDamageBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDE
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaClientIsoengineMetricVector$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaClientIsoengineMetricVector$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaClientIsoengineMetricVector$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaClientIsoengineMetricVector
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaClientIsoengineMetricVectorInt
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$10
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$11
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$12
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$13
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$14
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$15
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$16
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$8
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor$9
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorActor
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorAttackTarget
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorCutDefense$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorCutDefense$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorCutDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorDefense$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorDefense$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHearing$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHearing$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHearing$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHearing$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHearing
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitDefense$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitDefense$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorHitPoints
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPerceivable
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPerceptionThreshold$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPerceptionThreshold$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPerceptionThreshold$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPerceptionThreshold$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPerceptionThreshold
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPoisonDefense$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPoisonDefense$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorPoisonDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorResource$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorResource$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorResourceEnum
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSex
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSimpleDefenseResource$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSimpleDefenseResource$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSimpleDefenseResource$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSimpleDefenseResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSpellDefense$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSpellDefense$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorSpellDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorStingDefense$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorStingDefense$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorStingDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorStrength$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorStrength$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorStrength$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorStrength
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentHasEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalent$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalent$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalent$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalent
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$10
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$11
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$12
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$13
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$14
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$8
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype$9
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorTalentTalentArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVelocity$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVelocity$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVelocity$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVelocity
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVisibility$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVisibility$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVisibility$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVisibility$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelActorVisibility
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseAttackType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseBonus$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseBonus$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseBonus$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseBonus$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseBonusType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseDamageType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseLocal
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseLocalString$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseLocalString$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseLocalString$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseLocalString
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelBaseSuccessType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$10
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$11
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$12
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$8
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo$9
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEditorEditorInfo
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectActionEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectActionEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectActionEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectActionEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectActionEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectActionEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAgentBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAgentBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAgentBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAgentBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAgentBonusEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAgentBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAgentBonusType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectArmorBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectArmorBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectArmorBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectArmorBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectArmorBonusEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectArmorBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackBonusEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackBonusEffect$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$8
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect$9
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackRangeBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackRangeBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackRangeBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackRangeBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackRangeBonusEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackRangeBonusEffect$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectAttackRangeBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectCompositeEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectCompositeEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectCompositeEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectCompositeEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectCompositeEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionComparatorType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionEffectCondition$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionEffectCondition
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionEffectConditionGroup$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionEffectConditionGroup$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionEffectConditionGroup
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfActive$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfActive
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAndList$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAndList$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAndList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAttackSuccessType$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAttackSuccessType$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAttackSuccessType$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAttackSuccessType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAttackType$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAttackType$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfAttackType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfNotAndList$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfNotAndList$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfNotAndList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfNotOrList$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfNotOrList$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfNotOrList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfOrList$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfOrList$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfOrList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTalentItemClass$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTalentItemClass$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTalentItemClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTick$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTick$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTick$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTick
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTickCyclic$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTickCyclic$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTickCyclic$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectConditionIfTickCyclic
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageBonusEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageBonusEffect$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectDamageEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectEffectTarget
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect$8
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectGlueVirtualAgentEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectHasBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectResourceBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectResourceBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectResourceBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectResourceBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectResourceBonusEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectResourceBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectSensitivityBonusEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectSensitivityBonusEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectSensitivityBonusEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectSensitivityBonusEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectSensitivityBonusEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectSensitivityBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectVirtualAgentEffect$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectVirtualAgentEffect$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectVirtualAgentEffect$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectVirtualAgentEffect$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectVirtualAgentEffect$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelEffectVirtualAgentEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualCardFile
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFile$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFile$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFile$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFile$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFile$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFile$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFile
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualFolder
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelFileVirtualRootFolder
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmo$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmo$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmo$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmo
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmoArchetype$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmoArchetype$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmoArchetype$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmoArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmoClass$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmoClass$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemAmmoClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItem$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItem$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItem$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItem
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$10
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$11
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$12
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$13
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$14
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$5
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$6
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$7
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$8
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype$9
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemClass$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemClass$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelItemItemClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserDesigner$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserDesigner
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserPlayer$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserPlayer$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserPlayer
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserSuperUser$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserSuperUser
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserUserAccount$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserUserAccount$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserUserAccount$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserUserAccount$4
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserUserAccount
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserUserRole$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassDeNeiseGenaModelUserUserRole
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassEffectTargetGoal
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassEffectTargetOwner
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassEN
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassEquals
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassFactorBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassFactorChanceBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassFemale
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassFixBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassFlop
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassFR
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassGood
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassGreaterOrEquals
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHearingResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHearing_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHitPointsResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHitPoints_Cut_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHitPoints_Hit_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHitPoints_Poison_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHitPoints_Spell_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassHitPoints_Sting_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassLongRangeCombatAttack
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassMale
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassSmallerOrEquals
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassSpellAttack
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassStrengthResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassStrength_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassTalentRankSource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassVelocityResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassVelocity_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassVisibilityResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.MClassVisibility_Damage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Actor
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.actor.Actor
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.AttackTarget
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.CutDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Defense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Hearing
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.HitDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.HitPoints
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Perceivable
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.PerceptionThreshold
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.PoisonDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Resource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.ResourceEnum
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Sex
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.SimpleDefenseResource
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.SpellDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.StingDefense
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Strength
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.talent.HasEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.talent.Talent
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.actor.talent.Talent
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.talent.TalentArchetype
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.actor.talent.TalentArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Velocity
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.actor.Visibility
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.base.AttackType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.base.Bonus
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.base.Bonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.base.BonusType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.base.DamageType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.base.Local
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.base.LocalString
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.base.LocalString
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.base.SuccessType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.editor.EditorInfo
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.editor.EditorInfo
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.ActionEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.AgentBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.AgentBonusType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.ArmorBonusEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.ArmorBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.AttackBonusEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.AttackBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.AttackEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.AttackEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.AttackRangeBonusEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.AttackRangeBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.BonusEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.BonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.BonusUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.CompositeEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.CompositeEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.ComparatorType$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.ComparatorType$2
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.ComparatorType$3
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.ComparatorType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.EffectCondition
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.EffectCondition
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.EffectConditionGroup
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfActive
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfActive
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfAndList
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfAndList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfAttackSuccessType
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfAttackSuccessType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfAttackType
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfAttackType
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfNotAndList
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfNotAndList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfNotOrList
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfNotOrList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfOrList
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfOrList
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfTalentItemClass
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfTalentItemClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfTick
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfTick
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.condition.IfTickCyclic
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.condition.IfTickCyclic
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.DamageBonusEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.DamageBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.DamageEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.DamageEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.Effect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.Effect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.EffectTarget
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.GlueVirtualAgentEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.GlueVirtualAgentEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.HasBonus
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.ResourceBonusEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.ResourceBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.SensitivityBonusEffect
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.effect.SensitivityBonusEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.effect.VirtualAgentEffect
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.ActEnvironment
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.Action
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.ActionConfig
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.actions.ActionFight$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.actions.ActionFight
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.actions.ActionMove
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.actions.ActionUse
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.actions.ActionWait
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.acts.Act
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.acts.ActActiveEffects
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.acts.ActMove
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.acts.ActNOOP
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.Agent
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.AllTests
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.AmmoClerk$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.AmmoClerk
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.AttackbonidrinkTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.AttackbonidrinkTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.BonusMap
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.BoostFriendSpellroleTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.BoostFriendSpellroleTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.BowAndArrowTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.BowAndArrowTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.BowAndPoisonedArrowTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.BowAndPoisonedArrowTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.CloseCombatWithStrengthAmulettFightTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.CloseCombatWithStrengthAmulettFightTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.CloseCombatWithSwordFightTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.CloseCombatWithSwordFightTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.Composite
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.Engine
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.GlueVirtualAgent
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.GunAndBulletAndGunPowderTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.GunAndBulletAndGunPowderTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.LeatherArmorTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.LeatherArmorTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.logger.ConsoleFightLogger
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.logger.FightLogger
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.logger.NilFightLogger
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.Party
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.PerformActionVisitor
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.PoisonedDaggerDamage$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.PoisonedDaggerDamage
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.SimpleFightTest$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.SimpleFightTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.SpellDaggerAttack$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.SpellDaggerAttack
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.Thing
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.TickContext
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.Vector
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.fight.World
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.file.CardItemArchetype
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.file.CardItemArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.file.Dummy
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.file.Dummy
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.file.VirtualCardFile
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.file.VirtualCardFile
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.file.VirtualFile
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.file.VirtualFile
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.file.VirtualFolder
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.file.VirtualFolder
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.file.VirtualRootFolder
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.file.VirtualRootFolder
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.item.Ammo
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.item.Ammo
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.item.AmmoArchetype
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.item.AmmoArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.item.AmmoClass
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.item.AmmoClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.item.Item
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.item.Item
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.item.ItemArchetype
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.item.ItemArchetype
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.item.ItemClass
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.item.ItemClass
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.persistence.SimpleReadWriteTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.persistence.VirtualFileReadWriteTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.persistence.XStreamTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.testbase.ActionListConfig
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.testbase.BaseTest
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.testbase.TestConsoleFightLogger
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.testbase.TestGenaContext
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.user.Designer
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.user.Designer
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.user.Player
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.user.Player
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.user.SuperUser
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.user.SuperUser
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.user.UserAccount
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.user.UserAccount
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.model.user.UserRole
+[SERVER] DEBUG [main] - Java element filter matched for de.neise.gena.model.user.UserRole
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.Arrays16
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ArrayUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.BitMask
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.Character16
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.CharRange
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.CharSet
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.CharSetUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.CharUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ComparatorUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.DateUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.DurationFormatUtils$Token
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.DurationFormatUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.GWTUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ImageMask
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.MutableInt
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ObjectUtils$Null
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ObjectUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.RandomUtils$1
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.RandomUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.SetIndex
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.StackWatch
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.StopWatch
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.StringUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.SystemUtils
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ToStringBuilder
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ToStringStyle$DefaultToStringStyle
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ToStringStyle$MultiLineToStringStyle
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ToStringStyle$NoFieldNameToStringStyle
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ToStringStyle$ShortPrefixToStringStyle
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ToStringStyle$SimpleToStringStyle
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.ToStringStyle
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.Tupple
+[SERVER] DEBUG [main] - Filtering: de.neise.gena.utils.WordUtils
+[SERVER] DEBUG [main] - Filtering: javax.persistence.AssociationOverride
+[SERVER] DEBUG [main] - Filtering: javax.persistence.AssociationOverrides
+[SERVER] DEBUG [main] - Filtering: javax.persistence.AttributeOverride
+[SERVER] DEBUG [main] - Filtering: javax.persistence.AttributeOverrides
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Basic
+[SERVER] DEBUG [main] - Filtering: javax.persistence.CascadeType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Column
+[SERVER] DEBUG [main] - Filtering: javax.persistence.ColumnResult
+[SERVER] DEBUG [main] - Filtering: javax.persistence.DiscriminatorColumn
+[SERVER] DEBUG [main] - Filtering: javax.persistence.DiscriminatorType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.DiscriminatorValue
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Embeddable
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Embedded
+[SERVER] DEBUG [main] - Filtering: javax.persistence.EmbeddedId
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Entity
+[SERVER] DEBUG [main] - Filtering: javax.persistence.EntityListeners
+[SERVER] DEBUG [main] - Filtering: javax.persistence.EntityResult
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Enumerated
+[SERVER] DEBUG [main] - Filtering: javax.persistence.EnumType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.ExcludeDefaultListeners
+[SERVER] DEBUG [main] - Filtering: javax.persistence.ExcludeSuperclassListeners
+[SERVER] DEBUG [main] - Filtering: javax.persistence.FetchType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.FieldResult
+[SERVER] DEBUG [main] - Filtering: javax.persistence.FlushModeType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.GeneratedValue
+[SERVER] DEBUG [main] - Filtering: javax.persistence.GenerationType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Id
+[SERVER] DEBUG [main] - Filtering: javax.persistence.IdClass
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Inheritance
+[SERVER] DEBUG [main] - Filtering: javax.persistence.InheritanceType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.JoinColumn
+[SERVER] DEBUG [main] - Filtering: javax.persistence.JoinColumns
+[SERVER] DEBUG [main] - Filtering: javax.persistence.JoinTable
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Lob
+[SERVER] DEBUG [main] - Filtering: javax.persistence.LockModeType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.ManyToMany
+[SERVER] DEBUG [main] - Filtering: javax.persistence.ManyToOne
+[SERVER] DEBUG [main] - Filtering: javax.persistence.MapKey
+[SERVER] DEBUG [main] - Filtering: javax.persistence.MappedSuperclass
+[SERVER] DEBUG [main] - Filtering: javax.persistence.NamedNativeQueries
+[SERVER] DEBUG [main] - Filtering: javax.persistence.NamedNativeQuery
+[SERVER] DEBUG [main] - Filtering: javax.persistence.NamedQueries
+[SERVER] DEBUG [main] - Filtering: javax.persistence.NamedQuery
+[SERVER] DEBUG [main] - Filtering: javax.persistence.OneToMany
+[SERVER] DEBUG [main] - Filtering: javax.persistence.OneToOne
+[SERVER] DEBUG [main] - Filtering: javax.persistence.OrderBy
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PersistenceContext
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PersistenceContexts
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PersistenceContextType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PersistenceProperty
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PersistenceUnit
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PersistenceUnits
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PostLoad
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PostPersist
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PostRemove
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PostUpdate
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PrePersist
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PreRemove
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PreUpdate
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PrimaryKeyJoinColumn
+[SERVER] DEBUG [main] - Filtering: javax.persistence.PrimaryKeyJoinColumns
+[SERVER] DEBUG [main] - Filtering: javax.persistence.QueryHint
+[SERVER] DEBUG [main] - Filtering: javax.persistence.SecondaryTable
+[SERVER] DEBUG [main] - Filtering: javax.persistence.SecondaryTables
+[SERVER] DEBUG [main] - Filtering: javax.persistence.SequenceGenerator
+[SERVER] DEBUG [main] - Filtering: javax.persistence.SqlResultSetMapping
+[SERVER] DEBUG [main] - Filtering: javax.persistence.SqlResultSetMappings
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Table
+[SERVER] DEBUG [main] - Filtering: javax.persistence.TableGenerator
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Temporal
+[SERVER] DEBUG [main] - Filtering: javax.persistence.TemporalType
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Transient
+[SERVER] DEBUG [main] - Filtering: javax.persistence.UniqueConstraint
+[SERVER] DEBUG [main] - Filtering: javax.persistence.Version
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.AccessType
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Any
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.AnyMetaDef
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.AnyMetaDefs
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.BatchSize
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Cache
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.CacheConcurrencyStrategy
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.CacheModeType
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Cascade
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.CascadeType
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Check
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.CollectionId
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.CollectionOfElements
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Columns
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.DiscriminatorFormula
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Entity
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Fetch
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.FetchMode
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Filter
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.FilterDef
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.FilterDefs
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.FilterJoinTable
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.FilterJoinTables
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Filters
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.FlushModeType
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.ForceDiscriminator
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.ForeignKey
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Formula
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Generated
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.GenerationTime
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.GenericGenerator
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Immutable
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Index
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.IndexColumn
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.LazyCollection
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.LazyCollectionOption
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.LazyToOne
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.LazyToOneOption
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Loader
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.ManyToAny
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.MapKey
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.MapKeyManyToMany
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.MetaValue
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.NamedNativeQueries
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.NamedNativeQuery
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.NamedQueries
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.NamedQuery
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.NaturalId
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.NotFound
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.NotFoundAction
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.OnDelete
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.OnDeleteAction
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.OptimisticLock
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.OptimisticLockType
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.OrderBy
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.ParamDef
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Parameter
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Parent
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Persister
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.PolymorphismType
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Proxy
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.ResultCheckStyle
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Sort
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.SortType
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.SQLDelete
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.SQLDeleteAll
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.SQLInsert
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.SQLUpdate
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Table
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Tables
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Target
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Tuplizer
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Tuplizers
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Type
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.TypeDef
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.TypeDefs
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.Where
+[SERVER] DEBUG [main] - Filtering: org.hibernate.annotations.WhereJoinTable
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.AssertFalse
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.AssertTrue
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.CreditCardNumber
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Digits
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.EAN
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Email
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Future
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Length
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Max
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Min
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.NotEmpty
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.NotNull
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Past
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Pattern
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Patterns
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Range
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Size
+[SERVER] DEBUG [main] - Filtering: org.hibernate.validator.Valid
+[SERVER] DEBUG [main] - Detect class: true; detect hbm: false
+[SERVER] DEBUG [main] - Creating Factory: gena_test
+[SERVER] DEBUG [main] - Execute first pass mapping processing
+[SERVER] DEBUG [main] - Process hbm files
+[SERVER] DEBUG [main] - Process annotated classes
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.editor.EditorInfo
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=EditorInfo
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.editor.EditorInfo on table EditorInfo
+[SERVER] DEBUG [main] - Setting discriminator for entity de.neise.gena.model.editor.EditorInfo
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.editor.EditorInfo property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.editor.EditorInfo field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.changed
+[SERVER] DEBUG [main] - Binding column changed unique false
+[SERVER] DEBUG [main] - binding property changed with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for changed
+[SERVER] DEBUG [main] - Building property changed
+[SERVER] DEBUG [main] - Cascading changed with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.created
+[SERVER] DEBUG [main] - Binding column created unique false
+[SERVER] DEBUG [main] - binding property created with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for created
+[SERVER] DEBUG [main] - Building property created
+[SERVER] DEBUG [main] - Cascading created with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.description
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column description unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.editor.EditorInfo.description
+[SERVER] DEBUG [main] - Building property description
+[SERVER] DEBUG [main] - Cascading description with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.designComment
+[SERVER] DEBUG [main] - Binding column designComment unique false
+[SERVER] DEBUG [main] - binding property designComment with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for designComment
+[SERVER] DEBUG [main] - Building property designComment
+[SERVER] DEBUG [main] - Cascading designComment with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.designerChanger
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column designerChanger unique false
+[SERVER] DEBUG [main] - Building property designerChanger
+[SERVER] DEBUG [main] - Cascading designerChanger with none
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.designerOwner
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column designerOwner unique false
+[SERVER] DEBUG [main] - Building property designerOwner
+[SERVER] DEBUG [main] - Cascading designerOwner with none
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.editable
+[SERVER] DEBUG [main] - Binding column editable unique false
+[SERVER] DEBUG [main] - binding property editable with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for editable
+[SERVER] DEBUG [main] - Building property editable
+[SERVER] DEBUG [main] - Cascading editable with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.locked
+[SERVER] DEBUG [main] - Binding column locked unique false
+[SERVER] DEBUG [main] - binding property locked with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for locked
+[SERVER] DEBUG [main] - Building property locked
+[SERVER] DEBUG [main] - Cascading locked with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.name
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column name unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.editor.EditorInfo.name
+[SERVER] DEBUG [main] - Building property name
+[SERVER] DEBUG [main] - Cascading name with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.public_
+[SERVER] DEBUG [main] - Binding column public_ unique false
+[SERVER] DEBUG [main] - binding property public_ with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for public_
+[SERVER] DEBUG [main] - Building property public_
+[SERVER] DEBUG [main] - Cascading public_ with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.editor.EditorInfo.translated
+[SERVER] DEBUG [main] - Binding column translated unique false
+[SERVER] DEBUG [main] - binding property translated with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for translated
+[SERVER] DEBUG [main] - Building property translated
+[SERVER] DEBUG [main] - Cascading translated with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.actor.talent.TalentArchetype
+[SERVER] DEBUG [main] - Import with entity name=TalentArchetype
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.actor.talent.TalentArchetype field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.actor.talent.TalentArchetype.effect
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column effect unique false
+[SERVER] DEBUG [main] - Fetching effect with JOIN
+[SERVER] DEBUG [main] - Building property effect
+[SERVER] DEBUG [main] - Cascading effect with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.actor.talent.TalentArchetype.itemClass
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column itemClass unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.actor.talent.TalentArchetype.itemClass
+[SERVER] DEBUG [main] - Building property itemClass
+[SERVER] DEBUG [main] - Cascading itemClass with none
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.EffectCondition
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=EffectCondition
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.effect.condition.EffectCondition on table EffectCondition
+[SERVER] DEBUG [main] - Setting discriminator for entity de.neise.gena.model.effect.condition.EffectCondition
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.EffectCondition property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.EffectCondition field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.condition.EffectCondition.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfNotAndList
+[SERVER] DEBUG [main] - Import with entity name=IfNotAndList
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfNotAndList field annotation
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.Effect
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=Effect
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.effect.Effect on table Effect
+[SERVER] DEBUG [main] - Setting discriminator for entity de.neise.gena.model.effect.Effect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.Effect property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.Effect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.Effect.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.Effect.effectCondition
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column effectCondition unique false
+[SERVER] DEBUG [main] - Fetching effectCondition with JOIN
+[SERVER] DEBUG [main] - Building property effectCondition
+[SERVER] DEBUG [main] - Cascading effectCondition with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.Effect.visibleToPlayer
+[SERVER] DEBUG [main] - Binding column visibleToPlayer unique false
+[SERVER] DEBUG [main] - binding property visibleToPlayer with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for visibleToPlayer
+[SERVER] DEBUG [main] - Building property visibleToPlayer
+[SERVER] DEBUG [main] - Cascading visibleToPlayer with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.AttackEffect
+[SERVER] DEBUG [main] - Import with entity name=AttackEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.AttackEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.AttackEffect.ammoArchetype
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column ammoArchetype unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.effect.AttackEffect.ammoArchetype
+[SERVER] DEBUG [main] - Building property ammoArchetype
+[SERVER] DEBUG [main] - Cascading ammoArchetype with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.AttackEffect.attackType
+[SERVER] DEBUG [main] - Binding column attackType unique false
+[SERVER] DEBUG [main] - binding property attackType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for attackType
+[SERVER] DEBUG [main] - Building property attackType
+[SERVER] DEBUG [main] - Cascading attackType with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.AttackEffect.effectTarget
+[SERVER] DEBUG [main] - Binding column effectTarget unique false
+[SERVER] DEBUG [main] - binding property effectTarget with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for effectTarget
+[SERVER] DEBUG [main] - Building property effectTarget
+[SERVER] DEBUG [main] - Cascading effectTarget with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.AttackEffect.range
+[SERVER] DEBUG [main] - Binding column range unique false
+[SERVER] DEBUG [main] - Binding component with path: de.neise.gena.model.effect.AttackEffect.range
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.ModifyableInt field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.ModifyableInt.value
+[SERVER] DEBUG [main] - Binding column value unique false
+[SERVER] DEBUG [main] - binding property value with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for value
+[SERVER] DEBUG [main] - Building property value
+[SERVER] DEBUG [main] - Cascading value with null
+[SERVER] DEBUG [main] - Building property range
+[SERVER] DEBUG [main] - Cascading range with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.actor.talent.Talent
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=Talent
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.actor.talent.Talent on table Talent
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.actor.talent.Talent property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.actor.talent.Talent field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.actor.talent.Talent.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.actor.talent.Talent.rank
+[SERVER] DEBUG [main] - Binding column rank unique false
+[SERVER] DEBUG [main] - binding property rank with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for rank
+[SERVER] DEBUG [main] - Building property rank
+[SERVER] DEBUG [main] - Cascading rank with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.actor.talent.Talent.talentArchetype
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column talentArchetype unique false
+[SERVER] DEBUG [main] - Building property talentArchetype
+[SERVER] DEBUG [main] - Cascading talentArchetype with none
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.file.VirtualFile
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=VirtualFile
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.file.VirtualFile on table VirtualFile
+[SERVER] DEBUG [main] - Setting discriminator for entity de.neise.gena.model.file.VirtualFile
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.file.VirtualFile property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.file.VirtualFile field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualFile.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualFile.deleted
+[SERVER] DEBUG [main] - Binding column deleted unique false
+[SERVER] DEBUG [main] - binding property deleted with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for deleted
+[SERVER] DEBUG [main] - Building property deleted
+[SERVER] DEBUG [main] - Cascading deleted with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualFile.folder
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column folder unique false
+[SERVER] DEBUG [main] - Building property folder
+[SERVER] DEBUG [main] - Cascading folder with none
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualFile.name
+[SERVER] DEBUG [main] - Binding column name unique false
+[SERVER] DEBUG [main] - binding property name with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for name
+[SERVER] DEBUG [main] - Building property name
+[SERVER] DEBUG [main] - Cascading name with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualFile.owner
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column owner unique false
+[SERVER] DEBUG [main] - Building property owner
+[SERVER] DEBUG [main] - Cascading owner with none
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualFile.sortIndex
+[SERVER] DEBUG [main] - Binding column sortIndex unique false
+[SERVER] DEBUG [main] - binding property sortIndex with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for sortIndex
+[SERVER] DEBUG [main] - Building property sortIndex
+[SERVER] DEBUG [main] - Cascading sortIndex with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.BonusEffect
+[SERVER] DEBUG [main] - Import with entity name=BonusEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.BonusEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.BonusEffect.bonus
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column bonus unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.effect.BonusEffect.bonus
+[SERVER] DEBUG [main] - Building property bonus
+[SERVER] DEBUG [main] - Cascading bonus with all
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.file.VirtualFolder
+[SERVER] DEBUG [main] - Import with entity name=VirtualFolder
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.file.VirtualFolder field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualFolder.contents
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column contents unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.file.VirtualFolder.contents
+[SERVER] DEBUG [main] - Building property contents
+[SERVER] DEBUG [main] - Cascading contents with all
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.item.AmmoArchetype
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=AmmoArchetype
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.item.AmmoArchetype on table AmmoArchetype
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.AmmoArchetype property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.AmmoArchetype field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.AmmoArchetype.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.AmmoArchetype.ammoClass
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column ammoClass unique false
+[SERVER] DEBUG [main] - Building property ammoClass
+[SERVER] DEBUG [main] - Cascading ammoClass with none
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.AmmoArchetype.ammoUnits
+[SERVER] DEBUG [main] - Binding column ammoUnits unique false
+[SERVER] DEBUG [main] - binding property ammoUnits with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for ammoUnits
+[SERVER] DEBUG [main] - Building property ammoUnits
+[SERVER] DEBUG [main] - Cascading ammoUnits with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.DamageEffect
+[SERVER] DEBUG [main] - Import with entity name=DamageEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.DamageEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.DamageEffect.damageType
+[SERVER] DEBUG [main] - Binding column damageType unique false
+[SERVER] DEBUG [main] - binding property damageType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for damageType
+[SERVER] DEBUG [main] - Building property damageType
+[SERVER] DEBUG [main] - Cascading damageType with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.DamageEffect.effectTarget
+[SERVER] DEBUG [main] - Binding column effectTarget unique false
+[SERVER] DEBUG [main] - binding property effectTarget with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for effectTarget
+[SERVER] DEBUG [main] - Building property effectTarget
+[SERVER] DEBUG [main] - Cascading effectTarget with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.AttackRangeBonusEffect
+[SERVER] DEBUG [main] - Import with entity name=AttackRangeBonusEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.AttackRangeBonusEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.AttackRangeBonusEffect.attackType
+[SERVER] DEBUG [main] - Binding column attackType unique false
+[SERVER] DEBUG [main] - binding property attackType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for attackType
+[SERVER] DEBUG [main] - Building property attackType
+[SERVER] DEBUG [main] - Cascading attackType with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.file.VirtualCardFile
+[SERVER] DEBUG [main] - Import with entity name=VirtualCardFile
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.file.VirtualCardFile field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.VirtualCardFile.config
+[SERVER] DEBUG [main] - Binding column config unique false
+[SERVER] DEBUG [main] - binding property config with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for config
+[SERVER] DEBUG [main] - Building property config
+[SERVER] DEBUG [main] - Cascading config with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.file.CardItemArchetype
+[SERVER] DEBUG [main] - Import with entity name=CardItemArchetype
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.file.CardItemArchetype field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.CardItemArchetype.directionViews
+[SERVER] DEBUG [main] - Binding column directionViews unique false
+[SERVER] DEBUG [main] - binding property directionViews with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for directionViews
+[SERVER] DEBUG [main] - Building property directionViews
+[SERVER] DEBUG [main] - Cascading directionViews with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.CardItemArchetype.imageMap
+[SERVER] DEBUG [main] - Binding column imageMap unique false
+[SERVER] DEBUG [main] - binding property imageMap with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for imageMap
+[SERVER] DEBUG [main] - Building property imageMap
+[SERVER] DEBUG [main] - Cascading imageMap with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.CardItemArchetype.itemGroup
+[SERVER] DEBUG [main] - Binding column itemGroup unique false
+[SERVER] DEBUG [main] - binding property itemGroup with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for itemGroup
+[SERVER] DEBUG [main] - Building property itemGroup
+[SERVER] DEBUG [main] - Cascading itemGroup with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.CardItemArchetype.passable
+[SERVER] DEBUG [main] - Binding column passable unique false
+[SERVER] DEBUG [main] - binding property passable with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for passable
+[SERVER] DEBUG [main] - Building property passable
+[SERVER] DEBUG [main] - Cascading passable with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.CardItemArchetype.pixelOffset
+[SERVER] DEBUG [main] - Binding column pixelOffset unique false
+[SERVER] DEBUG [main] - Binding component with path: de.neise.gena.model.file.CardItemArchetype.pixelOffset
+[SERVER] DEBUG [main] - Processing de.neise.gena.client.isoengine.metric.VectorInt field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.VectorInt.x
+[SERVER] DEBUG [main] - Binding column x unique false
+[SERVER] DEBUG [main] - binding property x with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for x
+[SERVER] DEBUG [main] - Building property x
+[SERVER] DEBUG [main] - Cascading x with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.VectorInt.y
+[SERVER] DEBUG [main] - Binding column y unique false
+[SERVER] DEBUG [main] - binding property y with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for y
+[SERVER] DEBUG [main] - Building property y
+[SERVER] DEBUG [main] - Cascading y with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.VectorInt.z
+[SERVER] DEBUG [main] - Binding column z unique false
+[SERVER] DEBUG [main] - binding property z with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for z
+[SERVER] DEBUG [main] - Building property z
+[SERVER] DEBUG [main] - Cascading z with null
+[SERVER] DEBUG [main] - Building property pixelOffset
+[SERVER] DEBUG [main] - Cascading pixelOffset with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.CardItemArchetype.slowdown
+[SERVER] DEBUG [main] - Binding column slowdown unique false
+[SERVER] DEBUG [main] - binding property slowdown with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for slowdown
+[SERVER] DEBUG [main] - Building property slowdown
+[SERVER] DEBUG [main] - Cascading slowdown with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.file.CardItemArchetype.spaceForm
+[SERVER] DEBUG [main] - Binding column spaceForm unique false
+[SERVER] DEBUG [main] - Binding component with path: de.neise.gena.model.file.CardItemArchetype.spaceForm
+[SERVER] DEBUG [main] - Processing de.neise.gena.client.isoengine.metric.SpaceForm field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.SpaceForm.offset
+[SERVER] DEBUG [main] - Binding column offset unique false
+[SERVER] DEBUG [main] - Binding component with path: de.neise.gena.model.file.CardItemArchetype.spaceForm.offset
+[SERVER] DEBUG [main] - Processing de.neise.gena.client.isoengine.metric.Vector field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.Vector.x
+[SERVER] DEBUG [main] - Binding column x unique false
+[SERVER] DEBUG [main] - binding property x with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for x
+[SERVER] DEBUG [main] - Building property x
+[SERVER] DEBUG [main] - Cascading x with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.Vector.y
+[SERVER] DEBUG [main] - Binding column y unique false
+[SERVER] DEBUG [main] - binding property y with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for y
+[SERVER] DEBUG [main] - Building property y
+[SERVER] DEBUG [main] - Cascading y with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.Vector.z
+[SERVER] DEBUG [main] - Binding column z unique false
+[SERVER] DEBUG [main] - binding property z with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for z
+[SERVER] DEBUG [main] - Building property z
+[SERVER] DEBUG [main] - Cascading z with null
+[SERVER] DEBUG [main] - Building property offset
+[SERVER] DEBUG [main] - Cascading offset with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.SpaceForm.spaceFormType
+[SERVER] DEBUG [main] - Binding column spaceFormType unique false
+[SERVER] DEBUG [main] - binding property spaceFormType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for spaceFormType
+[SERVER] DEBUG [main] - Building property spaceFormType
+[SERVER] DEBUG [main] - Cascading spaceFormType with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.SpaceForm.x
+[SERVER] DEBUG [main] - Binding column x unique false
+[SERVER] DEBUG [main] - binding property x with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for x
+[SERVER] DEBUG [main] - Building property x
+[SERVER] DEBUG [main] - Cascading x with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.SpaceForm.y
+[SERVER] DEBUG [main] - Binding column y unique false
+[SERVER] DEBUG [main] - binding property y with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for y
+[SERVER] DEBUG [main] - Building property y
+[SERVER] DEBUG [main] - Cascading y with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.SpaceForm.z0
+[SERVER] DEBUG [main] - Binding column z0 unique false
+[SERVER] DEBUG [main] - binding property z0 with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for z0
+[SERVER] DEBUG [main] - Building property z0
+[SERVER] DEBUG [main] - Cascading z0 with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.SpaceForm.z1
+[SERVER] DEBUG [main] - Binding column z1 unique false
+[SERVER] DEBUG [main] - binding property z1 with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for z1
+[SERVER] DEBUG [main] - Building property z1
+[SERVER] DEBUG [main] - Cascading z1 with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.client.isoengine.metric.SpaceForm.z2
+[SERVER] DEBUG [main] - Binding column z2 unique false
+[SERVER] DEBUG [main] - binding property z2 with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for z2
+[SERVER] DEBUG [main] - Building property z2
+[SERVER] DEBUG [main] - Cascading z2 with null
+[SERVER] DEBUG [main] - Building property spaceForm
+[SERVER] DEBUG [main] - Cascading spaceForm with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.lang.persistence.LoginSession
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=LoginSession
+[SERVER]  INFO [main] - Bind entity de.neise.gena.lang.persistence.LoginSession on table LoginSession
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.persistence.LoginSession property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.persistence.LoginSession field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.LoginSession.loginSessionId
+[SERVER] DEBUG [main] - Binding column loginSessionId unique false
+[SERVER] DEBUG [main] - loginSessionId is an id
+[SERVER] DEBUG [main] - building SimpleValue for loginSessionId
+[SERVER] DEBUG [main] - Building property loginSessionId
+[SERVER] DEBUG [main] - Cascading loginSessionId with null
+[SERVER] DEBUG [main] - Bind @Id on loginSessionId
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.LoginSession.firstLogin
+[SERVER] DEBUG [main] - Binding column firstLogin unique false
+[SERVER] DEBUG [main] - binding property firstLogin with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for firstLogin
+[SERVER] DEBUG [main] - Building property firstLogin
+[SERVER] DEBUG [main] - Cascading firstLogin with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.LoginSession.lastRequest
+[SERVER] DEBUG [main] - Binding column lastRequest unique false
+[SERVER] DEBUG [main] - binding property lastRequest with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for lastRequest
+[SERVER] DEBUG [main] - Building property lastRequest
+[SERVER] DEBUG [main] - Cascading lastRequest with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.LoginSession.userAccount
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column userAccount unique false
+[SERVER] DEBUG [main] - Fetching userAccount with JOIN
+[SERVER] DEBUG [main] - Building property userAccount
+[SERVER] DEBUG [main] - Cascading userAccount with none
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.user.UserRole
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=UserRole
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.user.UserRole on table UserRole
+[SERVER] DEBUG [main] - Setting discriminator for entity de.neise.gena.model.user.UserRole
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.user.UserRole property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.user.UserRole field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.user.UserRole.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.user.Designer
+[SERVER] DEBUG [main] - Import with entity name=Designer
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.user.Designer field annotation
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfNotOrList
+[SERVER] DEBUG [main] - Import with entity name=IfNotOrList
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfNotOrList field annotation
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.ResourceBonusEffect
+[SERVER] DEBUG [main] - Import with entity name=ResourceBonusEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.ResourceBonusEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.ResourceBonusEffect.resourceEnum
+[SERVER] DEBUG [main] - Binding column resourceEnum unique false
+[SERVER] DEBUG [main] - binding property resourceEnum with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for resourceEnum
+[SERVER] DEBUG [main] - Building property resourceEnum
+[SERVER] DEBUG [main] - Cascading resourceEnum with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.item.AmmoClass
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=AmmoClass
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.item.AmmoClass on table AmmoClass
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.AmmoClass property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.AmmoClass field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.AmmoClass.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.AmmoClass.name
+[SERVER] DEBUG [main] - Binding column name unique false
+[SERVER] DEBUG [main] - binding property name with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for name
+[SERVER] DEBUG [main] - Building property name
+[SERVER] DEBUG [main] - Cascading name with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfActive
+[SERVER] DEBUG [main] - Import with entity name=IfActive
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfActive field annotation
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.DamageBonusEffect
+[SERVER] DEBUG [main] - Import with entity name=DamageBonusEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.DamageBonusEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.DamageBonusEffect.damageType
+[SERVER] DEBUG [main] - Binding column damageType unique false
+[SERVER] DEBUG [main] - binding property damageType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for damageType
+[SERVER] DEBUG [main] - Building property damageType
+[SERVER] DEBUG [main] - Cascading damageType with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.base.Bonus
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=Bonus
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.base.Bonus on table Bonus
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.base.Bonus property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.base.Bonus field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.base.Bonus.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.base.Bonus.bonusSource
+[SERVER] DEBUG [main] - Binding column bonusSource unique false
+[SERVER] DEBUG [main] - binding property bonusSource with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for bonusSource
+[SERVER] DEBUG [main] - Building property bonusSource
+[SERVER] DEBUG [main] - Cascading bonusSource with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.base.Bonus.bonusType
+[SERVER] DEBUG [main] - Binding column bonusType unique false
+[SERVER] DEBUG [main] - binding property bonusType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for bonusType
+[SERVER] DEBUG [main] - Building property bonusType
+[SERVER] DEBUG [main] - Cascading bonusType with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.base.Bonus.bonusValue
+[SERVER] DEBUG [main] - Binding column bonusValue unique false
+[SERVER] DEBUG [main] - binding property bonusValue with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for bonusValue
+[SERVER] DEBUG [main] - Building property bonusValue
+[SERVER] DEBUG [main] - Cascading bonusValue with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.item.ItemClass
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=ItemClass
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.item.ItemClass on table ItemClass
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.ItemClass property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.ItemClass field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.ItemClass.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.ItemClass.name
+[SERVER] DEBUG [main] - Binding column name unique false
+[SERVER] DEBUG [main] - binding property name with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for name
+[SERVER] DEBUG [main] - Building property name
+[SERVER] DEBUG [main] - Cascading name with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfAttackType
+[SERVER] DEBUG [main] - Import with entity name=IfAttackType
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfAttackType field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.condition.IfAttackType.attackType
+[SERVER] DEBUG [main] - Binding column attackType unique false
+[SERVER] DEBUG [main] - binding property attackType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for attackType
+[SERVER] DEBUG [main] - Building property attackType
+[SERVER] DEBUG [main] - Cascading attackType with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfTickCyclic
+[SERVER] DEBUG [main] - Import with entity name=IfTickCyclic
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfTickCyclic field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.condition.IfTickCyclic.cycleLength
+[SERVER] DEBUG [main] - Binding column cycleLength unique false
+[SERVER] DEBUG [main] - binding property cycleLength with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for cycleLength
+[SERVER] DEBUG [main] - Building property cycleLength
+[SERVER] DEBUG [main] - Cascading cycleLength with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.condition.IfTickCyclic.cycleStart
+[SERVER] DEBUG [main] - Binding column cycleStart unique false
+[SERVER] DEBUG [main] - binding property cycleStart with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for cycleStart
+[SERVER] DEBUG [main] - Building property cycleStart
+[SERVER] DEBUG [main] - Cascading cycleStart with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.user.Player
+[SERVER] DEBUG [main] - Import with entity name=Player
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.user.Player field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.user.Player.actor
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column actor unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.user.Player.actor
+[SERVER] DEBUG [main] - Building property actor
+[SERVER] DEBUG [main] - Cascading actor with all
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.ArmorBonusEffect
+[SERVER] DEBUG [main] - Import with entity name=ArmorBonusEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.ArmorBonusEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.ArmorBonusEffect.damageType
+[SERVER] DEBUG [main] - Binding column damageType unique false
+[SERVER] DEBUG [main] - binding property damageType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for damageType
+[SERVER] DEBUG [main] - Building property damageType
+[SERVER] DEBUG [main] - Cascading damageType with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.lang.persistence.UniqueSequenceTable
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=UniqueSequenceTable
+[SERVER]  INFO [main] - Bind entity de.neise.gena.lang.persistence.UniqueSequenceTable on table unique_sequence_table
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.persistence.UniqueSequenceTable property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.persistence.UniqueSequenceTable field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.UniqueSequenceTable.dummyKey
+[SERVER] DEBUG [main] - Binding column dummyKey unique false
+[SERVER] DEBUG [main] - dummyKey is an id
+[SERVER] DEBUG [main] - building SimpleValue for dummyKey
+[SERVER] DEBUG [main] - Building property dummyKey
+[SERVER] DEBUG [main] - Cascading dummyKey with null
+[SERVER] DEBUG [main] - Bind @Id on dummyKey
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.UniqueSequenceTable.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - binding property id with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.user.UserAccount
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=UserAccount
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.user.UserAccount on table UserAccount
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.user.UserAccount property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.user.UserAccount field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.user.UserAccount.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.user.UserAccount.name
+[SERVER] DEBUG [main] - Binding column name unique false
+[SERVER] DEBUG [main] - binding property name with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for name
+[SERVER] DEBUG [main] - Building property name
+[SERVER] DEBUG [main] - Cascading name with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.user.UserAccount.password
+[SERVER] DEBUG [main] - Binding column password unique false
+[SERVER] DEBUG [main] - binding property password with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for password
+[SERVER] DEBUG [main] - Building property password
+[SERVER] DEBUG [main] - Cascading password with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.user.UserAccount.userRole
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column userRole unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.user.UserAccount.userRole
+[SERVER] DEBUG [main] - Building property userRole
+[SERVER] DEBUG [main] - Cascading userRole with all
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfOrList
+[SERVER] DEBUG [main] - Import with entity name=IfOrList
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfOrList field annotation
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.SensitivityBonusEffect
+[SERVER] DEBUG [main] - Import with entity name=SensitivityBonusEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.SensitivityBonusEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.SensitivityBonusEffect.damagetype
+[SERVER] DEBUG [main] - Binding column damagetype unique false
+[SERVER] DEBUG [main] - binding property damagetype with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for damagetype
+[SERVER] DEBUG [main] - Building property damagetype
+[SERVER] DEBUG [main] - Cascading damagetype with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.lang.persistence.BlobRef
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=BlobRef
+[SERVER]  INFO [main] - Bind entity de.neise.gena.lang.persistence.BlobRef on table BlobRef
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.persistence.BlobRef property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.persistence.BlobRef field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.BlobRef.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.persistence.BlobRef.blob
+[SERVER] DEBUG [main] - Binding column blob unique false
+[SERVER] DEBUG [main] - binding property blob with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for blob
+[SERVER] DEBUG [main] - Building property blob
+[SERVER] DEBUG [main] - Cascading blob with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.item.Item
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=Item
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.item.Item on table Item
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.Item property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.Item field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.Item.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.Item.ammo
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column ammo unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.item.Item.ammo
+[SERVER] DEBUG [main] - Building property ammo
+[SERVER] DEBUG [main] - Cascading ammo with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.Item.itemArchetype
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column itemArchetype unique false
+[SERVER] DEBUG [main] - Fetching itemArchetype with JOIN
+[SERVER] DEBUG [main] - Building property itemArchetype
+[SERVER] DEBUG [main] - Cascading itemArchetype with none
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.CompositeEffect
+[SERVER] DEBUG [main] - Import with entity name=CompositeEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.CompositeEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.CompositeEffect.effect
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column effect unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.effect.CompositeEffect.effect
+[SERVER] DEBUG [main] - Building property effect
+[SERVER] DEBUG [main] - Cascading effect with all
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfTick
+[SERVER] DEBUG [main] - Import with entity name=IfTick
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfTick field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.condition.IfTick.comparatorType
+[SERVER] DEBUG [main] - Binding column comparatorType unique false
+[SERVER] DEBUG [main] - binding property comparatorType with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for comparatorType
+[SERVER] DEBUG [main] - Building property comparatorType
+[SERVER] DEBUG [main] - Cascading comparatorType with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.condition.IfTick.tick
+[SERVER] DEBUG [main] - Binding column tick unique false
+[SERVER] DEBUG [main] - binding property tick with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for tick
+[SERVER] DEBUG [main] - Building property tick
+[SERVER] DEBUG [main] - Cascading tick with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.item.Ammo
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=Ammo
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.item.Ammo on table Ammo
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.Ammo property annotation
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.Ammo field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.Ammo.id
+[SERVER] DEBUG [main] - Binding column id unique false
+[SERVER] DEBUG [main] - id is an id
+[SERVER] DEBUG [main] - building SimpleValue for id
+[SERVER] DEBUG [main] - Building property id
+[SERVER] DEBUG [main] - Cascading id with null
+[SERVER] DEBUG [main] - Bind @Id on id
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.Ammo.ammoClass
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column ammoClass unique false
+[SERVER] DEBUG [main] - Building property ammoClass
+[SERVER] DEBUG [main] - Cascading ammoClass with none
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.Ammo.ammoUnits
+[SERVER] DEBUG [main] - Binding column ammoUnits unique false
+[SERVER] DEBUG [main] - Binding component with path: de.neise.gena.model.item.Ammo.ammoUnits
+[SERVER] DEBUG [main] - Processing de.neise.gena.lang.ModifyableInt field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.lang.ModifyableInt.value
+[SERVER] DEBUG [main] - Binding column value unique false
+[SERVER] DEBUG [main] - binding property value with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for value
+[SERVER] DEBUG [main] - Building property value
+[SERVER] DEBUG [main] - Cascading value with null
+[SERVER] DEBUG [main] - Building property ammoUnits
+[SERVER] DEBUG [main] - Cascading ammoUnits with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.file.VirtualRootFolder
+[SERVER] DEBUG [main] - Import with entity name=VirtualRootFolder
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.file.VirtualRootFolder field annotation
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.GlueVirtualAgentEffect
+[SERVER] DEBUG [main] - Import with entity name=GlueVirtualAgentEffect
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.GlueVirtualAgentEffect field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.GlueVirtualAgentEffect.effect
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column effect unique false
+[SERVER] DEBUG [main] - Fetching effect with JOIN
+[SERVER] DEBUG [main] - Building property effect
+[SERVER] DEBUG [main] - Cascading effect with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.GlueVirtualAgentEffect.effectTarget
+[SERVER] DEBUG [main] - Binding column effectTarget unique false
+[SERVER] DEBUG [main] - binding property effectTarget with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for effectTarget
+[SERVER] DEBUG [main] - Building property effectTarget
+[SERVER] DEBUG [main] - Cascading effectTarget with null
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.GlueVirtualAgentEffect.ownAction
+[SERVER] DEBUG [main] - Binding column ownAction unique false
+[SERVER] DEBUG [main] - binding property ownAction with lazy=false
+[SERVER] DEBUG [main] - building SimpleValue for ownAction
+[SERVER] DEBUG [main] - Building property ownAction
+[SERVER] DEBUG [main] - Cascading ownAction with null
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.item.ItemArchetype
+[SERVER] DEBUG [main] - Import with entity name=ItemArchetype
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.item.ItemArchetype field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.ItemArchetype.ammoArchetype
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column ammoArchetype unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column element unique false
+[SERVER] DEBUG [main] - Binding column mapkey unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Collection role: de.neise.gena.model.item.ItemArchetype.ammoArchetype
+[SERVER] DEBUG [main] - Building property ammoArchetype
+[SERVER] DEBUG [main] - Cascading ammoArchetype with all
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.item.ItemArchetype.effect
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column effect unique false
+[SERVER] DEBUG [main] - Fetching effect with JOIN
+[SERVER] DEBUG [main] - Building property effect
+[SERVER] DEBUG [main] - Cascading effect with all
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfTalentItemClass
+[SERVER] DEBUG [main] - Import with entity name=IfTalentItemClass
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfTalentItemClass field annotation
+[SERVER] DEBUG [main] - Processing annotations of de.neise.gena.model.effect.condition.IfTalentItemClass.itemClass
+[SERVER] DEBUG [main] - Binding column null unique false
+[SERVER] DEBUG [main] - Binding column itemClass unique false
+[SERVER] DEBUG [main] - Building property itemClass
+[SERVER] DEBUG [main] - Cascading itemClass with none
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.effect.condition.IfAndList
+[SERVER] DEBUG [main] - Import with entity name=IfAndList
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.effect.condition.IfAndList field annotation
+[SERVER]  INFO [main] - Binding entity from annotated class: de.neise.gena.model.file.Dummy
+[SERVER] DEBUG [main] - Binding column DTYPE unique false
+[SERVER] DEBUG [main] - Import with entity name=Dummy
+[SERVER]  INFO [main] - Bind entity de.neise.gena.model.file.Dummy on table Dummy
+[SERVER] DEBUG [main] - Processing de.neise.gena.model.file.Dummy property annotation
+java.lang.ExceptionInInitializerError
+  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+  at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39)
+  at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27)
+  at java.lang.reflect.Constructor.newInstance(Constructor.java:513)
+  at junit.framework.TestSuite.createTest(TestSuite.java:54)
+  at junit.framework.TestSuite.addTestMethod(TestSuite.java:280)
+  at junit.framework.TestSuite.<init>(TestSuite.java:140)
+  at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestLoader.getTest(JUnit3TestLoader.java:102)
+  at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestLoader.loadTests(JUnit3TestLoader.java:59)
+  at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:445)
+  at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:673)
+  at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:386)
+  at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:196)
+Caused by: javax.persistence.PersistenceException: org.hibernate.AnnotationException: Property de.neise.gena.model.file.Dummy.dummyField has an unbound type and no explicit target entity. Resolve this Generic usage issue or set an explicit target attribute (eg @OneToMany(target=) or use an explicit @Type
+  at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:258)
+  at org.hibernate.ejb.HibernatePersistence.createEntityManagerFactory(HibernatePersistence.java:120)
+  at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:51)
+  at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:33)
+  at de.neise.gena.model.testbase.BaseTest.<clinit>(BaseTest.java:19)
+  ... 13 more
+Caused by: org.hibernate.AnnotationException: Property de.neise.gena.model.file.Dummy.dummyField has an unbound type and no explicit target entity. Resolve this Generic usage issue or set an explicit target attribute (eg @OneToMany(target=) or use an explicit @Type
+  at org.hibernate.cfg.AnnotationBinder.addElementsOfAClass(AnnotationBinder.java:993)
+  at org.hibernate.cfg.AnnotationBinder.getElementsToProcess(AnnotationBinder.java:833)
+  at org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:645)
+  at org.hibernate.cfg.AnnotationConfiguration.processArtifactsOfType(AnnotationConfiguration.java:498)
+  at org.hibernate.cfg.AnnotationConfiguration.secondPassCompile(AnnotationConfiguration.java:277)
+  at org.hibernate.cfg.Configuration.buildMappings(Configuration.java:1115)
+  at org.hibernate.ejb.Ejb3Configuration.buildMappings(Ejb3Configuration.java:1269)
+  at org.hibernate.ejb.EventListenerConfigurator.configure(EventListenerConfigurator.java:150)
+  at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:888)
+  at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:186)
+  at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:246)
+  ... 17 more
+

@@ -1,0 +1,65 @@
+Index: src/test/java/org/hibernate/ejb/test/emops/Race.java
+===================================================================
+--- src/test/java/org/hibernate/ejb/test/emops/Race.java	(revision 15625)
++++ src/test/java/org/hibernate/ejb/test/emops/Race.java	(working copy)
+@@ -18,7 +18,7 @@
+ @Entity
+ public class Race {
+ 	@Id @GeneratedValue public Integer id;
+-	@IndexColumn( name="index" ) @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
++	@IndexColumn( name="index_" ) @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+ 	@org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN }) 
+ 	public List<Competitor> competitors = new ArrayList<Competitor>();
+ 	public String name;
+Index: src/test/java/org/hibernate/ejb/test/lock/Lock.java
+===================================================================
+--- src/test/java/org/hibernate/ejb/test/lock/Lock.java	(revision 15625)
++++ src/test/java/org/hibernate/ejb/test/lock/Lock.java	(working copy)
+@@ -9,7 +9,7 @@
+ /**
+  * @author Emmanuel Bernard
+  */
+-@Entity
++@Entity(name="Lock_")
+ public class Lock {
+ 	private Integer id;
+ 	private Integer version;
+Index: src/test/java/org/hibernate/ejb/test/inheritance/Strawberry.java
+===================================================================
+--- src/test/java/org/hibernate/ejb/test/inheritance/Strawberry.java	(revision 15625)
++++ src/test/java/org/hibernate/ejb/test/inheritance/Strawberry.java	(working copy)
+@@ -1,6 +1,7 @@
+ //$Id$
+ package org.hibernate.ejb.test.inheritance;
+ 
++import javax.persistence.Column;
+ import javax.persistence.Entity;
+ 
+ /**
+@@ -10,6 +11,7 @@
+ public class Strawberry extends Fruit {
+ 	private Long size;
+ 
++	@Column(name="size_")
+ 	public Long getSize() {
+ 		return size;
+ 	}
+Index: src/test/java/org/hibernate/ejb/test/ops/Workload.java
+===================================================================
+--- src/test/java/org/hibernate/ejb/test/ops/Workload.java	(revision 15625)
++++ src/test/java/org/hibernate/ejb/test/ops/Workload.java	(working copy)
+@@ -1,6 +1,7 @@
+ //$Id$
+ package org.hibernate.ejb.test.ops;
+ 
++import javax.persistence.Column;
+ import javax.persistence.Entity;
+ import javax.persistence.GeneratedValue;
+ import javax.persistence.Id;
+@@ -14,5 +15,6 @@
+ 	@GeneratedValue
+ 	public Integer id;
+ 	public String name;
++	@Column(name="load_")
+ 	public Integer load;
+ }

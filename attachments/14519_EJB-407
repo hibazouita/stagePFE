@@ -1,0 +1,64 @@
+Index: src/test/org/hibernate/ejb/test/callbacks/CallbacksTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/callbacks/CallbacksTest.java	(revisão 16361)
++++ src/test/org/hibernate/ejb/test/callbacks/CallbacksTest.java	(cópia de trabalho)
+@@ -116,6 +116,7 @@
+ 		em.flush();
+ 		assertNotNull( rc.getCreationDate() );
+ 		em.getTransaction().rollback();
++		em.close();
+ 	}
+ 
+ 	public void testCallBackListenersHierarchy() throws Exception {
+Index: src/test/org/hibernate/ejb/test/emops/FlushTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/emops/FlushTest.java	(revisão 16361)
++++ src/test/org/hibernate/ejb/test/emops/FlushTest.java	(cópia de trabalho)
+@@ -66,7 +66,10 @@
+ 		for (Decorate value : founds) {
+ 			assertTrue( names.contains( value.getPet().getName() ) );
+ 		}
++		manager.getTransaction().rollback();
+ 		
++		manager.close();
++		
+ 	}
+ 
+ 	public Dog createDog(String name, double weight, int bones, EntityManager manager) {
+Index: src/test/org/hibernate/ejb/test/lock/LockTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/lock/LockTest.java	(revisão 16361)
++++ src/test/org/hibernate/ejb/test/lock/LockTest.java	(cópia de trabalho)
+@@ -30,6 +30,8 @@
+ 		assertEquals( "surname", lock.getName() );
+ 		em.remove( lock );
+ 		em.getTransaction().commit();
++		
++		em.close();
+ 	}
+ 
+ 	public void testLockWrite() throws Exception {
+Index: src/test/org/hibernate/ejb/test/exception/ExceptionTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/exception/ExceptionTest.java	(revisão 16361)
++++ src/test/org/hibernate/ejb/test/exception/ExceptionTest.java	(cópia de trabalho)
+@@ -100,6 +100,7 @@
+ 		catch( PersistenceException e ) {
+ 			Throwable t = e.getCause();
+ 			assertTrue("Should be a constraint violation", t instanceof ConstraintViolationException);
++			em.getTransaction().rollback();
+ 		}
+ 		finally {
+ 			em.close();
+Index: src/test/org/hibernate/ejb/test/transaction/FlushAndTransactionTest.java
+===================================================================
+--- src/test/org/hibernate/ejb/test/transaction/FlushAndTransactionTest.java	(revisão 16361)
++++ src/test/org/hibernate/ejb/test/transaction/FlushAndTransactionTest.java	(cópia de trabalho)
+@@ -42,6 +42,7 @@
+ 		em.getTransaction().begin();
+ 		em.remove( em.find( Book.class, book.id ) );
+ 		em.getTransaction().commit();
++		em.close();
+ 	}
+ 
+ //	public void testTransactionalOperationsWhenTransactional() throws Exception {

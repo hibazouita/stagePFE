@@ -1,0 +1,95 @@
+### Eclipse Workspace Patch 1.0
+#P hibernate-validator
+Index: hibernate-validator-legacy/src/main/java/org/hibernate/validator/event/ValidateEventListener.java
+===================================================================
+--- hibernate-validator-legacy/src/main/java/org/hibernate/validator/event/ValidateEventListener.java	(revision 15744)
++++ hibernate-validator-legacy/src/main/java/org/hibernate/validator/event/ValidateEventListener.java	(working copy)
+@@ -1,5 +1,5 @@
+ //$Id$
+-package org.hibernate.validator.event;
++package  org.hibernate.validator.event;
+ 
+ import java.io.Serializable;
+ import java.util.ArrayList;
+@@ -28,11 +28,11 @@
+ import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
+ import org.hibernate.util.ReflectHelper;
+ import org.hibernate.util.StringHelper;
+-import org.hibernate.validator.ClassValidator;
+ import org.hibernate.validator.Environment;
+ import org.hibernate.validator.InvalidStateException;
+ import org.hibernate.validator.InvalidValue;
+ import org.hibernate.validator.MessageInterpolator;
++import org.hibernate.validator.ClassValidator;
+ 
+ /**
+  * Before insert and update, executes the validator framework
+Index: hibernate-validator-legacy/src/main/java/org/hibernate/validator/ClassValidator.java
+===================================================================
+--- hibernate-validator-legacy/src/main/java/org/hibernate/validator/ClassValidator.java	(revision 15744)
++++ hibernate-validator-legacy/src/main/java/org/hibernate/validator/ClassValidator.java	(working copy)
+@@ -37,6 +37,7 @@
+ import org.hibernate.annotations.common.reflection.XProperty;
+ import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
+ import org.hibernate.util.IdentitySet;
++import org.hibernate.validator.*;
+ import org.hibernate.validator.interpolator.DefaultMessageInterpolatorAggregator;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+@@ -56,6 +57,7 @@
+ 	private static final String VALIDATOR_MESSAGE = "ValidatorMessages";
+ 	private static final Set<Class> INDEXABLE_CLASS = new HashSet<Class>();
+ 
++
+ 	static {
+ 		INDEXABLE_CLASS.add( Integer.class );
+ 		INDEXABLE_CLASS.add( Long.class );
+@@ -373,19 +375,43 @@
+ 
+ 		for ( int i = 0; i < beanValidators.size() ; i++ ) {
+ 			Validator validator = beanValidators.get( i );
+-			if ( !validator.isValid( bean ) ) {
+-				results.add( new InvalidValue( interpolate(validator), beanClass, null, bean, bean ) );
++			try {
++				log.debug("bean!");
++				if ( !validator.isValid( bean ) ) {
++					results.add( new InvalidValue( interpolate(validator), beanClass, null, bean, bean ) );
++				}
++			} catch ( InvalidStateException ive ) {
++				log.debug("BEAN caught an InvalidStateException with these values: ");
++				InvalidValue[] ivArray = ive.getInvalidValues();
++				for ( InvalidValue iv : ivArray ) {
++					log.debug("Name: " + iv.getPropertyName() + " / Message: " + iv.getMessage() );
++					results.add ( iv );
++				}
++				log.debug("continueing!:)");				
+ 			}
+ 		}
+ 
+ 		for ( int i = 0; i < memberValidators.size() ; i++ ) {
+ 			XMember getter = memberGetters.get( i );
+ 			if ( Hibernate.isPropertyInitialized( bean, getPropertyName( getter ) ) ) {
++
+ 				Object value = getMemberValue( bean, getter );
+ 				Validator validator = memberValidators.get( i );
+-				if ( !validator.isValid( value ) ) {
+-					String propertyName = getPropertyName( getter );
+-					results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
++				log.debug("going to validate this value: " + value );
++				
++				try {
++					if ( !validator.isValid( value ) ) {
++						String propertyName = getPropertyName( getter );
++						results.add( new InvalidValue( interpolate(validator), beanClass, propertyName, value, bean ) );
++					}
++				} catch ( InvalidStateException ive ) {
++					log.debug("caught an InvalidStateException with these values: ");
++					InvalidValue[] ivArray = ive.getInvalidValues();
++					for ( InvalidValue iv : ivArray ) {
++						log.debug("Name: " + iv.getPropertyName() + " / Message: " + iv.getMessage() );
++						results.add ( iv );
++					}
++					log.debug("continueing!:)");
+ 				}
+ 			}
+ 		}
